@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 import { v4 } from "uuid";
 
 interface IChat {
@@ -7,20 +7,36 @@ interface IChat {
 
 interface IUser extends Document {
   id: string;
+  name: string;
+  surname: string;
   mail: string;
   hash_password: string;
+  birthday: string;
   chatList: IChat[];
 }
+
 const UserSchema = new Schema<IUser>({
   id: { type: String, unique: true, default: () => v4() },
+  name: {
+    type: String,
+    required: true,
+  },
+  surname: {
+    type: String,
+    required: true,
+  },
   mail: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
   },
   hash_password: {
     type: String,
-    require: true,
+    required: true,
+  },
+  birthday: {
+    type: String,
+    required: true,
   },
   chatList: [
     {
@@ -29,6 +45,6 @@ const UserSchema = new Schema<IUser>({
   ],
 });
 
-const User = mongoose.model("users", UserSchema);
+const User = mongoose.model<IUser>("users", UserSchema);
 
 export default User;

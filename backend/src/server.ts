@@ -8,6 +8,7 @@ import http from "http";
 import morgan from "morgan";
 import chat_router from "./Chat/routes";
 import auth_router from "./Auth/Router";
+import CodeRoute from "./mail/router";
 import initSocket from "./Chat/Socket";
 dotenv.config();
 const app: Express = express();
@@ -25,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(201).sendFile(path.join(__dirname, "dist", "index.html"));
 });
 app.use(auth_router);
+app.use("/code", CodeRoute);
 app.use("/chat", chat_router);
 
 const server = http.createServer(app);

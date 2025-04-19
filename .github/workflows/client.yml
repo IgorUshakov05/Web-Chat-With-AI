@@ -3,7 +3,7 @@ name: Deploy frontend
 on:
   push:
     branches:
-      - main 
+      - dev 
 
 jobs:
   build:

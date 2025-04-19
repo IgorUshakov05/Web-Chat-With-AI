@@ -20,7 +20,7 @@ function App() {
         <Route path="/join" element={<JoinPage />} />
         <Route path="/developer" element={<AboutMePage />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/what" element={<Poprikolu />} />
+        <Route path="/docs" element={<Poprikolu />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

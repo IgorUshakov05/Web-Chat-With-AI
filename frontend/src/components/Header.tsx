@@ -7,7 +7,7 @@ import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 export default function Header() {
   let { mutate } = useNewChat();
   const [links] = useState<LinkType[]>([
-    { text: "Зачем?", link: "/what" },
+    { text: "Документация", link: "/docs" },
     { text: "Кто сделал?", link: "/developer" },
     { text: "Есть вопрос?", link: "/contact" },
   ]);

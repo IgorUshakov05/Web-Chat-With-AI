@@ -47,7 +47,7 @@ const HomePage = observer(() => {
         <main>
           <CTAction />
           <Feature />
-          <YandexAd blockId="R-A-14400356-1" />
+          <YandexAd blockId="R-A-14408229-1" />
         </main>
         <footer className="p-4 text-center bg-gray-200">
           &copy; {new Date().getFullYear()} Hunt AI — Бесплатная нейронка

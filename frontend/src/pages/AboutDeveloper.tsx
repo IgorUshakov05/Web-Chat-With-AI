@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Header from "../components/Header";
+import { drawGitHubTabActive } from "github-calendar-ts";
 import { authStore } from "../store";
 
 const AboutMePage: React.FC = () => {
+  useEffect(() => {
+  }, []);
   authStore.setAuth(localStorage.getItem("access") ? true : false);
-
   return (
     <>
       <Helmet>
@@ -35,6 +37,7 @@ const AboutMePage: React.FC = () => {
 
       <div className="overflow-hidden">
         <Header />
+
         <div className="bg-gradient-to-r text-black py-10">
           <div className="container mx-auto px-4">
             <div className="text-center mb-8">
@@ -96,6 +99,9 @@ const AboutMePage: React.FC = () => {
                 </div>
               </div>
             </div>
+              <div>
+                <div className="calendar-container mt-3 m-auto"></div>
+              </div>
           </div>
         </div>
       </div>
