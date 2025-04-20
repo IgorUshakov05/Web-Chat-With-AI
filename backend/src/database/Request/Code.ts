@@ -11,7 +11,7 @@ export async function SetCode({
 }): Promise<{ status: boolean; message: string }> {
   let newCode = await CodeSchema.findOne({ mail: email });
   if (newCode) {
-    return { status: false, message: "Код уже существует" };
+    return { status: false, message: "Код уже отправлен" };
   } else {
     const newCode = new CodeSchema({ mail: email, code: code });
     await newCode.save();

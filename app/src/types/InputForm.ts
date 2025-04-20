@@ -1,6 +1,11 @@
 export interface InputData {
-  mail: string;
+  email: string;
   password: string;
+}
+
+export interface PostVerefy {
+  email: string;
+  code: number;
 }
 export enum InputType {
   LOGIN,

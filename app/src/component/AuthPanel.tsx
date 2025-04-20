@@ -1,5 +1,7 @@
 import { useState } from "react";
 import User from "../types/FormType";
+import useSendCode from "../hook/useVerefyPost";
+import useVerefyCode from "../hook/useVerefyCode";
 enum AuthStage {
   SIGNUP,
   SIGNIN,
@@ -16,38 +18,115 @@ const AuthPanel = ({
   const [fromData, setDataFrom] = useState<User>({
     name: "",
     code: 0,
-    dirthday: "",
+    day: 0,
+    month: 0,
+    year: 0,
+    isVerefy: false,
     email: "",
     password: "",
     surname: "",
     retry_password: "",
   });
-  function InputValue({
-    value,
-    field,
-  }: {
+  interface InputValueProps {
     value: string | number;
     field: keyof User;
-  }) {
-    const newValue = field === "code" ? Number(value) : value;
+  }
+  function InputValue({ value, field }: InputValueProps) {
+    let newValue: string | number = field === "code" ? Number(value) : value;
+
+    if (["code", "day", "month", "year"].includes(field)) {
+      newValue = Number(value);
+      if (isNaN(newValue)) return;
+    }
+
+    if (field === "code" && newValue.toString().length > 6) {
+      return;
+    }
+
+    if (field === "day" && (Number(newValue) < 1 || Number(newValue) > 31)) {
+      return;
+    }
+
+    if (field === "month" && (Number(newValue) < 1 || Number(newValue) > 12)) {
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    if (
+      field === "year" &&
+      (Number(newValue) < 1900 || Number(newValue) > currentYear)
+    ) {
+      return;
+    }
+
     setDataFrom((prev) => ({
       ...prev,
       [field]: newValue,
     }));
-    console.log(fromData);
+    if (field === "code" && newValue.toString().length === 6) {
+      sendVerefy();
+      return;
+    }
+    console.log(`Поле "${field}" обновлено:`, newValue);
+  }
+
+  function clearInputs() {
+    setDataFrom({
+      name: "",
+      code: 0,
+      day: 0,
+      month: 0,
+      year: 0,
+      isVerefy: false,
+      email: "",
+      password: "",
+      surname: "",
+      retry_password: "",
+    });
   }
 
   const [step, setStep] = useState(0);
-  function validStep() {
-    switch (step) {
+  function validStep(stepItem: number) {
+    switch (stepItem) {
       case 0:
-        // if()
-        break;
+        return !(fromData.name && fromData.surname);
+      case 1:
+        return !(fromData.day && fromData.month && fromData.year);
+
+      case 2:
+        return !(
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromData.email) &&
+          fromData.code.toString().length >= 6 &&
+          trueCode
+        );
+      case 3:
+        return !(
+          fromData.retry_password === fromData.password &&
+          fromData.password.length >= 5
+        );
 
       default:
-        break;
+        return true;
     }
   }
+
+  const {
+    mutate: sendVerefy,
+    isSuccess: trueCode,
+    isIdle,
+  } = useVerefyCode({
+    email: fromData.email,
+    code: fromData.code,
+  });
+  const {
+    mutate: sendCode,
+    isSuccess: successCode,
+    isPending: waitCode,
+    data: messageCode,
+    isError: errorCode,
+  } = useSendCode({
+    email: fromData.email,
+  });
   return (
     <div className="auth-panel__container">
       <div className={`auth-panel ${isHiding ? "slide-out" : "slide-in"}`}>
@@ -80,6 +159,7 @@ const AuthPanel = ({
                   className="button-auth"
                   onClick={() => {
                     setStep(0);
+                    clearInputs();
                     setAuthStage(
                       authStage === AuthStage.SIGNUP
                         ? AuthStage.SIGNIN
@@ -95,110 +175,175 @@ const AuthPanel = ({
             <div className="cont">
               {authStage === AuthStage.SIGNUP ? (
                 <>
-                  <>
-                    <p className="text-ver">Введите свое имя и фамилию</p>
-                    <input
-                      type="text"
-                      className="input"
-                      placeholder="Имя"
-                      onChange={(e) =>
-                        InputValue({ value: e.target.value, field: "name" })
-                      }
-                    />
-                    <input
-                      type="text"
-                      className="input"
-                      onChange={(e) =>
-                        InputValue({ value: e.target.value, field: "surname" })
-                      }
-                      placeholder="Фамилия"
-                    />
-                  </>
-
-                  <>
-                    <p className="text-ver">Дата рождения</p>
-                    <div className="flex">
-                      <div>
-                        <span className="text-birth">День</span>
-                        <input
-                          type="number"
-                          className="input"
-                          placeholder="09"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-birth">Месяц</span>
-                        <input
-                          type="number"
-                          className="input"
-                          placeholder="07"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-birth">Год</span>
-                        <input
-                          type="number"
-                          className="input"
-                          placeholder="2005"
-                        />
-                      </div>
-                    </div>
-                  </>
-                  <>
-                    <p className="text-ver">Подтвердите почту</p>
-                    <div className="containerCode">
-                      <input
-                        onInput={(e) =>
-                          InputValue({
-                            value: e.currentTarget.value,
-                            field: "email",
-                          })
-                        }
-                        type="email"
-                        className="input"
-                        placeholder="example@ex.ex"
-                      />
-                      <span className="sendCode">Отправить код</span>
-                    </div>
-                    <div className="flex input code">
+                  {step === 0 && (
+                    <>
+                      <p className="text-ver">Введите свое имя и фамилию</p>
                       <input
                         type="text"
+                        className="input"
+                        placeholder="Имя"
+                        onChange={(e) =>
+                          InputValue({ value: e.target.value, field: "name" })
+                        }
+                      />
+                      <input
+                        type="text"
+                        className="input"
+                        onChange={(e) =>
+                          InputValue({
+                            value: e.target.value,
+                            field: "surname",
+                          })
+                        }
+                        placeholder="Фамилия"
+                      />
+                    </>
+                  )}
+                  {step === 1 && (
+                    <>
+                      <p className="text-ver">Дата рождения</p>
+                      <div className="flex">
+                        <div>
+                          <span className="text-birth">День</span>
+                          <input
+                            type="number"
+                            className="input"
+                            onChange={(e) =>
+                              InputValue({
+                                value: e.target.value,
+                                field: "day",
+                              })
+                            }
+                            placeholder="09"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-birth">Месяц</span>
+                          <input
+                            type="number"
+                            className="input"
+                            placeholder="07"
+                            onChange={(e) =>
+                              InputValue({
+                                value: e.target.value,
+                                field: "month",
+                              })
+                            }
+                          />
+                        </div>
+                        <div>
+                          <span className="text-birth">Год</span>
+                          <input
+                            type="number"
+                            onChange={(e) =>
+                              InputValue({
+                                value: e.target.value,
+                                field: "year",
+                              })
+                            }
+                            className="input"
+                            placeholder="2005"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {step === 2 && (
+                    <>
+                      <p className="text-ver">
+                        {messageCode?.data?.message ??
+                          (errorCode ? "Код уже отправлен" : "Введите почту")}
+                      </p>
+
+                      <div className="containerCode">
+                        <input
+                          onInput={(e) =>
+                            InputValue({
+                              value: e.currentTarget.value,
+                              field: "email",
+                            })
+                          }
+                          type="email"
+                          className="input"
+                          placeholder="example@ex.ex"
+                        />
+                        {!waitCode &&
+                          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromData.email) && (
+                            <span
+                              className="sendCode"
+                              onClick={() => sendCode()}
+                            >
+                              Отправить код
+                            </span>
+                          )}
+                      </div>
+                      {/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromData.email) && (
+                        <div className="flex input code">
+                          <input
+                            type="number"
+                            disabled={trueCode}
+                            value={fromData.code}
+                            onInput={(e) =>
+                              InputValue({
+                                value: e.currentTarget.value,
+                                field: "code",
+                              })
+                            }
+                            className="inputCode"
+                            placeholder="Код"
+                          />
+                          {fromData.code
+
+                            .toString()
+                            .split("")
+                            .slice(0, 6)
+                            .map((item, index) => (
+                              <div
+                                className="input"
+                                style={{
+                                  border:
+                                    isIdle && trueCode
+                                      ? "1px solid green"
+                                      : isIdle && errorCode
+                                      ? "1px solid red"
+                                      : "none",
+                                }}
+                                key={index}
+                              >
+                                {item || ""}
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                  {step === 3 && (
+                    <>
+                      <p className="text-ver">Введите пароль</p>
+                      <input
+                        type="password"
+                        className="input"
                         onInput={(e) =>
                           InputValue({
                             value: e.currentTarget.value,
-                            field: "code",
+                            field: "password",
                           })
                         }
-                        className="inputCode"
-                        placeholder="Код"
+                        placeholder="Пароль"
                       />
-                    </div>
-                  </>
-                  <>
-                    <p className="text-ver">Введите пароль</p>
-                    <input
-                      type="password"
-                      className="input"
-                      onInput={(e) =>
-                        InputValue({
-                          value: e.currentTarget.value,
-                          field: "password",
-                        })
-                      }
-                      placeholder="Пароль"
-                    />
-                    <input
-                      type="password"
-                      className="input"
-                      onInput={(e) =>
-                        InputValue({
-                          value: e.currentTarget.value,
-                          field: "retry_password",
-                        })
-                      }
-                      placeholder="Повторите пароль"
-                    />
-                  </>
+                      <input
+                        type="password"
+                        className="input"
+                        onInput={(e) =>
+                          InputValue({
+                            value: e.currentTarget.value,
+                            field: "retry_password",
+                          })
+                        }
+                        placeholder="Повторите пароль"
+                      />
+                    </>
+                  )}
                 </>
               ) : (
                 <>
@@ -224,6 +369,7 @@ const AuthPanel = ({
               )}
 
               <button
+                disabled={validStep(step)}
                 className="submit"
                 onClick={() => {
                   if (authStage === AuthStage.SIGNUP && step < 3) {

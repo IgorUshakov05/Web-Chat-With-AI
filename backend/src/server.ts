@@ -14,13 +14,17 @@ dotenv.config();
 const app: Express = express();
 
 const port = process.env.PORT || 3000;
-app.use(
-  cors({
-    origin: [process.env.CLIENT_URL || "http://localhost:3000"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: [process.env.CLIENT_URL || "http://localhost:3000"],
+//   })
+// );
+app.use(cors());
 app.use(express.json());
-
+app.use((req, res, next) => {
+  console.log(req.headers);
+  next();
+});
 app.use(morgan("dev"));
 app.get("/", (req: Request, res: Response) => {
   res.status(201).sendFile(path.join(__dirname, "dist", "index.html"));

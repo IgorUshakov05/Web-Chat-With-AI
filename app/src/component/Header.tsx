@@ -27,7 +27,9 @@ export default function Header():any  {
   return (
     <>
       <header className="header">
+        <a href="/">
         <img src="logo.svg" alt="Логотип HuntAI" className="logo" />
+        </a>
 
         <nav className="header-nav" aria-label="Основная навигация">
           <ul className="header-buttons">

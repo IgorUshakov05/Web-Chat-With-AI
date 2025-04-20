@@ -12,6 +12,11 @@ export interface ResponseAuth {
   refresh: string;
 }
 
+export interface RespondVerefyPost {
+  stats: boolean;
+  message: string;
+}
+
 export interface RaspondAuthentication {
   success: boolean;
   message: string;
