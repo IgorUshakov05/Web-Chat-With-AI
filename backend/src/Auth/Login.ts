@@ -6,9 +6,9 @@ import { create_jwt_token } from "../token/jwt";
 router.post(
   "/login",
   [
-    body("mail").isEmail().withMessage("Некорректный email").normalizeEmail(),
+    body("email").isEmail().withMessage("Некорректный email").normalizeEmail(),
     body("password")
-      .isLength({ min: 8, max: 30 })
+      .isLength({ min: 6, max: 30 })
       .withMessage("Пароль должен быть не менее 8, не более 30 символов"),
   ],
   async (req: Request, res: Response): Promise<any> => {
@@ -18,11 +18,11 @@ router.post(
         return res
           .status(400)
           .json({ success: false, errorList: errors.array() });
-      const { mail, password } = req.body;
-      const save_user = await find_user({ mail, password });
+      const { email, password } = req.body;
+      const save_user = await find_user({ email, password });
       if (!save_user.success) return res.status(404).json({ ...save_user });
       let token = create_jwt_token({
-        mail: save_user.mail || "",
+        email: save_user.email || "",
         id: save_user.id || "",
       });
       return res

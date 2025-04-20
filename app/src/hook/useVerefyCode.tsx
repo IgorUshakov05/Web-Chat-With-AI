@@ -11,7 +11,7 @@ export default function useVerefyCode({
   const mutation = useMutation({
     mutationFn: () => verefy_post({ email, code }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["verefyPost"] });
+      queryClient.invalidateQueries({ queryKey: ["verefyCode"] });
     },
   });
   return mutation;

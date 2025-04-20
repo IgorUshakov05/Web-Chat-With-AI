@@ -1,5 +1,5 @@
 export interface create_jwt {
-  mail: string;
+  email: string;
   id: string;
 }
 

@@ -9,7 +9,7 @@ export interface ResponseAuth {
   };
   id_chat?: string;
   access?: string;
-  refresh: string;
+  refresh?: string;
 }
 
 export interface RespondVerefyPost {

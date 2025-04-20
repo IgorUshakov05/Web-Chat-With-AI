@@ -9,7 +9,7 @@ interface IUser extends Document {
   id: string;
   name: string;
   surname: string;
-  mail: string;
+  email: string;
   hash_password: string;
   birthday: string;
   chatList: IChat[];
@@ -25,7 +25,7 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
-  mail: {
+  email: {
     type: String,
     required: true,
     unique: true,

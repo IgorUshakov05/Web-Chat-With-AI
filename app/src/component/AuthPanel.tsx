@@ -1,7 +1,9 @@
 import { useState } from "react";
 import User from "../types/FormType";
 import useSendCode from "../hook/useVerefyPost";
+import useRegistration from "../hook/useRegistration";
 import useVerefyCode from "../hook/useVerefyCode";
+import useLogin from "../hook/useLogin";
 enum AuthStage {
   SIGNUP,
   SIGNIN,
@@ -69,6 +71,41 @@ const AuthPanel = ({
     }
     console.log(`Поле "${field}" обновлено:`, newValue);
   }
+  const handelClichButtonRegistration = () => {
+    if (authStage === AuthStage.SIGNUP && step < 3) {
+      setStep(step + 1);
+    } else {
+      console.log("Форма отправлена");
+
+      sendDataRegistration(undefined, {
+        onSuccess: (data) => {
+          if (!data.success) return;
+
+          localStorage.setItem("access", data.access || "");
+          localStorage.setItem("refresh", data.refresh || "");
+          hide();
+        },
+        onError: (error) => {
+          console.error("Ошибка:", error);
+        },
+      });
+    }
+  };
+
+  const handelClichButtonLogin = () => {
+    sendDataLogin(undefined, {
+      onSuccess: (data) => {
+        console.log(data)
+        if (!data.success) return;
+        localStorage.setItem("access", data.access || "");
+        localStorage.setItem("refresh", data.refresh || "");
+        hide();
+      },
+      onError: (error) => {
+        console.error("Ошибка:", error);
+      },
+    });
+  };
 
   function clearInputs() {
     setDataFrom({
@@ -86,7 +123,13 @@ const AuthPanel = ({
   }
 
   const [step, setStep] = useState(0);
-  function validStep(stepItem: number) {
+  function validStepLogin() {
+    return !(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromData.email) &&
+      fromData.password.length >= 6
+    );
+  }
+  function validStepRegistration(stepItem: number) {
     switch (stepItem) {
       case 0:
         return !(fromData.name && fromData.surname);
@@ -120,13 +163,23 @@ const AuthPanel = ({
   });
   const {
     mutate: sendCode,
-    isSuccess: successCode,
     isPending: waitCode,
     data: messageCode,
     isError: errorCode,
   } = useSendCode({
     email: fromData.email,
   });
+
+  const {
+    mutate: sendDataRegistration,
+    data: dataRegistration,
+    isPending: waitRegistration,
+  } = useRegistration(fromData);
+  const {
+    mutate: sendDataLogin,
+    data: loginData,
+    isPending: waisLogin,
+  } = useLogin(fromData);
   return (
     <div className="auth-panel__container">
       <div className={`auth-panel ${isHiding ? "slide-out" : "slide-in"}`}>
@@ -319,7 +372,11 @@ const AuthPanel = ({
                   )}
                   {step === 3 && (
                     <>
-                      <p className="text-ver">Введите пароль</p>
+                      <p className="text-ver">
+                        {dataRegistration?.error
+                          ? dataRegistration.error
+                          : "Введите пароль"}
+                      </p>
                       <input
                         type="password"
                         className="input"
@@ -347,11 +404,31 @@ const AuthPanel = ({
                 </>
               ) : (
                 <>
-                  <p className="text-ver">Введите почту и пароль</p>
-                  <input type="email" className="input" placeholder="Почта" />
+                  <p className="text-ver">
+                    {loginData?.error
+                      ? loginData.error
+                      : "Введите почту и пароль"}
+                  </p>
+                  <input
+                    onInput={(e) =>
+                      InputValue({
+                        value: e.currentTarget.value,
+                        field: "email",
+                      })
+                    }
+                    type="email"
+                    className="input"
+                    placeholder="example@ex.ex"
+                  />
                   <input
                     type="password"
                     className="input"
+                    onInput={(e) =>
+                      InputValue({
+                        value: e.currentTarget.value,
+                        field: "password",
+                      })
+                    }
                     placeholder="Пароль"
                   />
                 </>
@@ -369,15 +446,17 @@ const AuthPanel = ({
               )}
 
               <button
-                disabled={validStep(step)}
+                disabled={
+                  authStage === AuthStage.SIGNUP
+                    ? validStepRegistration(step) || waitRegistration
+                    : validStepLogin() || waisLogin
+                }
                 className="submit"
-                onClick={() => {
-                  if (authStage === AuthStage.SIGNUP && step < 3) {
-                    setStep(step + 1);
-                  } else {
-                    console.log("Форма отправлена");
-                  }
-                }}
+                onClick={
+                  AuthStage.SIGNUP === authStage
+                    ? handelClichButtonRegistration
+                    : handelClichButtonLogin
+                }
               >
                 {authStage === AuthStage.SIGNUP
                   ? step === 3

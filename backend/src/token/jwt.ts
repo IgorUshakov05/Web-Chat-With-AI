@@ -1,13 +1,13 @@
 import { TokenInfo, TypeToken } from "./../types/toket_type";
 import jwt from "jsonwebtoken";
 import { create_jwt, token } from "../types/create_jwt";
-export const create_jwt_token = ({ mail, id }: create_jwt): token => {
-  const access = jwt.sign({ mail, id }, process.env.ACCESS_SECRET || "", {
+export const create_jwt_token = ({ email, id }: create_jwt): token => {
+  const access = jwt.sign({ email, id }, process.env.ACCESS_SECRET || "", {
     algorithm: "HS256",
     expiresIn: 3600*24*30,
   });
 
-  const refresh = jwt.sign({ mail, id }, process.env.REFRESH_SECRET || "", {
+  const refresh = jwt.sign({ email, id }, process.env.REFRESH_SECRET || "", {
     algorithm: "HS256",
     expiresIn: 3600*24*30*2,
   });

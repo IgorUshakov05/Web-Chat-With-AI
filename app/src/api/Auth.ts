@@ -1,3 +1,4 @@
+import User from "../types/FormType";
 import { InputData, PostVerefy } from "../types/InputForm";
 import {
   RaspondAuthentication,
@@ -5,9 +6,31 @@ import {
   ResponseAuth,
 } from "../types/RequestServer";
 import axios from "./base";
-export const registration_user = async (data_user: InputData) =>
-  axios.post<ResponseAuth>("/auth/registration", data_user);
-
+export const registration_user = async (
+  data_user: User
+): Promise<ResponseAuth> => {
+  try {
+    const { data } = await axios.post<ResponseAuth>(
+      "/auth/registration",
+      data_user
+    );
+    return {
+      success: data.success,
+      access: data.access,
+      refresh: data.refresh,
+      id_chat: data.id_chat,
+      error: data.error,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: error.response?.data?.error
+        ? error.response?.data?.error
+        : error.response?.data?.errorList[0].msg ||
+          "Ошибка при отправке запроса",
+    };
+  }
+};
 export const authentication = (): Promise<RaspondAuthentication> => {
   const token = localStorage.getItem("access");
 
@@ -40,5 +63,25 @@ export const verefy_post = async (verefy_data: PostVerefy) =>
 export const sendCode = async (verefy_data: { email: string }) =>
   axios.post<RespondVerefyPost>("/code/send-code", verefy_data);
 
-export const login_user = async (data_user: InputData) =>
-  axios.post<ResponseAuth>("/auth/login", data_user);
+export const login_user = async (
+  data_user: InputData
+): Promise<ResponseAuth> => {
+  try {
+    const { data } = await axios.post<ResponseAuth>("/auth/login", data_user);
+    return {
+      success: data.success,
+      access: data.access,
+      refresh: data.refresh,
+      id_chat: data.id_chat,
+      error: data.error,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: error.response?.data?.error
+        ? error.response?.data?.error
+        : error.response?.data?.errorList[0].msg ||
+          "Ошибка при отправке запроса",
+    };
+  }
+};
