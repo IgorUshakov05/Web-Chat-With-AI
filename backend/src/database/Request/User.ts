@@ -83,7 +83,7 @@ export const find_user_by_token = async (
   data: TokenInfo
 ): Promise<{ success: boolean; message: string }> => {
   try {
-    let find_user = await UserSchema.findOne({ mail: data.mail });
+    let find_user = await UserSchema.findOne({ email: data.email });
     if (!find_user)
       return { success: false, message: "Пользователь не найден" };
     return { success: true, message: "Успех!" };

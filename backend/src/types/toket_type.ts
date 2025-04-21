@@ -5,5 +5,5 @@ export enum TypeToken {
 
 export interface TokenInfo {
   id: string;
-  mail: string;
+  email: string;
 }

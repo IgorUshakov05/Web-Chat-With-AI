@@ -10,10 +10,10 @@ export default router.get(
     try {
       let access = await get_bearer(req.headers.authorization)?.trim();
       let info_token = await verify_jwt_token(access, TypeToken.ACCESS);
-      if (!info_token.success || !info_token.info?.mail)
+      if (!info_token.success || !info_token.info?.email)
         return res.status(401).json({ ...info_token });
       let user = await find_user_by_token(info_token.info);
-      return res.json({ ...user });
+      return res.status(200).json({ ...user });
     } catch (e) {
       return res
         .status(500)
