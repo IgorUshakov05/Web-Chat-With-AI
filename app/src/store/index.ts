@@ -87,56 +87,9 @@ class SocketConnect {
     }
   }
 }
-type AuthFormFields = {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  retry_password: string;
-  birthday: string;
-  code: string;
-};
 
-class AuthForm {
-  fromData: AuthFormFields = {
-    name: "Идиот",
-    surname: "",
-    email: "",
-    password: "",
-    retry_password: "",
-    birthday: "",
-    code: "",
-  };
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  resetForm() {
-    this.fromData = {
-      name: "",
-      surname: "",
-      email: "",
-      password: "",
-      retry_password: "",
-      birthday: "",
-      code: "",
-    };
-  }
-
-  setField<K extends keyof AuthFormFields>(field: K, value: AuthFormFields[K]) {
-    this.fromData[field] = value;
-    console.log(this.fromData[field])
-  }
-
-  getField<K extends keyof AuthFormFields>(field: K): AuthFormFields[K] {
-    return this.fromData[field];
-  }
-}
-
-const authForm = new AuthForm();
 const socketStore = new SocketConnect();
 const chatStore = new ChatStore();
 const authStore = new AuthStore();
 
-export { chatStore, authStore, socketStore, authForm };
+export { chatStore, authStore, socketStore };

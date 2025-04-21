@@ -1,23 +1,9 @@
 import React from "react";
+import Header from "../component/Header";
 const ChatPage: React.FC = () => {
   return (
     <div className="layout">
-      <header className="header_chat">
-        <div className="header__logo">
-          <img src="logo.svg" alt="Logo" className="logo" />
-        </div>
-        <br />
-        <nav className="header__nav">
-          <p className="header-text">Web Chat With AI</p>
-          <div className="header-buttons">
-            <a className="button_header_common">Наши продукты</a>
-            <a className="button_header">Разработчики</a>
-            <a href="Documentation.html" className="button_header_common">
-              Документация
-            </a>
-          </div>
-        </nav>
-      </header>
+      <Header />
 
       <main className="main-content">
         <aside className="sidebar sidebar--history">

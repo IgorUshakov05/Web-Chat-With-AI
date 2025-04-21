@@ -1,23 +1,35 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthPanel from "./AuthPanel";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { authStore } from "../store/index";
+import useAuntification from "../hook/useAuntification";
+import { observer } from "mobx-react";
 const links = [
   { text: "Наши продукты", href: "/products" },
   { text: "Разработчики", href: "/developers" },
   { text: "Документация", href: "/documentation" },
 ];
-
-export default function Header():any  {
+function Header(): any {
   const location = useLocation();
   let [isActive, setIsActive] = useState(false);
   let [isHiding, setIsHiding] = useState(false);
+
+  const { data, isError, isPending } = useAuntification();
+
+  useEffect(() => {
+    if (data?.success) {
+      authStore.setAuth(true);
+    } else {
+      authStore.setAuth(false);
+    }
+  }, [data?.success]);
+
   function hideHandle() {
     setIsHiding(true);
     setTimeout(() => {
       setIsActive(false);
       setIsHiding(false);
-    }, 300); 
+    }, 300);
   }
 
   function showHandle() {
@@ -28,7 +40,7 @@ export default function Header():any  {
     <>
       <header className="header">
         <a href="/">
-        <img src="logo.svg" alt="Логотип HuntAI" className="logo" />
+          <img src="logo.svg" alt="Логотип HuntAI" className="logo" />
         </a>
 
         <nav className="header-nav" aria-label="Основная навигация">
@@ -50,12 +62,15 @@ export default function Header():any  {
           </ul>
         </nav>
 
-        <button className="auth-button" onClick={showHandle}>
-          Авторизация
-        </button>
+        {!authStore.isAuth && (
+          <button className="auth-button" onClick={showHandle}>
+            {isPending ? "Загрузка" : "Авторизация"}
+          </button>
+        )}
       </header>
       {isActive && <AuthPanel hide={hideHandle} isHiding={isHiding} />}
-
     </>
   );
 }
+
+export default observer(Header);

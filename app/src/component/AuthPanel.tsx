@@ -4,6 +4,8 @@ import useSendCode from "../hook/useVerefyPost";
 import useRegistration from "../hook/useRegistration";
 import useVerefyCode from "../hook/useVerefyCode";
 import useLogin from "../hook/useLogin";
+import {observer} from 'mobx-react'
+import { authStore } from "../store";
 enum AuthStage {
   SIGNUP,
   SIGNIN,
@@ -82,6 +84,8 @@ const AuthPanel = ({
           if (!data.success) return;
 
           localStorage.setItem("access", data.access || "");
+          authStore.setAuth(true);
+
           localStorage.setItem("refresh", data.refresh || "");
           hide();
         },
@@ -95,9 +99,10 @@ const AuthPanel = ({
   const handelClichButtonLogin = () => {
     sendDataLogin(undefined, {
       onSuccess: (data) => {
-        console.log(data)
+        console.log(data);
         if (!data.success) return;
         localStorage.setItem("access", data.access || "");
+        authStore.setAuth(true);
         localStorage.setItem("refresh", data.refresh || "");
         hide();
       },
@@ -472,4 +477,4 @@ const AuthPanel = ({
   );
 };
 
-export default AuthPanel;
+export default observer(AuthPanel);

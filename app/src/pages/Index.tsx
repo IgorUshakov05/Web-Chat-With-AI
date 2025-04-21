@@ -1,7 +1,9 @@
+import { observer } from "mobx-react";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
+import { authStore } from "../store";
 
-export default function IndexPage() {
+function IndexPage() {
   return (
     <>
       <Header />
@@ -154,14 +156,16 @@ export default function IndexPage() {
                 <p className="opisa">HuntAI</p>
               </div>
             </div>
-            <div className="list-product-join">
-              <a href="https://huntid.com/" className="button-join-vhod">
-                Войти
-              </a>
-              <a href="https://huntid.com/" className="button-join-registr">
-                Зарегестрироваться
-              </a>
-            </div>
+            {!authStore.isAuth && (
+              <div className="list-product-join">
+                <a href="https://huntid.com/" className="button-join-vhod">
+                  Войти
+                </a>
+                <a href="https://huntid.com/" className="button-join-registr">
+                  Зарегестрироваться
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -170,3 +174,6 @@ export default function IndexPage() {
     </>
   );
 }
+
+
+export default observer(IndexPage)
