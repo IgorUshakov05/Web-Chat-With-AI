@@ -7,7 +7,7 @@ export default function ProductsPage() {
       <Header />
 
       <div className="webhunt-img">
-        <div className="">
+        <div>
           <div className="verh-web">
             <h2 className="name-platform">WebHunt</h2>
             <div className="sub">

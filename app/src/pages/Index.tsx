@@ -134,7 +134,7 @@ function IndexPage() {
       </div>
 
       <div className="sd">
-        <img src="HuntID.png" className="left-img" />
+        <img src="HuntID.png" className="left-img" alt="HuntID logo"/>
         <div className="right">
           <h4 className="name-product size">Присоединяйся</h4>
           <div className="join">
