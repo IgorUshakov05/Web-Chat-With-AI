@@ -21,7 +21,7 @@ export default function DevelopersPage() {
               <img src="Telegram.svg" alt="Telegram" />
             </Link>
           </div>
-          <img src="Игорь.png" alt="Игорь" className="photo-sektor" />
+          <img src="Игорь.webp" alt="Игорь" className="photo-sektor" />
           <div className="social-media">
             <Link to={"https://dprofile.ru/fullstack"} className="button-media">
               <img src="DProfile.svg" alt="DProfile" />
@@ -68,7 +68,7 @@ export default function DevelopersPage() {
               <img src="Telegram.svg" alt="Telegram" />
             </Link>
           </div>
-          <img src="ЯрикФото.png" alt="Ярослав" className="photo-sektor" />
+          <img src="ЯрикФото.webp" alt="Ярослав" className="photo-sektor" />
           <div className="social-media">
             <Link
               to={"https://dprofile.ru/yaroslavushakov"}

@@ -237,7 +237,7 @@ const AuthPanel = ({
 
         <div className="auth-panel__header">
           <img
-            src="img-login.png"
+            src="img-login.webp"
             alt="Header"
             className="auth-panel__header-image"
           />
