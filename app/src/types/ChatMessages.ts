@@ -10,19 +10,24 @@ export enum From {
   User = "User",
 }
 
-
 export interface Chat {
   id: string;
-  message: Message[];
+  message: Message;
+}
+
+export interface ChatListItemMessage {
+  id: string;
+  lastMessage: Message;
 }
 
 export interface Response {
   success: boolean;
   message?: string;
-  chats?: Chat[];
+  chats?: ChatListItemMessage[];
 }
 
-export interface NewChat extends Response {
+export interface NewChat {
+  success: boolean;
   chat_id: string;
 }
 

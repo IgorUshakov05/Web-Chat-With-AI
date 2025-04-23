@@ -19,6 +19,8 @@ export const registration_user = async (
       access: data.access,
       refresh: data.refresh,
       id_chat: data.id_chat,
+      name: data.name,
+      surname: data.surname,
       error: data.error,
     };
   } catch (error: any) {
@@ -73,6 +75,8 @@ export const login_user = async (
       access: data.access,
       refresh: data.refresh,
       id_chat: data.id_chat,
+      name: data.name,
+      surname: data.surname,
       error: data.error,
     };
   } catch (error: any) {

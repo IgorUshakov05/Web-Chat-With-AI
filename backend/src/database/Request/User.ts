@@ -1,7 +1,11 @@
 import { TokenInfo } from "./../../types/toket_type";
 import UserSchema from "../Schema/UserSchema";
 import { v4 } from "uuid";
-import { Create_User, Login_User, result_Create_User } from "../../types/create_user";
+import {
+  Create_User,
+  Login_User,
+  result_Create_User,
+} from "../../types/create_user";
 import User from "../Schema/UserSchema";
 import Chat from "../Schema/ChatSchema";
 import { encryptPassword, verifyPassword } from "../../secret/HashPassword";
@@ -21,7 +25,7 @@ export const create_user = async ({
     if (find_user)
       return { success: false, error: "Пользователь уже существует" };
     let verefy_post = await Code.findOne({ mail: email, code });
-    console.log(verefy_post)
+    console.log(verefy_post);
     if (!verefy_post) return { success: false, error: "Почта не подтверждена" };
     let birthday = `${day}-${month}-${year}`;
     let current_user = await UserSchema.create({
@@ -65,12 +69,21 @@ export const find_user = async ({
       let new_chat = await Chat.create({});
       await find_user.chatList.push({ id: new_chat.id });
       await find_user.save();
-      return { success: true, id: find_user.id, email, id_chat: new_chat.id };
+      return {
+        success: true,
+        id: find_user.id,
+        email,
+        id_chat: new_chat.id,
+        name: find_user.name,
+        surname: find_user.surname,
+      };
     }
     return {
       success: true,
       id: find_user.id,
       email,
+      name: find_user.name,
+      surname: find_user.surname,
       id_chat: find_last_chat.id,
     };
   } catch (e) {

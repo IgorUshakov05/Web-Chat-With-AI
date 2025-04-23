@@ -4,7 +4,7 @@ import useSendCode from "../hook/useVerefyPost";
 import useRegistration from "../hook/useRegistration";
 import useVerefyCode from "../hook/useVerefyCode";
 import useLogin from "../hook/useLogin";
-import {observer} from 'mobx-react'
+import { observer } from "mobx-react";
 import { authStore } from "../store";
 enum AuthStage {
   SIGNUP,
@@ -84,9 +84,11 @@ const AuthPanel = ({
           if (!data.success) return;
 
           localStorage.setItem("access", data.access || "");
+          localStorage.setItem("name", data.name || "");
+          localStorage.setItem("surname", data.surname || "");
+          localStorage.setItem("refresh", data.refresh || "");
           authStore.setAuth(true);
 
-          localStorage.setItem("refresh", data.refresh || "");
           hide();
         },
         onError: (error) => {
@@ -102,8 +104,11 @@ const AuthPanel = ({
         console.log(data);
         if (!data.success) return;
         localStorage.setItem("access", data.access || "");
-        authStore.setAuth(true);
         localStorage.setItem("refresh", data.refresh || "");
+        localStorage.setItem("name", data.name || "");
+        localStorage.setItem("surname", data.surname || "");
+
+        authStore.setAuth(true);
         hide();
       },
       onError: (error) => {
@@ -445,7 +450,7 @@ const AuthPanel = ({
                 <div className="verh">
                   <p className="text-ver">Войти при помощи</p>
                   <a href="#" className="button_hea">
-                    <img src="google.svg" alt="Google" />
+                    <img src="/google.svg" alt="Google" />
                   </a>
                 </div>
               )}

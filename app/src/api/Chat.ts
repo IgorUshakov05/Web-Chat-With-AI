@@ -16,7 +16,7 @@ export const get_messages_on_chat = async (chatID: string) => {
     if (error.response?.status === 404) {
       return { success: false, messages: [], status: 404 };
     }
-    throw error; // Пробрасываем дальше, если ошибка другая
+    throw error;
   }
 };
 
@@ -25,8 +25,7 @@ export const get_all_chats = async () => {
   if (!data.success) throw Error("Ошибка");
   return { success: data.success, chats: data.chats };
 };
-
 export const open_new_chat = async () => {
   let { data } = await axios.get<NewChat>("/chat/new_chat");
-  return { ...data };
+  return data;
 };

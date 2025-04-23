@@ -1,6 +1,8 @@
 export interface ResponseAuth {
   success: boolean;
   error?: string;
+  name?: string;
+  surname?: string;
   errorList?: {
     location: string;
     msg: string;

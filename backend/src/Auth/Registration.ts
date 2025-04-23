@@ -71,7 +71,13 @@ router.post(
       });
       return res
         .status(201)
-        .json({ success: true, ...token, id_chat: save_user.id_chat });
+        .json({
+          success: true,
+          ...token,
+          id_chat: save_user.id_chat,
+          name,
+          surname,
+        });
     } catch (e) {
       console.error("Ошибка при регистрации в файле Registration.ts", e);
       return res.status(500).json({ success: false, error: "Ошибка сервера" });

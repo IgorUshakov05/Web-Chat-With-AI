@@ -17,6 +17,8 @@ export interface Login_User {
 export interface result_Create_User {
   success: boolean;
   error?: string;
+  name?: string,
+  surname?: string;
   email?: string;
   id_chat?: string;
   id?: string;

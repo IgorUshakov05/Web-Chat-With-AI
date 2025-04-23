@@ -1,11 +1,21 @@
-import { makeAutoObservable, action, runInAction, observable } from "mobx";
+import { makeAutoObservable, action, runInAction } from "mobx";
 import { io, Socket } from "socket.io-client";
 import Message, { Chat } from "../types/ChatMessages";
 
 class ChatStore {
   messages: Message[] = [];
   chatID: string = localStorage.getItem("chat_id") || "";
-  chatList: Chat[] = [];
+  chatList: Chat[] = [
+    {
+      id: "11222",
+      message: {
+        sender: "User",
+        text: "Helo",
+        timestamp: 1121212,
+        success: true,
+      },
+    },
+  ];
   constructor() {
     makeAutoObservable(this, {
       setMessages: action,

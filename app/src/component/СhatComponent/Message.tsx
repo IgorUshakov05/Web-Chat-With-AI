@@ -1,21 +1,27 @@
 import Message from "../../types/ChatMessages";
+import hljs from "highlight.js";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import "highlight.js/styles/default.css";
+import CodeBlock from "./CodeBlock"; // путь укажите, если отличается
 
-export default function MessageTemplate(data: Message) {
+export default function MessageTemplate({ data }: { data: Message }) {
   if (data.sender === "Bot") {
     return (
-      <>
-        <div className="message received">
-          <div className="message__body">
-            <div className="message__avatar">
-              <img
-                src="/ЛогоЧата.svg"
-                alt="Bot"
-                className="message__avatar-img"
-              />
-            </div>
-            <div className="message__wrapper">
-              <div className="message__header">
-                <span className="message__sender">HuntAI</span>
+      <div className="message received">
+        <div className="message__body">
+          <div className="message__avatar">
+            <img
+              src="/ЛогоЧата.svg"
+              alt="Bot"
+              className="message__avatar-img"
+            />
+          </div>
+          <div className="message__wrapper">
+            <div className="beflex">
+              <h1 className="message__sender">HuntAI</h1>
+              <p className="message__header">
                 <button
                   className="message__copy-button"
                   title="Копировать"
@@ -27,30 +33,34 @@ export default function MessageTemplate(data: Message) {
                     className="message__copy-icon"
                   />
                 </button>
-              </div>
-              <div className="message__content markdown-content">
-                <p>
-                  Now, when the .header-text content (e.g., "Web Chat With AI")
-                  is too long for its container, it will truncate with .... If
-                  you don’t see the ellipsis and want to force it, let me know,
-                  and I can suggest a specific max-width or other tweaks!
-                </p>
-                <div className="message__content-code">
-                  <div className="message__header">
-                    <div className="Code">html</div>
-                    <img
-                      src="/copy.svg"
-                      alt="Copy"
-                      className="message__copy-icon"
-                    />
-                  </div>
-                  <pre className="Code"></pre>
-                </div>
-              </div>
+              </p>
+            </div>
+            <div className="message__content markdown-content">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code({ node, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return match ? (
+                      <CodeBlock
+                        language={match[1]}
+                        value={String(children).trim()}
+                      />
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {data.text}
+              </ReactMarkdown>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   } else {
     return (

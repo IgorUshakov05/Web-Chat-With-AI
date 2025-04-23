@@ -11,6 +11,7 @@ interface IUser extends Document {
   surname: string;
   email: string;
   hash_password: string;
+  avatar: string;
   birthday: string;
   chatList: IChat[];
 }
@@ -24,6 +25,11 @@ const UserSchema = new Schema<IUser>({
   surname: {
     type: String,
     required: true,
+  },
+  avatar: {
+    type: String,
+    require: false,
+    default: null,
   },
   email: {
     type: String,

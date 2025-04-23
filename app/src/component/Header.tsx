@@ -14,11 +14,12 @@ function Header(): any {
   let [isActive, setIsActive] = useState(false);
   let [isHiding, setIsHiding] = useState(false);
 
-  const { data, isError, isPending } = useAuntification();
+  const { data, isPending } = useAuntification();
 
   useEffect(() => {
     if (data?.success) {
       authStore.setAuth(true);
+      
     } else {
       authStore.setAuth(false);
     }
@@ -40,7 +41,7 @@ function Header(): any {
     <>
       <header className="header">
         <a href="/">
-          <img src="logo.svg" alt="Логотип HuntAI" className="logo" />
+          <img src="/logo.svg" alt="Логотип HuntAI" className="logo" />
         </a>
 
         <nav className="header-nav" aria-label="Основная навигация">

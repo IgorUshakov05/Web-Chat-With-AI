@@ -25,9 +25,20 @@ router.post(
         email: save_user.email || "",
         id: save_user.id || "",
       });
-      return res
-        .status(201)
-        .json({ success: true, ...token, id_chat: save_user.id_chat });
+      console.log({
+        success: true,
+        ...token,
+        id_chat: save_user.id_chat,
+        name: save_user.name,
+        surname: save_user.surname,
+      });
+      return res.status(201).json({
+        success: true,
+        ...token,
+        id_chat: save_user.id_chat,
+        name: save_user.name,
+        surname: save_user.surname,
+      });
     } catch (e) {
       console.error("Ошибка при регистрации в файле Registration.ts", e);
       return res.status(500).json({ success: false, error: "Ошибка сервера" });

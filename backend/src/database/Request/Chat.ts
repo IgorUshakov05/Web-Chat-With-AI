@@ -22,8 +22,18 @@ export const find_all_chat_of_user = async (userID?: string) => {
     if (!chats?.chatList.length)
       return { success: false, message: "Чатов нет!", chats: [] };
     let chatList = chats.chatList.map((chat: any) => chat.id);
-    let get_caht = await Chat.find({ id: { $in: chatList } });
-    return { success: true, chats: get_caht, message: "Успех!" };
+
+    let get_chat = await Chat.aggregate([
+      { $match: { id: { $in: chatList } } },
+      {
+        $project: {
+          id: 1,
+          lastMessage: { $arrayElemAt: ["$message", -1] }, 
+        },
+      },
+    ]);
+
+    return { success: true, chats: get_chat, message: "Успех!" };
   } catch (e) {
     return { success: false, message: "Не удалось найти чат", chats: [] };
   }
@@ -53,7 +63,10 @@ export const create_chat = async (userID: string | undefined) => {
     let new_chat = await Chat.create({});
     await find_user.chatList.push({ id: new_chat.id });
     await find_user.save();
-    return { success: true, chat_id: new_chat.id };
+    return {
+      success: true,
+      chat_id: new_chat.id,
+    };
   } catch (e) {
     return { success: false, message: "Ошибка сервера" };
   }
