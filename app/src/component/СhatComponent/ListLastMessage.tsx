@@ -9,7 +9,7 @@ export default function ChatListLastMessage({
   return (
     <div className="sidebar__list">
       {messages.map((item, index) => (
-        <Link to={item.id} className="history-item-no-activity" key={index}>
+        <Link to={`/chat/${item.id}`} className="history-item-no-activity" key={index}>
           {item.message.text}
         </Link>
       ))}

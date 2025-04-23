@@ -1,28 +1,18 @@
 import { makeAutoObservable, action, runInAction } from "mobx";
 import { io, Socket } from "socket.io-client";
-import Message, { Chat } from "../types/ChatMessages";
+import Message, { ChatListItemMessage } from "../types/ChatMessages";
 
 class ChatStore {
   messages: Message[] = [];
   chatID: string = localStorage.getItem("chat_id") || "";
-  chatList: Chat[] = [
-    {
-      id: "11222",
-      message: {
-        sender: "User",
-        text: "Helo",
-        timestamp: 1121212,
-        success: true,
-      },
-    },
-  ];
+  chatList: ChatListItemMessage[] = [];
   constructor() {
     makeAutoObservable(this, {
       setMessages: action,
       setChatID: action,
     });
   }
-  setChatList(newChatList: Chat[]) {
+  setChatList(newChatList: ChatListItemMessage[]) {
     console.log(newChatList);
     this.chatList = newChatList;
   }

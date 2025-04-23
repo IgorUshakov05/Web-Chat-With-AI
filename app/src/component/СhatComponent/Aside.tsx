@@ -7,11 +7,11 @@ import useAllChat from "../../hook/GetAllChats";
 import { useEffect } from "react";
 function Aside() {
   const { mutate } = useNewChat();
-  const { data, isSuccess, isPending, isError } = useAllChat();
+  const { data, isSuccess, isPending } = useAllChat();
   useEffect(() => {
-    setTimeout(() => {
-      console.log(data);
-    }, 1000);
+    if (data?.chats) {
+      chatStore.setChatList(data?.chats);
+    }
   }, [data?.chats]);
   return (
     <aside className="sidebar sidebar--history">
@@ -22,20 +22,26 @@ function Aside() {
             Новый чат
           </button>
         </div>
-
-        <ChatListLastMessage
-          messages={[
-            {
-              id: "12123123",
+        {isPending && (
+          <div className="sidebar__list">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <p className="history-item-no-activity empty" key={index}></p>
+            ))}
+          </div>
+        )}
+        {isSuccess && chatStore.chatList && (
+          <ChatListLastMessage
+            messages={chatStore.chatList.map((item) => ({
+              id: item.id,
               message: {
-                sender: "Bot",
-                text: "Hello",
-                timestamp: 11212,
+                sender: item.lastMessage.sender,
+                text: item.lastMessage.text,
+                timestamp: item.lastMessage.timestamp,
                 success: true,
               },
-            },
-          ]}
-        />
+            }))}
+          />
+        )}
       </div>
       <UserData />
     </aside>

@@ -1,20 +1,20 @@
-import { Response, From, NewChat } from "../types/ChatMessages";
+import Message, { Response, NewChat } from "../types/ChatMessages";
 import axios from "./base";
 export const get_messages_on_chat = async (chatID: string) => {
   try {
-    let { data, status } = await axios.get<{
+    let { data } = await axios.get<{
       success: boolean;
       chat: {
-        message: [
-          { _id: string; timestamp: number; sender: From; text: string }
-        ];
+        id: string;
+        message: Message[];
       };
+      message: string;
     }>(`/chat/${chatID}`);
-
-    return { success: data.success, messages: data.chat?.message, status };
+    console.log(data, " current Chat");
+    return data;
   } catch (error: any) {
     if (error.response?.status === 404) {
-      return { success: false, messages: [], status: 404 };
+      return { success: false, chat: { message: [] }, message: "Успех!" };
     }
     throw error;
   }

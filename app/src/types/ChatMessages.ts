@@ -2,7 +2,6 @@ export default interface Message {
   sender: "User" | "Bot";
   text: string;
   timestamp: number;
-  success?: boolean;
 }
 
 export enum From {
