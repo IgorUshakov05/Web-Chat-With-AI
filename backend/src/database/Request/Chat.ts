@@ -7,7 +7,6 @@ export const find_chat_by_id = async (id: string) => {
     let chat = await Chat.findOne({ id }).select("message");
     if (!chat) return { success: false, message: "Чат не найден", chat: [] };
 
-    // Возвращаем найденный чат
     return { success: true, chat, message: "Успех!" };
   } catch (e) {
     return { success: false, message: "Не удалось найти чат", chat: [] };
