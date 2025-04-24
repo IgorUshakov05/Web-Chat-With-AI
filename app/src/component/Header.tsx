@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { authStore } from "../store/index";
 import useAuntification from "../hook/useAuntification";
 import { observer } from "mobx-react";
+import { useNewChat } from "../hook/NewChat";
 const links = [
   { text: "Наши продукты", href: "/products" },
   { text: "Разработчики", href: "/developers" },
@@ -15,11 +16,10 @@ function Header(): any {
   let [isHiding, setIsHiding] = useState(false);
 
   const { data, isPending } = useAuntification();
-
+  const { mutate } = useNewChat();
   useEffect(() => {
     if (data?.success) {
       authStore.setAuth(true);
-      
     } else {
       authStore.setAuth(false);
     }
@@ -63,9 +63,13 @@ function Header(): any {
           </ul>
         </nav>
 
-        {!authStore.isAuth && (
+        {!authStore.isAuth ? (
           <button className="auth-button" onClick={showHandle}>
             {isPending ? "Загрузка" : "Авторизация"}
+          </button>
+        ) : (
+          <button className="auth-button" onClick={() => mutate()}>
+            Перейти в чат
           </button>
         )}
       </header>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import User from "../types/FormType";
 import useSendCode from "../hook/useVerefyPost";
 import useRegistration from "../hook/useRegistration";
@@ -6,6 +6,9 @@ import useVerefyCode from "../hook/useVerefyCode";
 import useLogin from "../hook/useLogin";
 import { observer } from "mobx-react";
 import { authStore } from "../store";
+import Google from "./GoogleAuth";
+import useLoginGoogle from "../hook/useLoginGoogle";
+import { useGoogleLogin } from "@react-oauth/google";
 enum AuthStage {
   SIGNUP,
   SIGNIN,
@@ -73,6 +76,7 @@ const AuthPanel = ({
     }
     console.log(`Поле "${field}" обновлено:`, newValue);
   }
+
   const handelClichButtonRegistration = () => {
     if (authStage === AuthStage.SIGNUP && step < 3) {
       setStep(step + 1);
@@ -190,6 +194,26 @@ const AuthPanel = ({
     data: loginData,
     isPending: waisLogin,
   } = useLogin(fromData);
+
+  const {
+    mutate: startGoogleAuth,
+    isPending: waitGoogleAuth,
+    isSuccess: successGoogleAuth,
+    data: googleAuthData,
+  } = useLoginGoogle();
+  useEffect(() => {
+    if (googleAuthData) {
+      if (googleAuthData.success) {
+        localStorage.setItem("access", googleAuthData.access || "");
+        localStorage.setItem("name", googleAuthData.name || "");
+        localStorage.setItem("surname", googleAuthData.surname || "");
+        localStorage.setItem("refresh", googleAuthData.refresh || "");
+        authStore.setAuth(true);
+        hide();
+      }
+      console.log("Google auth data:", googleAuthData);
+    }
+  }, [googleAuthData]);
   return (
     <div className="auth-panel__container">
       <div className={`auth-panel ${isHiding ? "slide-out" : "slide-in"}`}>
@@ -415,10 +439,11 @@ const AuthPanel = ({
               ) : (
                 <>
                   <p className="text-ver">
-                    {loginData?.error
-                      ? loginData.error
-                      : "Введите почту и пароль"}
+                    {loginData?.error ||
+                      googleAuthData?.error ||
+                      "Введите почту и пароль"}
                   </p>
+
                   <input
                     onInput={(e) =>
                       InputValue({
@@ -447,12 +472,11 @@ const AuthPanel = ({
 
             <div className="cont">
               {authStage === AuthStage.SIGNIN && (
-                <div className="verh">
-                  <p className="text-ver">Войти при помощи</p>
-                  <a href="#" className="button_hea">
-                    <img src="/google.svg" alt="Google" />
-                  </a>
-                </div>
+                <Google
+                  startGoogleAuth={startGoogleAuth}
+                  waitGoogleAuth={waitGoogleAuth}
+                  successGoogleAuth={successGoogleAuth}
+                />
               )}
 
               <button

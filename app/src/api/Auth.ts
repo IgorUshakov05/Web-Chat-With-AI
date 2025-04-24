@@ -58,6 +58,34 @@ export const authentication = (): Promise<RaspondAuthentication> => {
       });
   });
 };
+export const signin_google = async (tokens: {
+  access_token: string;
+}): Promise<ResponseAuth> => {
+  try {
+    const { data } = await axios.post<ResponseAuth>(
+      "/auth/google/sign_in",
+      tokens
+    );
+
+    return {
+      success: data.success,
+      access: data.access,
+      refresh: data.refresh,
+      id_chat: data.id_chat,
+      name: data.name,
+      surname: data.surname,
+      error: data.error,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: error.response?.data?.error
+        ? error.response?.data?.error
+        : error.response?.data?.errorList[0].msg ||
+          "Ошибка при отправке запроса",
+    };
+  }
+};
 
 export const verefy_post = async (verefy_data: PostVerefy) =>
   axios.post<RespondVerefyPost>("/code/verefy-post", verefy_data);

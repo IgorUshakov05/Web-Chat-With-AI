@@ -16,9 +16,9 @@ function Input() {
     };
   }, []);
   useEffect(() => {
-    console.log("Mess");
     socketStore.socket.on("message", (data: SocketMessage) => {
       console.log("📩 Получено сообщение с сервера:", data);
+      if (data.connection || data.from === "User") return;
       chatStore.setOneMessage({
         sender: data.from,
         timestamp: data.timestamp,
@@ -31,6 +31,19 @@ function Input() {
       socketStore.socket.off("message");
     };
   }, []);
+  useEffect(() => {
+    socketStore.connect();
+    socketStore.socket.on("error", (err) => {
+      console.error("Ошибка от сервера:", err.message);
+    });
+
+    socketStore.socket.emit("joinRoom", { room: chatStore.chatID });
+
+    return () => {
+      socketStore.socket.emit("leaveRoom", { room: chatStore.chatID });
+      socketStore.disconnect();
+    };
+  }, [chatStore.chatID]);
   const handelEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();

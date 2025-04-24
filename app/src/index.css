@@ -253,6 +253,7 @@ body.panel-open {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
   justify-content: center;
   font-family: "Inter", sans-serif;
   color: #374151;
@@ -269,7 +270,6 @@ body.panel-open {
 }
 
 .auth-panel__content p {
-  margin-top: 20px;
   font-size: 14px;
   line-height: 1.5;
   color: #000000;
@@ -694,7 +694,7 @@ section.chat-area,
   bottom: 0%;
   right: 0;
   left: 0;
-  width: 80%;
+  width: 82%;
   margin: auto;
   max-height: 300px;
   padding: 10px;
@@ -1322,6 +1322,7 @@ ul {
   padding: 10px 16px;
   border-radius: 8px;
   text-decoration: none;
+  border: none;
   color: #808080;
   font-weight: 500;
   font-family: "Inter", sans-serif;
@@ -1334,6 +1335,12 @@ ul {
   transition: background-color 0.3s ease;
 }
 
+.button_hea:hover {
+  opacity: 0.8;
+}
+.button-auth:disabled {
+  opacity: 0.2;
+}
 .containerCode > .input {
   margin-bottom: 0;
   padding-right: 30%;

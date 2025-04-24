@@ -6,6 +6,7 @@ import Header from "../component/Header";
 import Aside from "../component/СhatComponent/Aside";
 import Input from "../component/СhatComponent/Input";
 import MessageTemplate from "../component/СhatComponent/Message";
+import { useNavigate } from "react-router-dom";
 import Spinner from "../component/СhatComponent/Spin";
 
 import useCurrentChat from "../hook/GetCurrentChat";
@@ -14,15 +15,15 @@ import { chatStore } from "../store";
 const ChatPage: React.FC = () => {
   const location = useLocation();
   const chatID = location.pathname.split("/")[2];
-
-  const { data, isPending, isSuccess, isError } = useCurrentChat(chatID);
+  const navigate = useNavigate();
+  const { data, isPending, isSuccess } = useCurrentChat(chatID);
 
   useEffect(() => {
     chatStore.setChatID(chatID);
     if (isSuccess && data?.chat.message) {
       chatStore.setMessages(data.chat.message);
     }
-  }, [chatID, data, isSuccess]);
+  }, [chatID, data, isSuccess, navigate]);
 
   return (
     <div className="layout">
