@@ -91,7 +91,40 @@ export const find_user = async ({
     return { success: false, error: "Ошибка при регистрации" };
   }
 };
-
+export const find_user_without_password = async (
+  email: string
+): Promise<result_Create_User> => {
+  try {
+    let find_user = await User.findOne({ email });
+    if (!find_user) return { success: false, error: "Пользователь не найден" };
+    let find_last_chat = await Chat.findOne({
+      id: find_user.chatList[0].id,
+    });
+    if (!find_last_chat) {
+      let new_chat = await Chat.create({});
+      await find_user.chatList.push({ id: new_chat.id });
+      await find_user.save();
+      return {
+        success: true,
+        id: find_user.id,
+        email,
+        id_chat: new_chat.id,
+        name: find_user.name,
+        surname: find_user.surname,
+      };
+    }
+    return {
+      success: true,
+      name: find_user.name,
+      surname: find_user.surname,
+      id: find_user.id,
+      email,
+      id_chat: find_last_chat.id,
+    };
+  } catch (e) {
+    return { success: false, error: "Ошибка при регистрации" };
+  }
+};
 export const find_user_by_token = async (
   data: TokenInfo
 ): Promise<{ success: boolean; message: string }> => {

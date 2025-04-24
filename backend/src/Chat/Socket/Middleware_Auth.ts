@@ -1,7 +1,7 @@
 import { verify_jwt_token } from "../../token/jwt";
 import { TypeToken } from "../../types/toket_type";
 
-export default function Middleware(socket: any, next: (err?: Error) => void) {
+export default function   Middleware(socket: any, next: (err?: Error) => void) {
   try {
     const token = getBearer(socket.handshake.auth?.Authorization);
 
