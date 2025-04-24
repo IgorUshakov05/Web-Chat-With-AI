@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+# Простая программа на PySide6
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Эта программа создаёт простое окно с кнопкой "Нажми меня!".  При нажатии кнопки выводится сообщение.
 
-## Available Scripts
+## Код:
 
-In the project directory, you can run:
+```python
+import sys
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
+from PySide6.QtGui import QIcon
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+        self.setWindowTitle("Моя первая программа на PySide6")
+        self.setWindowIcon(QIcon("path/to/your/icon.png")) # Замените на путь к вашему значку
 
-### `npm test`
+        # Кнопка
+        button = QPushButton("Нажми меня!")
+        button.clicked.connect(self.button_clicked)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+        # Текстовая метка (Label)
+        self.label = QLabel("Нажми на кнопку!")
 
-### `npm run build`
+        # Вертикальный layout
+        layout = QVBoxLayout()
+        layout.addWidget(button)
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    def button_clicked(self):
+        self.label.setText("Кнопка нажата!")
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())

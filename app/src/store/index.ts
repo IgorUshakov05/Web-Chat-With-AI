@@ -13,7 +13,6 @@ class ChatStore {
     });
   }
   setChatList(newChatList: ChatListItemMessage[]) {
-    console.log(newChatList);
     this.chatList = newChatList;
   }
   setChatID(id: string) {
@@ -22,7 +21,6 @@ class ChatStore {
   setOneMessage(new_message: Message) {
     runInAction(() => {
       this.messages = [...this.messages, new_message];
-      console.log(this.messages);
     });
   }
   setMessages(new_messages: Message[]) {
@@ -50,7 +48,8 @@ class SocketConnect {
     reconnectionDelay: 1000,
     autoConnect: false,
   });
-  message: string = localStorage.getItem("message") || "";
+  
+  message: string = localStorage.getItem("message") || ``;
   constructor() {
     makeAutoObservable(this);
   }
@@ -73,13 +72,14 @@ class SocketConnect {
     localStorage.removeItem("message");
     this.message = "";
   }
-  sendMessage(room: string) {
+  sendMessage(room: string, text: string) {
     this.socket.emit("message", {
-      text: this.message,
+      text: text,
       room,
       date_time: Date.now(),
     });
   }
+
   disconnect() {
     if (this.socket) {
       this.socket.disconnect();

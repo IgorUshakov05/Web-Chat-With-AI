@@ -62,7 +62,7 @@ const initSocket = (server: any) => {
         "Bot",
         messageAI.message
       );
-      console.log(messageAI);
+      console.log(messageAI, " ответ ии");
       io.to(data.room).emit("message", {
         ...save_ai_message,
         text: messageAI.message,

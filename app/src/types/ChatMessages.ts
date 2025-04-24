@@ -21,8 +21,8 @@ export interface ChatListItemMessage {
 
 export interface Response {
   success: boolean;
-  message?: string;
-  chats?: ChatListItemMessage[];
+  message: string;
+  chats: ChatListItemMessage[];
 }
 
 export interface NewChat {

@@ -354,18 +354,21 @@ body.panel-open {
 }
 
 /* Chat Area Scrollbar */
-section.chat-area::-webkit-scrollbar {
+section.chat-area::-webkit-scrollbar,
+.history::-webkit-scrollbar {
   background-color: white;
   width: 6px;
 }
 
-section.chat-area::-webkit-scrollbar-thumb {
+section.chat-area::-webkit-scrollbar-thumb,
+.history::-webkit-scrollbar-thumb {
   background-color: #f4f5ff;
   border-radius: 2px;
   min-height: 10px;
 }
 
-section.chat-area {
+section.chat-area,
+.history {
   scrollbar-width: thin;
   scrollbar-color: #f4f5ff white;
 }
@@ -386,6 +389,8 @@ section.chat-area {
 
 .history {
   padding: 20px;
+  max-height: 72vh;
+  overflow-y: scroll;
 }
 
 .history-item {
@@ -465,6 +470,7 @@ section.chat-area {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  align-items: center;
   gap: 20px;
 }
 
@@ -662,6 +668,7 @@ section.chat-area {
   border: 1px solid #e6e6e6;
   padding: 0 10px;
   border-radius: 10px;
+  max-width: 93%;
   overflow-x: auto;
 }
 
@@ -730,7 +737,6 @@ section.chat-area {
   background: #1e27d5;
 }
 
-/* Firefox Scrollbar */
 .chat-input__textarea {
   scrollbar-width: thin;
   scrollbar-color: #232dfc #e6e6e6;

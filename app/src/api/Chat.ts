@@ -20,10 +20,10 @@ export const get_messages_on_chat = async (chatID: string) => {
   }
 };
 
-export const get_all_chats = async () => {
+export const get_all_chats = async (): Promise<Response> => {
   let { data } = await axios.get<Response>("/chat");
   if (!data.success) throw Error("Ошибка");
-  return { success: data.success, chats: data.chats };
+  return { success: data.success, chats: data.chats, message: "Ошибка" };
 };
 export const open_new_chat = async () => {
   let { data } = await axios.get<NewChat>("/chat/new_chat");

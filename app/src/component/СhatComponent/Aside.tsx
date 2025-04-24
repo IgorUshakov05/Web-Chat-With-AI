@@ -29,17 +29,20 @@ function Aside() {
             ))}
           </div>
         )}
-        {isSuccess && chatStore.chatList && (
+        {isSuccess && data.chats && (
           <ChatListLastMessage
-            messages={chatStore.chatList.map((item) => ({
-              id: item.id,
-              message: {
-                sender: item.lastMessage.sender,
-                text: item.lastMessage.text,
-                timestamp: item.lastMessage.timestamp,
-                success: true,
-              },
-            }))}
+            messages={chatStore.chatList
+              .filter((item) => item.lastMessage !== undefined)
+              .reverse()
+              .map((item) => ({
+                id: item.id,
+                message: {
+                  sender: item.lastMessage.sender,
+                  text: item.lastMessage.text,
+                  timestamp: item.lastMessage.timestamp,
+                  success: true,
+                },
+              }))}
           />
         )}
       </div>

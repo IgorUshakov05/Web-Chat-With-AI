@@ -1,46 +1,55 @@
 import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { observer } from "mobx-react";
+
 import Header from "../component/Header";
-import MessageTemplate from "../component/СhatComponent/Message";
 import Aside from "../component/СhatComponent/Aside";
 import Input from "../component/СhatComponent/Input";
+import MessageTemplate from "../component/СhatComponent/Message";
+import Spinner from "../component/СhatComponent/Spin";
+
 import useCurrentChat from "../hook/GetCurrentChat";
-import { useLocation } from "react-router-dom";
 import { chatStore } from "../store";
-import { observer } from "mobx-react";
+
 const ChatPage: React.FC = () => {
   const location = useLocation();
-  const { data } = useCurrentChat(location.pathname.split("/")[2]);
-  useEffect(() => {
-    const newChatID = location.pathname.split("/")[2];
-    chatStore.setChatID(newChatID);
-  }, [location.pathname]);
+  const chatID = location.pathname.split("/")[2];
+
+  const { data, isPending, isSuccess, isError } = useCurrentChat(chatID);
 
   useEffect(() => {
-    if (data?.chat.message) {
+    chatStore.setChatID(chatID);
+    if (isSuccess && data?.chat.message) {
       chatStore.setMessages(data.chat.message);
     }
-  }, [data]);
+  }, [chatID, data, isSuccess]);
 
   return (
     <div className="layout">
       <Header />
       <main className="main-content">
         <Aside />
-
         <section className="chat-area">
-          <div className="chat-messages">
-            {chatStore.messages.map((msg, index) => (
-              <MessageTemplate
-                key={index}
-                data={{
-                  sender: msg.sender,
-                  text: msg.text,
-                  timestamp: msg.timestamp,
-                }}
-              />
-            ))}
+          <div
+            className="chat-messages"
+            style={{ justifyContent: isPending ? "center" : "flex-start" }}
+          >
+            {isPending ? (
+              <Spinner />
+            ) : (
+              chatStore.messages.map((msg, index) => (
+                <MessageTemplate
+                  key={index}
+                  data={{
+                    sender: msg.sender,
+                    text: msg.text,
+                    timestamp: msg.timestamp,
+                  }}
+                />
+              ))
+            )}
           </div>
-          <Input />
+          {!isPending && <Input />}
         </section>
       </main>
     </div>
