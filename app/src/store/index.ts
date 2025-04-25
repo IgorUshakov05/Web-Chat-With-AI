@@ -30,15 +30,20 @@ class ChatStore {
 
 class AuthStore {
   isAuth: boolean = false;
+  isWaitAuth: boolean = false;
   constructor() {
     makeAutoObservable(this);
   }
   setAuth(state: boolean = false) {
     this.isAuth = state;
   }
+  setWaitAuth(state: boolean = false) {
+    this.isWaitAuth = state;
+  }
 }
 
 class SocketConnect {
+  isWait: boolean = false;
   socket: Socket = io(process.env.REACT_APP_SERVER_URL, {
     transports: ["websocket"],
     auth: {
@@ -48,10 +53,13 @@ class SocketConnect {
     reconnectionDelay: 1000,
     autoConnect: false,
   });
-  
+
   message: string = localStorage.getItem("message") || ``;
   constructor() {
     makeAutoObservable(this);
+  }
+  setWait(state: boolean) {
+    this.isWait = state;
   }
   connect() {
     if (!this.socket.connected) {

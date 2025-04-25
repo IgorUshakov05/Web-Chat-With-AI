@@ -19,6 +19,7 @@ function Input() {
     socketStore.socket.on("message", (data: SocketMessage) => {
       console.log("📩 Получено сообщение с сервера:", data);
       if (data.connection || data.from === "User") return;
+      socketStore.setWait(false);
       chatStore.setOneMessage({
         sender: data.from,
         timestamp: data.timestamp,
@@ -52,12 +53,14 @@ function Input() {
   };
   const handelSend = () => {
     const msg = socketStore.message.trim();
-    if (msg === "") return false;
+    if (msg === "" || socketStore.isWait) return false;
     chatStore.setOneMessage({
       sender: "User",
       text: msg,
       timestamp: Date.now(),
     });
+    socketStore.setWait(true);
+
     socketStore.sendMessage(chatStore.chatID, msg);
     socketStore.clearInput();
   };

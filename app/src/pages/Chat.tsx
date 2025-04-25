@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { observer } from "mobx-react";
 
@@ -10,14 +10,22 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../component/СhatComponent/Spin";
 
 import useCurrentChat from "../hook/GetCurrentChat";
-import { chatStore } from "../store";
+import { chatStore, socketStore } from "../store";
+import LoadingMessage from "../component/СhatComponent/LoadingMessage";
 
 const ChatPage: React.FC = () => {
   const location = useLocation();
   const chatID = location.pathname.split("/")[2];
   const navigate = useNavigate();
   const { data, isPending, isSuccess } = useCurrentChat(chatID);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatStore.messages.length, isPending]);
   useEffect(() => {
     chatStore.setChatID(chatID);
     if (isSuccess && data?.chat.message) {
@@ -49,6 +57,8 @@ const ChatPage: React.FC = () => {
                 />
               ))
             )}
+            {socketStore.isWait ? <LoadingMessage /> : null}
+            <div ref={bottomRef} />
           </div>
           {!isPending && <Input />}
         </section>

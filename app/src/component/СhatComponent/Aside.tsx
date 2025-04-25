@@ -33,7 +33,7 @@ function Aside() {
           <ChatListLastMessage
             messages={chatStore.chatList
               .filter((item) => item.lastMessage !== undefined)
-              .reverse()
+              .sort((a, b) => a.lastMessage.timestamp - b.lastMessage.timestamp)
               .map((item) => ({
                 id: item.id,
                 message: {

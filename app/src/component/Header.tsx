@@ -15,15 +15,8 @@ function Header(): any {
   let [isActive, setIsActive] = useState(false);
   let [isHiding, setIsHiding] = useState(false);
 
-  const { data, isPending } = useAuntification();
+
   const { mutate } = useNewChat();
-  useEffect(() => {
-    if (data?.success) {
-      authStore.setAuth(true);
-    } else {
-      authStore.setAuth(false);
-    }
-  }, [data?.success]);
 
   function hideHandle() {
     setIsHiding(true);
@@ -43,7 +36,6 @@ function Header(): any {
         <a href="/">
           <img src="/logo.svg" alt="Логотип HuntAI" className="logo" />
         </a>
-
         <nav className="header-nav" aria-label="Основная навигация">
           <ul className="header-buttons">
             {links.map((link, index) => (
@@ -65,7 +57,7 @@ function Header(): any {
 
         {!authStore.isAuth ? (
           <button className="auth-button" onClick={showHandle}>
-            {isPending ? "Загрузка" : "Авторизация"}
+            {authStore.isWaitAuth ? "Загрузка" : "Авторизация"}
           </button>
         ) : (
           <button className="auth-button" onClick={() => mutate()}>

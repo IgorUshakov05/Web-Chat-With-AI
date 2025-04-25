@@ -1,16 +1,33 @@
 import Message from "../../types/ChatMessages";
-import hljs from "highlight.js";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/default.css";
 import CodeBlock from "./CodeBlock"; // путь укажите, если отличается
+import { useRef } from "react";
 
 export default function MessageTemplate({ data }: { data: Message }) {
+  const messageRef = useRef<HTMLDivElement>(null);
+
+  const handleCopy = async () => {
+    if (!messageRef.current) return;
+    const html = messageRef.current.innerHTML;
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([html], { type: "text/html" }),
+          "text/plain": new Blob([data.text], { type: "text/plain" }),
+        }),
+      ]);
+      console.log("Сообщение скопировано!");
+    } catch (err) {
+      console.error("Ошибка при копировании:", err);
+    }
+  };
   if (data.sender === "Bot") {
     return (
       <div className="message received">
-        <div className="message__body">
+        <div className="message__body" ref={messageRef}>
           <div className="message__avatar">
             <img
               src="/ЛогоЧата.svg"
@@ -25,6 +42,7 @@ export default function MessageTemplate({ data }: { data: Message }) {
                 <button
                   className="message__copy-button"
                   title="Копировать"
+                  onClick={handleCopy}
                   type="button"
                 >
                   <img

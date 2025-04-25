@@ -168,11 +168,11 @@ body.panel-open {
   color: white;
   border: 10px solid #e5e6ff;
   padding: 10px 20px;
-  border-radius: 10px;
   cursor: pointer;
   font-family: "Inter", sans-serif;
   font-size: 12px;
   transition: background-color 0.3s ease;
+  border-radius: 13px !important;
 }
 
 .auth-panel__container {
@@ -349,6 +349,7 @@ body.panel-open {
 
 .beflex {
   display: flex;
+  margin-bottom: 8px;
   align-items: center;
   justify-content: space-between;
 }
@@ -498,13 +499,15 @@ section.chat-area,
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  width: 100%;
+  width: 93%;
 }
 
 .message__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .message__sender {
@@ -512,6 +515,8 @@ section.chat-area,
   font-size: 20px;
   font-weight: Regular;
   color: #374151;
+  margin: 0;
+  padding: 0;
 }
 
 .message__copy-button {
@@ -568,8 +573,6 @@ section.chat-area,
 
 .message__content-code .message__header {
   background: none;
-  padding-bottom: 10px;
-  margin-bottom: 2px;
 }
 
 .message__content-code .Code {
@@ -678,7 +681,6 @@ section.chat-area,
   color: #808080;
   background: none;
   padding: 0;
-  margin-right: 10px;
 }
 .markdown-content pre code {
   background: none;

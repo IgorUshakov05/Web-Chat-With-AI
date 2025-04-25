@@ -1,14 +1,14 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { Content } from "@google/generative-ai";
 import { find_chat_by_id } from "./Chat";
-
-// Функция для получения ответа от AI
+import { setGlobalDispatcher, Agent, fetch } from "undici";
+setGlobalDispatcher(new Agent({ keepAliveTimeout: 60000 }));
+globalThis.fetch = fetch as any;
+import { GoogleGenerativeAI } from "@google/generative-ai";
 export default async function get_answer_ai(
   request: string,
   chatID: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    // Инициализируем новую сессию чата для каждого запроса
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",

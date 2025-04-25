@@ -352,7 +352,7 @@ const AuthPanel = ({
                           }
                           type="email"
                           className="input"
-                          placeholder="example@ex.ex"
+                          placeholder="love@webhunt.ru"
                         />
                         {!waitCode &&
                           /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromData.email) && (
@@ -453,7 +453,7 @@ const AuthPanel = ({
                     }
                     type="email"
                     className="input"
-                    placeholder="example@ex.ex"
+                    placeholder="love@webhunt.ru"
                   />
                   <input
                     type="password"

@@ -7,16 +7,30 @@ import Documention from "./pages/Documention";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import React from "react";
+import RequireProtect from "./Auth/ProtectedRoute";
+import ProtectNotRequire from "./Auth/NotProtectedAuth";
 
 const App: React.FC = () => {
   return (
-    <GoogleOAuthProvider clientId={process.env.REACT_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID || "11"}>
       <Routes>
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/documentation" element={<Documention />} />
+        <Route
+          path="/"
+          element={<ProtectNotRequire children={<IndexPage />} />}
+        />
+        <Route
+          path="/documentation"
+          element={<ProtectNotRequire children={<Documention />} />}
+        />
         <Route path="/products" element={<ProductsPage />} />
-        <Route path="/developers" element={<DevelopersPage />} />
-        <Route path="/chat/:id" element={<ChatPage />} />
+        <Route
+          path="/developers"
+          element={<ProtectNotRequire children={<DevelopersPage />} />}
+        />
+        <Route
+          path="/chat/:id"
+          element={<RequireProtect children={<ChatPage />} />}
+        />
       </Routes>
     </GoogleOAuthProvider>
   );

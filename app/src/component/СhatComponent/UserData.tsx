@@ -12,7 +12,7 @@ function UserData() {
   return (
     <div className="autorizacia">
       <div className="user-info">
-        <img src="/ЯрикФото.png" alt="User" className="user-icon" />
+        <img src="/ДефолтСпециалист.jpg" alt="User" className="user-icon" />
         <div className="user-text">
           <p className="user-name">
             {localStorage.getItem("name")} {localStorage.getItem("surname")}
