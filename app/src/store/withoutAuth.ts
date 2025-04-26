@@ -2,18 +2,22 @@ import { makeAutoObservable } from "mobx";
 import { Message } from "../types/WithoutAuth";
 
 class ChatStore {
-  messages: Message[] = [
-    { sender: "Bot", message: "Привет, чем могу помочь?" },
-    { sender: "User", message: "Привет, чем могу помочь?" },
-    { sender: "Bot", message: "Привет, чем могу помочь?" },
-  ];
+  isPending: boolean = false;
+  messages: Message[] = [];
   message: string = localStorage.getItem("message") || "";
   constructor() {
     makeAutoObservable(this);
   }
+  setIsWait(state: boolean) {
+    this.isPending = state;
+  }
   inputMessage(message: string) {
     this.message = message;
     localStorage.setItem("message", message);
+  }
+  clear() {
+    this.message = "";
+    localStorage.removeItem("message");
   }
   setOneMessage(new_message: Message) {
     this.messages = [...this.messages, new_message];

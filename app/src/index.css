@@ -2346,5 +2346,11 @@ ul {
 
 .message-list {
   height: 100%;
+  overflow-y: scroll;
   width: 100%;
+  max-height: 90%;
+}
+
+.message-list::-webkit-scrollbar {
+  display: none;
 }

@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 import MessageList from "./MessageList";
 
 function Chat() {
-  const { mutate, data } = useMessageWithOutAuth(chatStoreWithoutAuth.message);
+  const { mutate, isPending } = useMessageWithOutAuth(
+    chatStoreWithoutAuth.message
+  );
   const [emptyMessage] = useState([
     {
       color: "red",
@@ -41,13 +43,24 @@ function Chat() {
     let value = e.currentTarget.value;
     chatStoreWithoutAuth.inputMessage(value);
   }
-  function handelSubmit() {
+  useEffect(() => {
+    chatStoreWithoutAuth.setIsWait(isPending);
+  }, [isPending]);
+  async function handelSubmit() {
     if (chatStoreWithoutAuth.message.length === 0) return;
-    chatStoreWithoutAuth.setOneMessage({
+    await chatStoreWithoutAuth.setOneMessage({
       message: chatStoreWithoutAuth.message,
       sender: "User",
     });
-    chatStoreWithoutAuth.message = "";
+    await mutate(undefined, {
+      onSuccess: (response) => {
+        chatStoreWithoutAuth.setOneMessage({
+          message: response.message,
+          sender: "Bot",
+        });
+      },
+    });
+    chatStoreWithoutAuth.clear();
   }
 
   return (
@@ -79,11 +92,11 @@ function Chat() {
           maxLength={1000}
           placeholder="Введите запрос..."
         />
-        {!!chatStoreWithoutAuth.message.length && (
+        {!!chatStoreWithoutAuth.message.length && !isPending && (
           <button
             className="buttonInEmpty"
             aria-label="Отправить запрос"
-            disabled={chatStoreWithoutAuth.message.length === 0}
+            disabled={chatStoreWithoutAuth.message.length === 0 || isPending}
             onClick={handelSubmit}
           >
             <svg
