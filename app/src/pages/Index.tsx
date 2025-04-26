@@ -2,11 +2,14 @@ import { observer } from "mobx-react";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { authStore } from "../store";
+import YandexAd from "../component/UX/AdsBlock";
+import ChatWithoutAuth from "../component/ChatWithoutAuth/Container";
 
 function IndexPage() {
   return (
     <>
       <Header />
+      <ChatWithoutAuth />
       <div className="p2">
         <div className="left-panel">
           <div className="kartochka">
@@ -21,7 +24,6 @@ function IndexPage() {
             </div>
           </div>
         </div>
-
         <div className="right-panel">
           <div className="kartochka">
             <div>
@@ -48,6 +50,7 @@ function IndexPage() {
           </div>
         </div>
       </div>
+      <YandexAd blockID="R-A-15263232-1" />
 
       <div className="sektor-container fle ">
         <div className="sektor-gaza bot">
@@ -134,7 +137,7 @@ function IndexPage() {
       </div>
 
       <div className="sd">
-        <img src="HuntID.png" className="left-img" alt="HuntID logo"/>
+        <img src="HuntID.png" className="left-img" alt="HuntID logo" />
         <div className="right">
           <h4 className="name-product size">Присоединяйся</h4>
           <div className="join">
@@ -169,11 +172,11 @@ function IndexPage() {
           </div>
         </div>
       </div>
+      <YandexAd blockID="R-A-15263232-2" />
 
       <Footer />
     </>
   );
 }
 
-
-export default observer(IndexPage)
+export default observer(IndexPage);

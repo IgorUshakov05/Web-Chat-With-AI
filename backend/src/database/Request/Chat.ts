@@ -12,6 +12,32 @@ export const find_chat_by_id = async (id: string) => {
     return { success: false, message: "Не удалось найти чат", chat: [] };
   }
 };
+export const delete_chat = async (id: string) => {
+  try {
+    const [chat, user] = await Promise.all([
+      Chat.findOne({ id }),
+      User.findOne({ "chatList.id": id }),
+    ]);
+
+    if (!chat) {
+      return { success: false, message: "Чат не найден" };
+    }
+
+    if (!user) {
+      return { success: false, message: "Пользователь не найден" };
+    }
+
+    await Promise.all([
+      User.updateOne({ "chatList.id": id }, { $pull: { chatList: { id } } }),
+      Chat.deleteOne({ id }),
+    ]);
+
+    return { success: true, message: "Чат успешно удален", id };
+  } catch (error) {
+    console.error("Ошибка при удалении чата:", error);
+    return { success: false, message: "Ошибка сервера" };
+  }
+};
 
 export const find_all_chat_of_user = async (userID?: string) => {
   try {
@@ -27,7 +53,7 @@ export const find_all_chat_of_user = async (userID?: string) => {
       {
         $project: {
           id: 1,
-          lastMessage: { $arrayElemAt: ["$message", -1] }, 
+          lastMessage: { $arrayElemAt: ["$message", -1] },
         },
       },
     ]);

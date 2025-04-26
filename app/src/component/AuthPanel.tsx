@@ -214,6 +214,13 @@ const AuthPanel = ({
       console.log("Google auth data:", googleAuthData);
     }
   }, [googleAuthData]);
+  let [stepColor, _] = useState([
+    "linear-gradient(90deg, #00d9e9 -271.07%, #00e91b -180.59%, #00bbff -76.32%, #4183ff 11.58%, #5412e0 100%)",
+    "linear-gradient(90deg, #00D9E9 -230.77%, #00E91B -126.79%, #00BBFF -6.96%, #4183FF 94.05%, #5412E0 195.67%)",
+    "linear-gradient(90deg, #00D9E9 -117.88%, #00E91B -15.42%, #00BBFF 102.66%, #4183FF 202.2%, #5412E0 302.33%)",
+    "linear-gradient(90deg, #00D9E9 -30.18%, #00E91B 88.29%, #00BBFF 224.81%, #4183FF 339.89%, #5412E0 455.67%)",
+  ]);
+
   return (
     <div className="auth-panel__container">
       <div className={`auth-panel ${isHiding ? "slide-out" : "slide-in"}`}>
@@ -233,6 +240,16 @@ const AuthPanel = ({
             alt="Header"
             className="auth-panel__header-image"
           />
+          {AuthStage.SIGNUP === authStage && (
+            <p
+              className="step"
+              style={{
+                background: stepColor[step],
+              }}
+            >
+              {step + 1} из 4 шагов
+            </p>
+          )}
         </div>
 
         <div className="auth-panel__content">

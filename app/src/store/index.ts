@@ -15,6 +15,9 @@ class ChatStore {
   setChatList(newChatList: ChatListItemMessage[]) {
     this.chatList = newChatList;
   }
+  removeChat(id: string) {
+    this.chatList = this.chatList.filter((item) => item.id !== id);
+  }
   setChatID(id: string) {
     this.chatID = id;
   }

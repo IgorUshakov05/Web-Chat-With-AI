@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 
-
 import {
   create_chat,
+  delete_chat,
   find_all_chat_of_user,
   find_chat_by_id,
   insert_message_to_chat_on_id,
@@ -10,8 +10,33 @@ import {
 import { body, validationResult, check } from "express-validator";
 import { verify_jwt_token } from "../token/jwt";
 import { TypeToken } from "../types/toket_type";
+import { get_answer_ai_without_auth } from "../database/Request/AI";
 const router = Router();
-
+router.post(
+  "/response_without_auth",
+  [
+    body("message")
+      .exists({ checkFalsy: true })
+      .withMessage("Message is required")
+      .isLength({ min: 1, max: 1000 })
+      .withMessage("Message must be between 5 and 1000 characters"),
+  ],
+  async (req: Request, res: Response): Promise<any> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Введите сообщение" });
+    }
+    let { message } = req.body;
+    let response = await get_answer_ai_without_auth(message);
+    if (!response.success)
+      return res
+        .status(404)
+        .json({ success: false, message: response.message });
+    return res.status(201).json(response);
+  }
+);
 router.get("/", async (req: Request, res: Response): Promise<any> => {
   try {
     let access = await get_bearer(req.headers.authorization)?.trim();
@@ -77,6 +102,28 @@ router.post(
     }
   }
 );
+
+router.delete("/:id", async (req: Request, res: Response): Promise<any> => {
+  try {
+    let chat_id: string = req.params.id;
+    if (!chat_id)
+      return res.status(404).json({ success: false, message: "Чат не найден" });
+    let access = await get_bearer(req.headers.authorization)?.trim();
+    if (!access)
+      return res.status(403).json({ success: false, message: "Нет токена" });
+    let info_token = await verify_jwt_token(access, TypeToken.ACCESS);
+    if (!info_token.success) return res.status(403).json(info_token);
+    let response = await delete_chat(chat_id);
+    if (!response.success)
+      return res
+        .status(404)
+        .json({ success: false, message: response.message });
+    return res.status(201).json(response);
+  } catch (e) {
+    console.log(e);
+    return { success: false, message: "Ошибка сервера" };
+  }
+});
 
 export default router.get(
   "/:id",

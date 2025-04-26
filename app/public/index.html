@@ -24,11 +24,24 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script>
+      window.yaContextCb = window.yaContextCb || [];
+    </script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      window.yaContextCb.push(() => {
+        Ya.Context.AdvManager.render({
+          blockId: "R-A-15263232-1",
+          renderTo: "yandex_rtb_R-A-15263232-1",
+          type: "feed",
+        });
+      });
+    </script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </body>
 </html>

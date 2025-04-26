@@ -53,3 +53,29 @@ export default async function get_answer_ai(
     return { success: false, message: "Ошибка сервера!" };
   }
 }
+
+export async function get_answer_ai_without_auth(
+  text: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      tools: [
+        {
+          codeExecution: {},
+        },
+      ],
+    });
+
+    const chatSession = model.startChat({ history: [] });
+    const result = await chatSession.sendMessage(text);
+    const responseText = result.response.text();
+    console.log(responseText);
+
+    return { success: true, message: responseText };
+  } catch (e) {
+    console.error("Error:", e);
+    return { success: false, message: "Ошибка сервера!" };
+  }
+}

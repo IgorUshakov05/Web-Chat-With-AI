@@ -1,9 +1,10 @@
 import { observer } from "mobx-react";
 import { chatStore, socketStore } from "../../store";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SocketMessage } from "../../types/ChatMessages";
 
 function Input() {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const handelInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     let value = e.currentTarget.value;
     socketStore.typing(value);
@@ -33,6 +34,7 @@ function Input() {
     };
   }, []);
   useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
     socketStore.connect();
     socketStore.socket.on("error", (err) => {
       console.error("Ошибка от сервера:", err.message);
@@ -70,6 +72,7 @@ function Input() {
       <textarea
         onKeyDown={handelEnterPress}
         value={socketStore.message}
+        ref={inputRef}
         onInput={handelInput}
         className="chat-input__textarea"
         placeholder="Введите запрос..."

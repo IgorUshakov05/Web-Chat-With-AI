@@ -17,10 +17,10 @@ export default function Footer():any {
       <p className="razdel">Сотрудничество</p>
       <p className="punkt">
         <a
-          href="mailto:h@example.com"
+          href="mailto:team@webhunt.ru"
           className="__cf_email__"
         >
-          example@example.com
+          team@webhunt.ru
         </a>
       </p>
     </div>
@@ -36,7 +36,7 @@ export default function Footer():any {
           href="mailto:support@example.com"
           className="__cf_email__"
         >
-          support@example.com
+          support@webhunt.ru
         </a>
       </p>
     </div>

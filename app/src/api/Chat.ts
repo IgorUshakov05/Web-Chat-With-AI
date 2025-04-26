@@ -1,4 +1,8 @@
-import Message, { Response, NewChat } from "../types/ChatMessages";
+import Message, {
+  Response,
+  NewChat,
+  MesssageWithoutAuth,
+} from "../types/ChatMessages";
 import axios from "./base";
 export const get_messages_on_chat = async (chatID: string) => {
   try {
@@ -18,6 +22,24 @@ export const get_messages_on_chat = async (chatID: string) => {
     }
     throw error;
   }
+};
+export const send_message_without_authification = async (message: string) => {
+  let { data } = await axios.post<MesssageWithoutAuth>(
+    `/chat/response_without_auth`,
+    {
+      message,
+    }
+  );
+  return data;
+};
+export const delete_chat = async (chatID: string) => {
+  let { data } = await axios.delete<{
+    success: boolean;
+    id?: string;
+    message: string;
+  }>(`/chat/${chatID}`);
+  if (!data.success) throw Error("Ошибка");
+  return { success: data.success, message: data.message };
 };
 
 export const get_all_chats = async (): Promise<Response> => {

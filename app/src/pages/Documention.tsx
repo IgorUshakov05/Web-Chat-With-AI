@@ -5,6 +5,8 @@ import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/default.css";
 import "tailwindcss/tailwind.css";
 import Footer from "../component/Footer";
+import DocumentationArticle from "../component/UX/Documentation";
+import YandexAd from "../component/UX/AdsBlock";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -34,7 +36,9 @@ const Documentation = () => {
 
         if (isAtCenter) {
           const scaleFactor = 1 - distanceFromCenter / maxDistance;
-          const newFontSize = originalFontSize + (targetFontSize - originalFontSize) * scaleFactor;
+          const newFontSize =
+            originalFontSize +
+            (targetFontSize - originalFontSize) * scaleFactor;
           (item as HTMLElement).style.fontSize = `${newFontSize}px`;
           (item as HTMLElement).style.color = "#232DFC";
         } else {
@@ -73,7 +77,6 @@ const Documentation = () => {
   useEffect(() => {
     hljs.highlightAll();
   }, []);
-
 
   const codeSnippets = {
     axiosSetup: `import axios from "axios";
@@ -298,12 +301,13 @@ export default function Middleware(
 const getBearer = (header?: string): string | undefined => {
   if (!header || !header.startsWith("Bearer ")) return undefined;
   return header.split("Bearer ")[1].trim();
-};`
+};`,
   };
 
   return (
-    <div className = "min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Header />
+      <DocumentationArticle />
       <div className="gemini-container">
         <img src="gemini.svg" className="gemini-image" alt="gemini Image" />
       </div>
@@ -351,15 +355,21 @@ const getBearer = (header?: string): string | undefined => {
         <div className="content-blocks">
           <div className="block">
             <p className="text">Клонирование проекта</p>
-            <p className="code">git clone https://github.com/IgorUshakov05/Web-Chat-With-AI.git</p>
+            <p className="code">
+              git clone https://github.com/IgorUshakov05/Web-Chat-With-AI.git
+            </p>
           </div>
           <div className="block">
             <p className="text">Установка зависимостей и запуск сервера</p>
-            <p className="code">cd Web-Chat-With-AI/backend && npm install && npm run dev</p>
+            <p className="code">
+              cd Web-Chat-With-AI/backend && npm install && npm run dev
+            </p>
           </div>
           <div className="block">
             <p className="text">Установка зависимостей и запуск клиента</p>
-            <p className="code">cd Web-Chat-With-AI/frontend && npm install && npm run dev</p>
+            <p className="code">
+              cd Web-Chat-With-AI/frontend && npm install && npm run dev
+            </p>
           </div>
         </div>
       </div>
@@ -369,7 +379,9 @@ const getBearer = (header?: string): string | undefined => {
         </div>
         <div className="content-blocks">
           <div className="block">
-            <pre><code className="javascript">{codeSnippets.axiosSetup}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.axiosSetup}</code>
+            </pre>
           </div>
         </div>
       </div>
@@ -380,26 +392,40 @@ const getBearer = (header?: string): string | undefined => {
         <div className="content-blocks">
           <div className="block">
             <p className="text">Запрос на регистрацию</p>
-            <pre><code className="javascript">{codeSnippets.registration}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.registration}</code>
+            </pre>
           </div>
           <div className="block">
-            <p className="text">Запрос на аутентификацию (для защищенных маршрутов)</p>
-            <pre><code className="javascript">{codeSnippets.authentication}</code></pre>
+            <p className="text">
+              Запрос на аутентификацию (для защищенных маршрутов)
+            </p>
+            <pre>
+              <code className="javascript">{codeSnippets.authentication}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="text">Запрос на вход</p>
-            <pre><code className="javascript">{codeSnippets.login}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.login}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="text">
               Кастомный хук с использованием{" "}
-              <a href="https://tanstack.com/query/latest">tanstack/react-query</a>
+              <a href="https://tanstack.com/query/latest">
+                tanstack/react-query
+              </a>
             </p>
-            <pre><code className="javascript">{codeSnippets.authHook}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.authHook}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="text">Мемоизация редуктора ввода логина и пароля</p>
-            <pre><code className="javascript">{codeSnippets.memoizedReducer}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.memoizedReducer}</code>
+            </pre>
           </div>
         </div>
       </div>
@@ -450,7 +476,9 @@ const getBearer = (header?: string): string | undefined => {
               </tr>
               <tr>
                 <td>GET</td>
-                <td>/chat/{"{"}chat_id{"}"}</td>
+                <td>
+                  /chat/{"{"}chat_id{"}"}
+                </td>
                 <td>Получение сообщений из чата</td>
                 <td>Bearer Token</td>
               </tr>
@@ -465,11 +493,15 @@ const getBearer = (header?: string): string | undefined => {
         <div className="content-blocks">
           <div className="block">
             <p className="text">Подключение к серверу</p>
-            <pre><code className="javascript">{codeSnippets.socketConnection}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.socketConnection}
+              </code>
+            </pre>
             <p className="text">
               Сервер слушает подключения по адресу{" "}
-              <code className="inline-code">http://localhost:3000</code> с поддержкой CORS для
-              запросов с фронтенда.
+              <code className="inline-code">http://localhost:3000</code> с
+              поддержкой CORS для запросов с фронтенда.
             </p>
           </div>
           <hr className="separator" />
@@ -482,14 +514,19 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">connection</code>
               </li>
               <li>
-                <strong>Описание:</strong> Срабатывает при подключении нового пользователя.
+                <strong>Описание:</strong> Срабатывает при подключении нового
+                пользователя.
               </li>
               <li>
                 <strong>Ответ сервера:</strong> Лог в консоли с ID пользователя.
               </li>
             </ul>
             <p className="text">Пример:</p>
-            <pre><code className="javascript">{codeSnippets.socketConnectionExample}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.socketConnectionExample}
+              </code>
+            </pre>
           </div>
           <div className="block">
             <p className="sub-title">Вход в комнату</p>
@@ -499,13 +536,15 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">joinRoom</code>
               </li>
               <li>
-                <strong>Описание:</strong> Позволяет пользователю войти в комнату.
+                <strong>Описание:</strong> Позволяет пользователю войти в
+                комнату.
               </li>
               <li>
                 <strong>Параметры:</strong>
                 <ul>
                   <li>
-                    <code className="inline-code">room</code> (string) — ID комнаты.
+                    <code className="inline-code">room</code> (string) — ID
+                    комнаты.
                   </li>
                 </ul>
               </li>
@@ -514,9 +553,15 @@ const getBearer = (header?: string): string | undefined => {
               </li>
             </ul>
             <p className="text">Пример отправки события:</p>
-            <pre><code className="javascript">{codeSnippets.joinRoom}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.joinRoom}</code>
+            </pre>
             <p className="text">Ответ:</p>
-            <pre><code className="javascript">{codeSnippets.joinRoomResponse}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.joinRoomResponse}
+              </code>
+            </pre>
           </div>
           <div className="block">
             <p className="sub-title">Выход из комнаты</p>
@@ -526,13 +571,15 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">leaveRoom</code>
               </li>
               <li>
-                <strong>Описание:</strong> Позволяет пользователю покинуть комнату.
+                <strong>Описание:</strong> Позволяет пользователю покинуть
+                комнату.
               </li>
               <li>
                 <strong>Параметры:</strong>
                 <ul>
                   <li>
-                    <code className="inline-code">room</code> (string) — ID комнаты.
+                    <code className="inline-code">room</code> (string) — ID
+                    комнаты.
                   </li>
                 </ul>
               </li>
@@ -541,9 +588,15 @@ const getBearer = (header?: string): string | undefined => {
               </li>
             </ul>
             <p className="text">Пример отправки события:</p>
-            <pre><code className="javascript">{codeSnippets.leaveRoom}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.leaveRoom}</code>
+            </pre>
             <p className="text">Ответ:</p>
-            <pre><code className="javascript">{codeSnippets.leaveRoomResponse}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.leaveRoomResponse}
+              </code>
+            </pre>
           </div>
           <div className="block">
             <p className="sub-title">Отправка сообщения</p>
@@ -553,33 +606,50 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">message</code>
               </li>
               <li>
-                <strong>Описание:</strong> Отправка сообщения в чат. Сообщение сохраняется в базе
-                данных, а также отправляется всем участникам комнаты.
+                <strong>Описание:</strong> Отправка сообщения в чат. Сообщение
+                сохраняется в базе данных, а также отправляется всем участникам
+                комнаты.
               </li>
               <li>
                 <strong>Параметры:</strong>
                 <ul>
                   <li>
-                    <code className="inline-code">room</code> (string) — ID комнаты.
+                    <code className="inline-code">room</code> (string) — ID
+                    комнаты.
                   </li>
                   <li>
-                    <code className="inline-code">text</code> (string) — Текст сообщения.
-                  </li>
-                  <li>
-                    <code className="inline-code">user_time</code> (string) — Время отправки
+                    <code className="inline-code">text</code> (string) — Текст
                     сообщения.
+                  </li>
+                  <li>
+                    <code className="inline-code">user_time</code> (string) —
+                    Время отправки сообщения.
                   </li>
                 </ul>
               </li>
             </ul>
             <p className="text">Пример отправки сообщения:</p>
-            <pre><code className="javascript">{codeSnippets.message}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.message}</code>
+            </pre>
             <p className="text">Ответ сервера для пользователя:</p>
-            <pre><code className="javascript">{codeSnippets.messageUserResponse}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.messageUserResponse}
+              </code>
+            </pre>
             <p className="text">Ответ от AI:</p>
-            <pre><code className="javascript">{codeSnippets.messageAIResponse}</code></pre>
-            <p className="text">Если возникла ошибка при обработке ответа AI:</p>
-            <pre><code className="javascript">{codeSnippets.messageError}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.messageAIResponse}
+              </code>
+            </pre>
+            <p className="text">
+              Если возникла ошибка при обработке ответа AI:
+            </p>
+            <pre>
+              <code className="javascript">{codeSnippets.messageError}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="sub-title">Отключение пользователя</p>
@@ -589,18 +659,25 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">disconnect</code>
               </li>
               <li>
-                <strong>Описание:</strong> Срабатывает при отключении пользователя от сервера.
+                <strong>Описание:</strong> Срабатывает при отключении
+                пользователя от сервера.
               </li>
               <li>
                 <strong>Ответ сервера:</strong> Лог в консоли.
               </li>
             </ul>
             <p className="text">Пример:</p>
-            <pre><code className="javascript">{codeSnippets.disconnect}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.disconnect}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="sub-title">Пример использования на клиенте</p>
-            <pre><code className="javascript">{codeSnippets.socketClientExample}</code></pre>
+            <pre>
+              <code className="javascript">
+                {codeSnippets.socketClientExample}
+              </code>
+            </pre>
           </div>
         </div>
       </div>
@@ -610,17 +687,22 @@ const getBearer = (header?: string): string | undefined => {
         </div>
         <div className="content-blocks">
           <div className="block">
-            <p className="text">Middleware проверяет JWT токен перед установкой соединения.</p>
+            <p className="text">
+              Middleware проверяет JWT токен перед установкой соединения.
+            </p>
           </div>
           <div className="block">
             <p className="text">Проверка токена</p>
-            <pre><code className="javascript">{codeSnippets.middleware}</code></pre>
+            <pre>
+              <code className="javascript">{codeSnippets.middleware}</code>
+            </pre>
           </div>
           <div className="block">
             <p className="text">События WebSocket</p>
             <ul className="description-list">
               <li>
-                <code className="inline-code">joinRoom</code>: Присоединение к комнате
+                <code className="inline-code">joinRoom</code>: Присоединение к
+                комнате
               </li>
               <li>
                 <code className="inline-code">leaveRoom</code>: Выход из комнаты
@@ -629,7 +711,8 @@ const getBearer = (header?: string): string | undefined => {
                 <code className="inline-code">message</code>: Отправка сообщения
               </li>
               <li>
-                <code className="inline-code">disconnect</code>: Отключение пользователя
+                <code className="inline-code">disconnect</code>: Отключение
+                пользователя
               </li>
             </ul>
           </div>
@@ -641,6 +724,8 @@ const getBearer = (header?: string): string | undefined => {
       >
         ↑
       </button>
+      <YandexAd blockID="R-A-15263232-2" />
+
       <Footer />
     </div>
   );

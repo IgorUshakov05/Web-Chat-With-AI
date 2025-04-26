@@ -39,3 +39,9 @@ export interface SocketMessage {
   from: "User" | "Bot";
   timestamp: number;
 }
+
+
+export interface MesssageWithoutAuth {
+  success: boolean;
+  message: string;
+}
