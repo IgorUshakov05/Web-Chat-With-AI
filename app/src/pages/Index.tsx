@@ -4,6 +4,9 @@ import Header from "../component/Header";
 import { authStore } from "../store";
 import YandexAd from "../component/UX/AdsBlock";
 import ChatWithoutAuth from "../component/ChatWithoutAuth/Container";
+import React, { lazy, Suspense } from "react";
+
+const Join = lazy(() => import("../component/UX/Join"));
 
 function IndexPage() {
   return (
@@ -51,7 +54,7 @@ function IndexPage() {
         </div>
       </div>
       <YandexAd blockID="R-A-15263232-1" />
-
+    
       <div className="sektor-container fle ">
         <div className="sektor-gaza bot">
           <div>
@@ -135,43 +138,9 @@ function IndexPage() {
           </div>
         </div>
       </div>
-
-      <div className="sd">
-        <img src="HuntID.png" className="left-img" alt="HuntID logo" />
-        <div className="right">
-          <h4 className="name-product size">Присоединяйся</h4>
-          <div className="join">
-            <p className="text-join">
-              Станьте частью нашей ЭКО-системы, аккаунт созданный на любой из
-              наших платформ, вы можете использовать на других наших платформах{" "}
-            </p>
-            <div className="list-product-join">
-              <div className="element">
-                <img src="Галочка.svg" className="logo-plasd" />
-                <p className="opisa">WebHunt</p>
-              </div>
-              <div className="element">
-                <img src="Галочка.svg" className="logo-plasd" />
-                <p className="opisa">CountryHunt</p>
-              </div>
-              <div className="element">
-                <img src="Галочка.svg" className="logo-plasd" />
-                <p className="opisa">HuntAI</p>
-              </div>
-            </div>
-            {!authStore.isAuth && (
-              <div className="list-product-join">
-                <a href="https://huntid.com/" className="button-join-vhod">
-                  Войти
-                </a>
-                <a href="https://huntid.com/" className="button-join-registr">
-                  Зарегестрироваться
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <Suspense>
+        <Join />
+      </Suspense>
       <YandexAd blockID="R-A-15263232-2" />
 
       <Footer />

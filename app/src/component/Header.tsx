@@ -15,7 +15,6 @@ function Header(): any {
   let [isActive, setIsActive] = useState(false);
   let [isHiding, setIsHiding] = useState(false);
 
-
   const { mutate } = useNewChat();
 
   function hideHandle() {

@@ -8,7 +8,6 @@ import { observer } from "mobx-react";
 import { authStore } from "../store";
 import Google from "./GoogleAuth";
 import useLoginGoogle from "../hook/useLoginGoogle";
-import { useGoogleLogin } from "@react-oauth/google";
 enum AuthStage {
   SIGNUP,
   SIGNIN,
@@ -202,6 +201,7 @@ const AuthPanel = ({
     data: googleAuthData,
   } = useLoginGoogle();
   useEffect(() => {
+    console.log("rener");
     if (googleAuthData) {
       if (googleAuthData.success) {
         localStorage.setItem("access", googleAuthData.access || "");

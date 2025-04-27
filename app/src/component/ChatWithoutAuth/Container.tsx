@@ -59,6 +59,12 @@ function Chat() {
           sender: "Bot",
         });
       },
+      onError: (data) => {
+        chatStoreWithoutAuth.setOneMessage({
+          message: "С начала авторизируйтесь",
+          sender: "Bot",
+        });
+      },
     });
     chatStoreWithoutAuth.clear();
   }
