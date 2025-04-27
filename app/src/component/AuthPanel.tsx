@@ -100,7 +100,8 @@ const AuthPanel = ({
       });
     }
   };
-
+ 
+  
   const handelClichButtonLogin = () => {
     sendDataLogin(undefined, {
       onSuccess: (data) => {
