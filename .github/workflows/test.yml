@@ -23,7 +23,7 @@ jobs:
           node-version: "20"
 
       - name: Install backend dependencies
-        run: npm install
+        run: npm install && npm i @types/mongoose
 
       - name: Build backend
         run: npm run build
