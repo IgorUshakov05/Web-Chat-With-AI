@@ -2,39 +2,82 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Шрифты -->
     <link
       href="https://fonts.googleapis.com/css2?family=Involve:wght@400;600&family=Inter:wght@400&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Стиль для синтаксиса -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Involve:wght@400;600&family=Inter:wght@400&display=swap"
-      rel="stylesheet"
     />
 
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="HuntAI - бесплатный ИИ для создания текстов, программирования, поиска информации и обучения. Удобные инструменты для бизнеса и повседневных задач."
     />
+
+    <!-- Open Graph для Facebook -->
+    <meta
+      property="og:title"
+      content="HuntAI"
+    />
+    <meta
+      property="og:description"
+      content="HuntAI - мощный инструмент для решения задач с использованием ИИ: создание контента, анализ данных и разработка решений для бизнеса."
+    />
+    <meta property="og:image" content="https://0mzwj77k-3000.inc1.devtunnels.ms/image.png" />
+    <meta property="og:url" content="https://0mzwj77k-3000.inc1.devtunnels.ms/" />
+
+    <!-- Twitter Card -->
+    <meta
+      name="twitter:title"
+      content="HuntAI"
+    />
+    <meta
+      name="twitter:description"
+      content="HuntAI - нейросеть, которая помогает бизнесу решать задачи с помощью ИИ. Генерация текста, программирование, аналитика и многое другое."
+    />
+    <meta name="twitter:image" content="https://0mzwj77k-3000.inc1.devtunnels.ms/image.png`" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+
+    <title>HuntAI - Нейросеть для создания решений</title>
+
+    <!-- Структурированные данные для улучшения SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "name": "HuntAI - Нейросеть для бизнеса и повседневных задач",
+        "url": "https://0mzwj77k-3000.inc1.devtunnels.ms/",
+        "description": "HuntAI использует нейросети для анализа данных, создания контента и решения бизнес-задач. Простой и удобный ИИ для вашей компании.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://0mzwj77k-3000.inc1.devtunnels.ms/search?q={search_term}",
+          "query-input": "required name=search_term"
+        }
+      }
+    </script>
+
+    <!-- Манифест приложения -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!-- <script>
-      window.yaContextCb = window.yaContextCb || [];
-    </script>
-    <script src="https://yandex.ru/ads/system/context.js" async></script> -->
-    <title>React App</title>
   </head>
   <body>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <!-- <div id="root"></div>
+    <div id="root"></div>
+
+    <!-- Реклама через Яндекс -->
     <script>
       window.yaContextCb.push(() => {
         Ya.Context.AdvManager.render({
@@ -43,6 +86,6 @@
           type: "feed",
         });
       });
-    </script> -->
+    </script>
   </body>
 </html>

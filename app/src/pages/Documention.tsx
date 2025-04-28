@@ -7,6 +7,7 @@ import "tailwindcss/tailwind.css";
 import Footer from "../component/Footer";
 import DocumentationArticle from "../component/UX/Documentation";
 import YandexAd from "../component/UX/AdsBlock";
+import DocumentationMeta from "../Meta/Documentation";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -306,6 +307,7 @@ const getBearer = (header?: string): string | undefined => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <DocumentationMeta />
       <Header />
       <DocumentationArticle />
       <div className="gemini-container">

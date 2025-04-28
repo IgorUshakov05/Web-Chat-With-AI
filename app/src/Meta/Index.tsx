@@ -1,0 +1,67 @@
+import { Helmet } from "react-helmet";
+
+export default function IndexMeta() {
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+
+  return (
+    <Helmet>
+      <title>HuntAI - Нейросеть для создания решений</title>
+
+      {/* Description */}
+      <meta
+        name="description"
+        content="HuntAI - бесплатный ИИ для создания текстов, программирования, поиска информации и обучения. Удобные инструменты для бизнеса и повседневных задач."
+      />
+
+      <meta
+        property="og:title"
+        content="HuntAI - Нейросеть для анализа данных и создания решений"
+      />
+      <meta
+        property="og:description"
+        content="HuntAI - мощный инструмент для решения задач с использованием ИИ: создание контента, анализ данных и разработка решений для бизнеса."
+      />
+      <meta
+        property="og:image"
+        content={`${baseUrl}/image.png`}
+      />
+      <meta
+        property="og:url"
+        content={baseUrl}
+      />
+      <meta property="og:type" content="website" />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:title"
+        content="HuntAI - Нейросеть для анализа данных и создания решений"
+      />
+      <meta
+        name="twitter:description"
+        content="HuntAI - нейросеть, которая помогает бизнесу решать задачи с помощью ИИ. Генерация текста, программирование, аналитика и многое другое."
+      />
+      <meta
+        name="twitter:image"
+        content={`${baseUrl}/image.png`}
+      />
+
+      <script type="application/ld+json">
+        {`
+          {
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": "HuntAI - Нейросеть для бизнеса и повседневных задач",
+            "url": "${baseUrl}",
+            "description": "HuntAI использует нейросети для анализа данных, создания контента и решения бизнес-задач. Простой и удобный ИИ для вашей компании.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "${baseUrl}/search?q={search_term}",
+              "query-input": "required name=search_term"
+            }
+          }
+        `}
+      </script>
+    </Helmet>
+  );
+}

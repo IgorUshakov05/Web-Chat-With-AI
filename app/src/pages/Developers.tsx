@@ -1,35 +1,41 @@
+import { Link } from "react-router-dom";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import YandexAd from "../component/UX/AdsBlock";
+import DevelopersMeta from "../Meta/Developers";
 export default function DevelopersPage() {
   return (
     <>
+      <DevelopersMeta />
       <Header />
       <div className="sektor-container">
         <article className="sektor">
           <div className="social-media">
-            <button className="button-media">
+            <Link to={"https://tenchat.ru/FullStack"} className="button-media">
               <img src="TenChat.svg" alt="TenChat" />
-            </button>
-            <button className="button-media">
+            </Link>
+            <Link to={"https://vk.com/opex_shisha"} className="button-media">
               <img src="VK.svg" alt="VK" />
-            </button>
-            <button className="button-media">
+            </Link>
+            <Link to={"https://t.me/O101O1O1O"} className="button-media">
               <img src="Telegram.svg" alt="Telegram" />
-            </button>
+            </Link>
           </div>
           <img src="Игорь.png" alt="Игорь" className="photo-sektor" />
           <div className="social-media">
-            <button className="button-media">
+            <Link to={"https://dprofile.ru/fullstack"} className="button-media">
               <img src="DProfile.svg" alt="DProfile" />
-            </button>
+            </Link>
             <div className="Name-text">
               <p className="name">Ушаков Игорь</p>
               <p className="special">Программист</p>
             </div>
-            <button className="button-media">
+            <Link
+              to={"https://github.com/IgorUshakov05"}
+              className="button-media"
+            >
               <img src="github-logo 1.svg" alt="GitHub" />
-            </button>
+            </Link>
           </div>
         </article>
         <article className="comand">
@@ -46,28 +52,40 @@ export default function DevelopersPage() {
         </article>
         <article className="sektor">
           <div className="social-media">
-            <button className="button-media">
+            <Link
+              to={"https://tenchat.ru/YaroslavDesign"}
+              className="button-media"
+            >
               <img src="TenChat.svg" alt="TenChat" />
-            </button>
-            <button className="button-media">
+            </Link>
+            <Link
+              to={"https://vk.com/YaroslavUshakov"}
+              className="button-media"
+            >
               <img src="VK.svg" alt="VK" />
-            </button>
-            <button className="button-media">
+            </Link>
+            <Link to={"https://t.me/YaroslavUshakov"} className="button-media">
               <img src="Telegram.svg" alt="Telegram" />
-            </button>
+            </Link>
           </div>
           <img src="ЯрикФото.png" alt="Ярослав" className="photo-sektor" />
           <div className="social-media">
-            <button className="button-media">
+            <Link
+              to={"https://dprofile.ru/yaroslavushakov"}
+              className="button-media"
+            >
               <img src="DProfile.svg" alt="DProfile" />
-            </button>
+            </Link>
             <div className="Name-text">
               <p className="name">Ушаков Ярослав</p>
               <p className="special">Дизайнер</p>
             </div>
-            <button className="button-media">
+            <Link
+              to={"https://www.behance.net/YaroslavUshakov"}
+              className="button-media"
+            >
               <img src="behance-163 1.svg" alt="Behance" />
-            </button>
+            </Link>
           </div>
         </article>
       </div>

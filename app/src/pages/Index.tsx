@@ -1,16 +1,17 @@
 import { observer } from "mobx-react";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
-import { authStore } from "../store";
 import YandexAd from "../component/UX/AdsBlock";
 import ChatWithoutAuth from "../component/ChatWithoutAuth/Container";
-import React, { lazy, Suspense } from "react";
-
+import { lazy, Suspense } from "react";
+import { Helmet } from "react-helmet";
+import IndexMeta from "../Meta/Index";
 const Join = lazy(() => import("../component/UX/Join"));
 
 function IndexPage() {
   return (
     <>
+    <IndexMeta />
       <Header />
       <ChatWithoutAuth />
       <div className="p2">
@@ -54,7 +55,7 @@ function IndexPage() {
         </div>
       </div>
       <YandexAd blockID="R-A-15263232-1" />
-    
+
       <div className="sektor-container fle ">
         <div className="sektor-gaza bot">
           <div>

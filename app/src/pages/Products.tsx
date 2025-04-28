@@ -1,9 +1,11 @@
 import Footer from "../component/Footer";
 import Header from "../component/Header";
+import ProductsMeta from "../Meta/Products";
 
 export default function ProductsPage() {
   return (
     <>
+      <ProductsMeta />
       <Header />
 
       <div className="webhunt-img">
