@@ -202,7 +202,6 @@ const AuthPanel = ({
     data: googleAuthData,
   } = useLoginGoogle();
   useEffect(() => {
-    console.log("rener");
     if (googleAuthData) {
       if (googleAuthData.success) {
         localStorage.setItem("access", googleAuthData.access || "");
@@ -212,7 +211,6 @@ const AuthPanel = ({
         authStore.setAuth(true);
         hide();
       }
-      console.log("Google auth data:", googleAuthData);
     }
   }, [googleAuthData]);
   let [stepColor, _] = useState([
