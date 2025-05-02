@@ -1,6 +1,9 @@
 name: Docker Compose Action
 
-on: [push]
+on: 
+  push: 
+    branches: 
+      - dev
 
 jobs:
   build:
