@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HuntAI — Сервер запущен</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #00ffc3;
+      text-shadow: 0 0 10px #00ffc3;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+
+    .badge {
+      background-color: #00ffc3;
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 255, 195, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px rgba(0, 255, 195, 0.6); }
+      50% { box-shadow: 0 0 20px rgba(0, 255, 195, 1); }
+      100% { box-shadow: 0 0 10px rgba(0, 255, 195, 0.6); }
+    }
+  </style>
+</head>
+<body>
+  <h1>HuntAI</h1>
+  <p>Сервер успешно запущен и готов к работе.</p>
+  <div class="badge">Status: OK</div>
+</body>
+</html>

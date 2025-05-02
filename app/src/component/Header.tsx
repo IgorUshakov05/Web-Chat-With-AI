@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import AuthPanel from "./AuthPanel";
 import { useEffect, useState } from "react";
 import { authStore } from "../store/index";
-import useAuntification from "../hook/useAuntification";
 import { observer } from "mobx-react";
 import { useNewChat } from "../hook/NewChat";
 const links = [

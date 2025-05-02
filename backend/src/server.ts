@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 app.use(morgan("dev"));
 app.get("/", (req: Request, res: Response) => {
-  res.status(201).sendFile(path.join(__dirname, "dist", "index.html"));
+  res.status(201).sendFile(path.join(__dirname, "public", "index.html"));
 });
 app.use(auth_router);
 app.use("/code", CodeRoute);
@@ -51,8 +51,9 @@ const io = initSocket(server);
 
 const start = async () => {
   try {
+    console.log("Начало запуска");
+    console.log("Подключение к бд", process.env.DATABASE_URL);
     await mongoose.connect(process.env.DATABASE_URL || "");
-    console.log("Подключение к бд");
 
     server.listen(port, () => {
       console.log(`[server]: Server is running at http://localhost:${port}`);

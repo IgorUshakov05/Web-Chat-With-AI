@@ -12,11 +12,9 @@ import DocumentationMeta from "../Meta/Documentation";
 hljs.registerLanguage("javascript", javascript);
 
 const Documentation = () => {
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
       updateStyles();
       toggleBackToTopButton();
     };
