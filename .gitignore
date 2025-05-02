@@ -9,7 +9,9 @@
 /coverage
 
 # production
-/build
+/frontend/build
+/backend/dist
+/app/build
 
 # misc
 .DS_Store
@@ -25,3 +27,4 @@ yarn-error.log*
 
 /app/.env
 /backend/.env
+/frontend/.env
