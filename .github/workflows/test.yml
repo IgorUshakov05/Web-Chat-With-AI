@@ -6,7 +6,7 @@ on:
       - dev
   pull_request:
     branches:
-      - dev  
+      - dev
 
 jobs:
   build:
@@ -27,11 +27,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build and run Docker containers with Compose
+      - name: Собираем docker compose
         run: |
           docker-compose -f docker-compose.yml up -d --build
 
-      - name: Wait for backend health check
+      - name: Пррверяем жизнь отклик сервера
         run: |
           for i in {1..10}; do
             if curl --silent --fail http://localhost:4000/health; then
@@ -42,9 +42,8 @@ jobs:
             sleep 5
           done
 
-      - name: Run frontend tests
+      - name: FrontEnd test
         run: |
-          # Тесты для фронтенда, если необходимо
           curl --silent --fail http://localhost:3000
 
       - name: Tear down containers
