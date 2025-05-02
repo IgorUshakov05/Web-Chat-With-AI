@@ -30,4 +30,4 @@ jobs:
 
       - name: Tear down containers
         run: |
-          docker-compose down
+          docker compose down
