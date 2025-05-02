@@ -7,13 +7,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Run docker compose
+      - name: Старт MogndoDB
+        uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-version: 5.0
+
+      - name: Запуск docker-compose
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "docker-compose.yml"
 
-      - name: Execute tests in the running services
+      - name: Запускаем все сервера
         run: |
-          docker compose up
+          # Запуск всех сервисов в фоновом режиме
+          docker-compose up -d
+
+          curl --silent --fail http://localhost:3000 
+          curl --silent --fail http://localhost:4000/health
+
+      - name: Tear down containers
+        run: |
+          docker-compose down
