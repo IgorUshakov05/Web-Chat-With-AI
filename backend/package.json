@@ -27,6 +27,7 @@
     "google-auth-library": "^9.15.1",
     "got": "^14.4.6",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.1",
     "morgan": "^1.10.0",
     "nodemailer": "^6.10.1",
     "passport-google-oauth20": "^2.0.0",
@@ -38,10 +39,11 @@
     "@types/axios": "^0.9.36",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^22.10.7",
     "@types/nodemailer": "^6.4.17",
-    "typescript": "^5.7.3",
     "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }

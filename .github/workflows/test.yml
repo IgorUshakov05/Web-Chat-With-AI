@@ -1,47 +1,56 @@
-name: Fullstack CI
+name: Docker Compose CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - dev
   pull_request:
-    branches: [main]
+    branches:
+      - main  
 
 jobs:
-  backend:
-    name: Backend Tests
+  build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        networks:
+          - webnet
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Install backend dependencies
-        run: npm install && npm i @types/mongoose
+      - name: Build and run Docker containers with Compose
+        run: |
+          docker-compose -f docker-compose.yml up -d --build
 
-      - name: Build backend
-        run: npm run build
+      - name: Wait for backend health check
+        run: |
+          for i in {1..10}; do
+            if curl --silent --fail http://localhost:4000/health; then
+              echo "Backend is healthy"
+              break
+            fi
+            echo "Waiting for backend to become healthy..."
+            sleep 5
+          done
 
-  frontend:
-    name: Frontend Tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Run frontend tests
+        run: |
+          # Тесты для фронтенда, если необходимо
+          curl --silent --fail http://localhost:3000
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Tear down containers
+        run: |
+          docker-compose down
 
-      - name: Install frontend dependencies
-        run: npm install
+    networks:
+      webnet:
+        driver: bridge

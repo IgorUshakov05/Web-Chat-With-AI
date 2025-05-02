@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { OAuth2Client } from "google-auth-library";
-import jwt from "jsonwebtoken";
 import path from "path";
 import http from "http";
 import morgan from "morgan";
@@ -15,11 +14,11 @@ import initSocket from "./Chat/Socket";
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
-// app.use(
-//   cors({
-//     origin: [process.env.CLIENT_URL || "http://localhost:3000"],
-//   })
-// );
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL || ""],
+  })
+);
 
 app.use(cors());
 app.use(express.json());
@@ -31,6 +30,19 @@ app.use(morgan("dev"));
 app.get("/", (req: Request, res: Response) => {
   res.status(201).sendFile(path.join(__dirname, "public", "index.html"));
 });
+app.get("/health", async (req: Request, res: Response) => {
+  try {
+    const dbState = mongoose.connection.readyState;
+    if (dbState === 1) {
+      res.status(200).send("OK");
+    } else {
+      res.status(500).send("Database not connected");
+    }
+  } catch (e) {
+    res.status(500).send("Error");
+  }
+});
+
 app.use(auth_router);
 app.use("/code", CodeRoute);
 app.use("/chat", chat_router);
