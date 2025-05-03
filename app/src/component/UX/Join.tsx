@@ -36,10 +36,10 @@ function Join() {
           </div>
           {!authStore.isAuth && (
             <div className="list-product-join">
-              <a href="https://huntid.com/" className="button-join-vhod">
+              <a href="#header" className="button-join-vhod">
                 Войти
               </a>
-              <a href="https://huntid.com/" className="button-join-registr">
+              <a href="#header" className="button-join-registr">
                 Зарегестрироваться
               </a>
             </div>

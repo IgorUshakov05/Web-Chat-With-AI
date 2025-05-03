@@ -102,35 +102,38 @@ function IndexPage() {
           <span className="gra">GPT</span>
         </h1>
         <div className="list-product">
-          <div className="block-content">
-            <div className="centr-name">
-              <h3 className="nazv">Hunt AI</h3>
-              <p className="text-ai">
-                Бесплатный чат с искусственным интеллектом
-              </p>
+          <div className="w40">
+            <div className="block-content">
+              <div className="centr-name l">
+                <h3 className="nazv">Hunt AI</h3>
+                <p className="text-ai">
+                  Бесплатный чат с искусственным интеллектом
+                </p>
+              </div>
+              <div className="photo-product">
+                <img src="HuntAI.svg" className="logo-pla" alt="" />
+                <img src="Img-AI.png" className="ai-img" alt="" />
+                <img src="Snake.png" className="ai-img snake" alt="" />
+              </div>
             </div>
-            <div className="photo-product">
-              <img src="HuntAI.svg" className="logo-pla" alt="" />
-              <img src="Img-AI.png" className="ai-img" alt="" />
-              <img src="Snake.png" className="ai-img snake" alt="" />
+            <div className="block-content">
+              <div className="centr-name r">
+                <h3 className="nazv">Web Hunt</h3>
+                <p className="text-ai">Работа для Веб специалистов в СНГ </p>
+              </div>
+              <div className="photo-product">
+                <img src="WebHunt.svg" className="logo-pla" alt="" />
+                <img src="WebHUnt.png" className="ai-img" alt="" />
+              </div>
             </div>
           </div>
-          <div className="block-content">
-            <div className="centr-name">
-              <h3 className="nazv">Web Hunt</h3>
-              <p className="text-ai">Работа для Веб специалистов в СНГ </p>
-            </div>
-            <div className="photo-product">
-              <img src="WebHunt.svg" className="logo-pla" alt="" />
-              <img src="WebHUnt.png" className="ai-img" alt="" />
-            </div>
-          </div>
+
           <div className="block-content">
             <div className="centr-name">
               <h3 className="nazv">Country Hunt</h3>
               <p className="text-ai">Поиск работы по всему миру</p>
             </div>
-            <div className="photo-product">
+            <div className="photo-product fly">
               <img src="CountryHunt.svg" className="logo-pla" alt="" />
               <img src="Img-Country.png" className="ai-img" alt="" />
             </div>
