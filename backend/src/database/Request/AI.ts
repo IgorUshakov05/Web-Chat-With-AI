@@ -20,11 +20,9 @@ export default async function get_answer_ai(
     });
 
     const chatSession = model.startChat({ history: [] });
-    // Получаем историю чата
     let history: Content[] = await chatSession.getHistory();
     console.log(history[history.length - 1]);
 
-    // Загружаем сообщения из базы данных для текущего чата
     let { success, chat } = await find_chat_by_id(chatID);
     if (success && chat) {
       if (chat && "message" in chat && Array.isArray(chat.message)) {
@@ -41,9 +39,7 @@ export default async function get_answer_ai(
       request +
       ", using the markdown response and respond in the user's language";
 
-    // Отправляем сообщение
     const result = await chatSession.sendMessage(prompt);
-    // Извлекаем и возвращаем текст ответа
     const responseText = result.response.text();
     console.log(responseText);
 

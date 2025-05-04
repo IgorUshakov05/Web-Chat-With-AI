@@ -13,7 +13,7 @@ import CodeRoute from "./mail/router";
 import initSocket from "./Chat/Socket";
 dotenv.config();
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 app.use(
   cors({
     origin: [process.env.CLIENT_URL || ""],
@@ -54,7 +54,7 @@ export async function verifyGoogleIdToken(idToken: string) {
     idToken,
     audience: process.env.GOOGLE_CLIENT_ID,
   });
-  return ticket.getPayload(); // name, email, picture и т.д.
+  return ticket.getPayload(); 
 }
 
 const server = http.createServer(app);
@@ -68,7 +68,7 @@ const start = async () => {
     await mongoose.connect(process.env.DATABASE_URL || "");
 
     server.listen(port, () => {
-      console.log(`[server]: Server is running at http://localhost:${port}`);
+      console.log(`[server]: Server is running at ${process.env.SERVER_URL}`);
     });
   } catch (e) {
     console.log(e);

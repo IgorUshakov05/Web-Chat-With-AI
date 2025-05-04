@@ -284,9 +284,6 @@ export default function ProductsPage() {
                 текстов, созданная для тех, кто ценит скорость, удобство и
                 качество.
               </p>
-              <button className="auth-button h">
-                Вкусить дары разработчиков
-              </button>
             </div>
           </div>
         </div>
