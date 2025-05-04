@@ -21,11 +21,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H your.server.ip >> ~/.ssh/known_hosts
+          ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
 
       - name: Деплой и запуск Docker Compose на сервере
         run: |
-          ssh -i ~/.ssh/id_rsa user@your.server.ip << 'EOF'
+          ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
             cd /huntai
             git pull origin main
             docker compose down
