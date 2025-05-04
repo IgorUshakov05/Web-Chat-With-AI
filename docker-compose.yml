@@ -12,3 +12,5 @@ services:
       - "4000:4000"
     environment:
       - DATABASE_URL=mongodb://host.docker.internal:27017/webAI
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -23,11 +23,19 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
 
-      - name: Деплой и запуск Docker Compose на сервере
+      - name: Деплой и перезапуск Docker Compose на сервере
         run: |
           ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
-            cd /huntai
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
+          set -e
+    
+          cd /huntai
+    
+          git pull origin main
+    
+          docker compose down --remove-orphans
+    
+          docker image prune -f
+    
+          docker compose up -d --build
           EOF
+        
