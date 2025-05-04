@@ -27,15 +27,15 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
           set -e
-    
+
           cd /huntai
-    
+          git reset --hard HEAD
+
           git pull origin main
-    
+
           docker compose down --remove-orphans
-    
+
           docker image prune -f
-    
+
           docker compose up -d --build
           EOF
-        
