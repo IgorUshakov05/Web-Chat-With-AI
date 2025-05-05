@@ -11,6 +11,5 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - DATABASE_URL=mongodb://host.docker.internal:27017/webAI
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - DATABASE_URL=mongodb://localhost:27017/webAI  
+    network_mode: host  
