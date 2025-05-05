@@ -11,6 +11,8 @@ services:
     image: igorushakov05/hunt-ai-server:v0.0.1
     ports:
       - "4000:4000"
-    network_mode: host
+    env_file:
+      - ./backend/.env 
     environment:
-      - DATABASE_URL=mongodb://localhost:27017/webAI
+      - DATABASE_URL=${LINUX_DATABASE_URL}
+    network_mode: host  
