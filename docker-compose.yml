@@ -1,18 +1,37 @@
-services:
-  frontend:
-    build: ./app
-    image: igorushakov05/hunt-ai-client:v0.0.1
-    ports:
-      - "3000:3000"
+version: '3.8'
 
-  
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: webAI
+    restart: unless-stopped
+
   backend:
     build: ./backend
     image: igorushakov05/hunt-ai-server:v0.0.1
+    container_name: backend
     ports:
       - "4000:4000"
-    env_file:
-      - ./backend/.env 
     environment:
-      - DATABASE_URL=${LINUX_DATABASE_URL}
-    network_mode: host  
+      DATABASE_URL: "mongodb://mongodb:27017/webAI"  
+      PORT: 4000
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  frontend:
+    build: ./app
+    image: igorushakov05/hunt-ai-client:v0.0.1
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:

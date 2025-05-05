@@ -64,8 +64,8 @@ const io = initSocket(server);
 const start = async () => {
   try {
     console.log("Начало запуска");
-    console.log("Подключение к бд", process.env.LINUX_DATABASE_URL);
-    await mongoose.connect(process.env.LINUX_DATABASE_URL || "");
+    console.log("Подключение к бд", process.env.DATABASE_URL);
+    await mongoose.connect(process.env.DATABASE_URL || "");
 
     server.listen(port, () => {
       console.log(`[server]: Server is running at ${process.env.SERVER_URL}`);
