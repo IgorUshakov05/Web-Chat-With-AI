@@ -4,14 +4,13 @@ import Header from "../component/Header";
 import YandexAd from "../component/UX/AdsBlock";
 import ChatWithoutAuth from "../component/ChatWithoutAuth/Container";
 import { lazy, Suspense } from "react";
-import { Helmet } from "react-helmet";
 import IndexMeta from "../Meta/Index";
 const Join = lazy(() => import("../component/UX/Join"));
 
 function IndexPage() {
   return (
     <>
-    <IndexMeta />
+      <IndexMeta />
       <Header />
       <ChatWithoutAuth />
       <div className="p2">
@@ -54,7 +53,7 @@ function IndexPage() {
           </div>
         </div>
       </div>
-      <YandexAd blockID="R-A-15263232-1" />
+      <YandexAd blockID="R-A-15368355-3" />
 
       <div className="sektor-container fle ">
         <div className="sektor-gaza bot">
@@ -112,9 +111,9 @@ function IndexPage() {
               </p>
             </div>
             <div className="photo-product">
-              <img src="HuntAI.svg" className="logo-pla" />
-              <img src="Img-AI.png" className="ai-img" />
-              <img src="Snake.png" className="ai-img snake" />
+              <img src="HuntAI.svg" className="logo-pla" alt="" />
+              <img src="Img-AI.png" className="ai-img" alt="" />
+              <img src="Snake.png" className="ai-img snake" alt="" />
             </div>
           </div>
           <div className="block-content">
@@ -123,8 +122,8 @@ function IndexPage() {
               <p className="text-ai">Работа для Веб специалистов в СНГ </p>
             </div>
             <div className="photo-product">
-              <img src="WebHunt.svg" className="logo-pla" />
-              <img src="WebHUnt.png" className="ai-img" />
+              <img src="WebHunt.svg" className="logo-pla" alt="" />
+              <img src="WebHUnt.png" className="ai-img" alt="" />
             </div>
           </div>
           <div className="block-content">
@@ -133,8 +132,8 @@ function IndexPage() {
               <p className="text-ai">Поиск работы по всему миру</p>
             </div>
             <div className="photo-product">
-              <img src="CountryHunt.svg" className="logo-pla" />
-              <img src="Img-Country.png" className="ai-img" />
+              <img src="CountryHunt.svg" className="logo-pla" alt="" />
+              <img src="Img-Country.png" className="ai-img" alt="" />
             </div>
           </div>
         </div>
@@ -142,7 +141,7 @@ function IndexPage() {
       <Suspense>
         <Join />
       </Suspense>
-      <YandexAd blockID="R-A-15263232-2" />
+      <YandexAd blockID="R-A-15368355-2" />
 
       <Footer />
     </>
