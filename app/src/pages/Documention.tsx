@@ -724,7 +724,7 @@ const getBearer = (header?: string): string | undefined => {
       >
         ↑
       </button>
-      <YandexAd blockID="R-A-15368355-2" />
+      {/* <YandexAd blockID="R-A-15374861-4" /> */}
 
       <Footer />
     </div>

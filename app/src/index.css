@@ -823,7 +823,7 @@ section.chat-area,
   height: 16px;
 }
 pre code.hljs {
-  padding: 1em 0 0 0 !important;
+  padding: 12px !important;
 }
 
 /* Code Block Styling */
@@ -1145,8 +1145,8 @@ pre code.hljs {
 .sektor-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 150px;
-  margin-bottom: 100px;
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .sektor {
@@ -2350,7 +2350,13 @@ ul {
   height: 100%;
   overflow-y: scroll;
   width: 100%;
+  align-items: flex-end;
   max-height: 90%;
+  gap:10px;
+  display: flex;
+}
+.messagesAndAds {
+  width: 100%;
 }
 
 .message-list::-webkit-scrollbar {

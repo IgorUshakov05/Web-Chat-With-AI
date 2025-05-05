@@ -1,18 +1,19 @@
-version: '3.8'
-
 services:
-  mongodb:
-    image: mongo:6
-    container_name: mongodb
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: webAI  
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
     networks:
       - backend-network
-    volumes:
-      - mongodb_data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: webAI
-    restart: unless-stopped
 
   backend:
     build: ./backend
@@ -22,8 +23,12 @@ services:
       - "4000:4000"
     env_file:
       - ./backend/.env
+    environment:
+      DATABASE_URL: "mongodb://root:password@mongo:27017/webAI?authSource=admin"  
+      SERVER_URL: "https://api.hunt-ai.ru"
+      CLIENT_URL: "https://hunt-ai.ru" 
     depends_on:
-      - mongodb
+      - mongo
     networks:
       - backend-network
     restart: unless-stopped
@@ -32,14 +37,24 @@ services:
     build: ./app
     image: igorushakov05/hunt-ai-client:v0.0.1
     container_name: frontend
-    env_file:
-      - ./app/.env
     ports:
       - "3000:3000"
+    env_file:
+      - ./app/.env
+    environment:
+      NODE_ENV: production
+      REACT_APP_SERVER_URL: "https://api.hunt-ai.ru"
+      REACT_APP_CLIENT_URL: "https://hunt-ai.ru" 
+    networks:
+      - backend-network
     restart: unless-stopped
 
-networks:
-  backend-network:
-
 volumes:
-  mongodb_data:
+  mongo-data:
+    driver: local
+  mongo-config:
+    driver: local
+
+networks:
+  backend-network: 
+    driver: bridge

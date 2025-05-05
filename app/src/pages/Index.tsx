@@ -53,7 +53,6 @@ function IndexPage() {
           </div>
         </div>
       </div>
-      <YandexAd blockID="R-A-15368355-3" />
 
       <div className="sektor-container fle ">
         <div className="sektor-gaza bot">
@@ -141,8 +140,7 @@ function IndexPage() {
       <Suspense>
         <Join />
       </Suspense>
-      <YandexAd blockID="R-A-15368355-2" />
-
+      {/* <YandexAd blockID="R-A-15374861-1" /> */}
       <Footer />
     </>
   );

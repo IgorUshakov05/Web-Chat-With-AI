@@ -19,13 +19,16 @@ function MessageList() {
 
   return (
     <div className="message-list" ref={listRef}>
-      {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
-        <MessageTemplate
-          key={index}
-          data={{ message: itemMessage.message, sender: itemMessage.sender }}
-        />
-      ))}
-      {chatStoreWithoutAuth.isPending && <LoadingMessage />}
+      {/* <div id="yandex_rtb_R-A-15368355-4"></div> */}
+      <div className="messagesAndAds">
+        {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
+          <MessageTemplate
+            key={index}
+            data={{ message: itemMessage.message, sender: itemMessage.sender }}
+          />
+        ))}
+        {chatStoreWithoutAuth.isPending && <LoadingMessage />}
+      </div>
     </div>
   );
 }
