@@ -24,8 +24,6 @@ services:
       - ./backend/.env
     environment:
       DATABASE_URL: "mongodb://root:password@mongo:27017/webAI?authSource=admin"  
-      SERVER_URL: "https://api.hunt-ai.ru"
-      CLIENT_URL: "https://hunt-ai.ru" 
     depends_on:
       - mongo
     networks:
@@ -39,10 +37,6 @@ services:
       - "3000:3000"
     env_file:
       - ./app/.env
-    environment:
-      NODE_ENV: production
-      REACT_APP_SERVER_URL: "https://api.hunt-ai.ru"
-      REACT_APP_CLIENT_URL: "https://hunt-ai.ru" 
     networks:
       - backend-network
     restart: unless-stopped
