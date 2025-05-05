@@ -16,12 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Записываем .env backend
-        run: echo "${{ secrets.BACKEND_ENV }}" > backend/.env 
-
-      - name: Записываем .env frontend
-        run: echo "${{ secrets.FRONTEND_ENV }}" > app/.env 
-      
 
       - name: Настройка SSH ключа
         run: |
@@ -30,6 +24,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
 
+          
       - name: Деплой и перезапуск Docker Compose на сервере
         run: |
           ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
@@ -49,6 +44,9 @@ jobs:
           docker network prune -f
 
           docker volume prune -f
+
+          echo "${{ secrets.BACKEND_ENV }}" > backend/.env 
+          echo "${{ secrets.FRONTEND_ENV }}" > app/.env 
 
           docker compose up -d --build
           EOF
