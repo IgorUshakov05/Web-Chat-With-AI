@@ -15,12 +15,6 @@ jobs:
 
       - name: Записываем .env 
         run: echo "${{ secrets.BACKEND_ENV }}" > backend/.env
-  
-      - name: Старт MogndoDB
-        uses: supercharge/mongodb-github-action@1.12.0
-        with:
-          mongodb-version: 5.0
-
       - name: Запуск docker-compose
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
