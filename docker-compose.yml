@@ -6,6 +6,8 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
+    networks:
+      - backend-network
     volumes:
       - mongodb_data:/data/db
     environment:
@@ -22,6 +24,8 @@ services:
       - ./backend/.env
     depends_on:
       - mongodb
+    networks:
+      - backend-network
     restart: unless-stopped
 
   frontend:
@@ -33,6 +37,9 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+
+networks:
+  backend-network:
 
 volumes:
   mongodb_data:
