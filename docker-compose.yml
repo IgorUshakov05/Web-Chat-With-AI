@@ -5,11 +5,18 @@ services:
     ports:
       - "3000:3000"
 
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
   backend:
     build: ./backend
     image: igorushakov05/hunt-ai-server:v0.0.1
     ports:
       - "4000:4000"
+    network_mode: host
     environment:
-      - DATABASE_URL=mongodb://localhost:27017/webAI  
-    network_mode: host  
+      - DATABASE_URL=mongodb://localhost:27017/webAI
