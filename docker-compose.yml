@@ -17,7 +17,6 @@ services:
 
   backend:
     build: ./backend
-    image: igorushakov05/hunt-ai-server:v0.0.1
     container_name: backend
     ports:
       - "4000:4000"
@@ -35,7 +34,6 @@ services:
 
   frontend:
     build: ./app
-    image: igorushakov05/hunt-ai-client:v0.0.1
     container_name: frontend
     ports:
       - "3000:3000"
