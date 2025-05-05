@@ -18,9 +18,8 @@ services:
     container_name: backend
     ports:
       - "4000:4000"
-    environment:
-      DATABASE_URL: "mongodb://mongodb:27017/webAI"  
-      PORT: 4000
+    env_file:
+      - ./backend/.env
     depends_on:
       - mongodb
     restart: unless-stopped
@@ -29,6 +28,8 @@ services:
     build: ./app
     image: igorushakov05/hunt-ai-client:v0.0.1
     container_name: frontend
+    env_file:
+      - ./app/.env
     ports:
       - "3000:3000"
     restart: unless-stopped
