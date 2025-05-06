@@ -40,7 +40,6 @@ jobs:
           set -e
           cd /huntai
           
-          # Проверяем существование сети
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
           
           git fetch origin
