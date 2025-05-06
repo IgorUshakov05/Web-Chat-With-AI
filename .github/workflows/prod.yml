@@ -34,46 +34,21 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
-      - name: Деплой
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          set -e
-          cd /huntai
-          
-          # Проверяем и создаем сеть
-          docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
-          
-          # Проверяем наличие MongoDB и запускаем только если нет
-          if ! docker inspect mongo >/dev/null 2>&1; then
-            echo "Запускаем MongoDB..."
-            docker compose -f docker-compose.prod.yml up -d mongo
-            # Ждем пока MongoDB станет доступной
-            sleep 30
-          else
-            echo "MongoDB уже запущена, пропускаем запуск"
-          fi
-          
-          git fetch origin
-          git reset --hard origin/main
-      
-          # Обновляем только изменённые сервисы
-          if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
-            echo "Обновляем backend..."
-            echo "${{ secrets.BACKEND_ENV }}" > backend/.env
-            docker compose -f docker-compose.prod.yml build backend
-            docker compose -f docker-compose.prod.yml up -d --force-recreate backend
-          fi
-      
-          if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
-            echo "Обновляем frontend..."
-            echo "${{ secrets.FRONTEND_ENV }}" > app/.env
-            docker compose -f docker-compose.prod.yml build frontend
-            docker compose -f docker-compose.prod.yml up -d --force-recreate frontend
-          fi
-      
-          # Если не было изменений в конкретных частях - просто перезапускаем
-          if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
-            echo "Перезапускаем приложения..."
-            docker compose -f docker-compose.prod.yml up -d
-          fi
-          EOF
+          - name: Деплой
+          run: |
+            ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            cd /huntai
+            
+            # Остановка старых контейнеров с очисткой orphans
+            docker compose -f docker-compose.prod.yml down --remove-orphans
+            
+            # Запуск MongoDB если не запущена
+            if ! docker ps --format '{{.Names}}' | grep -q '^mongo$'; then
+              docker compose -f docker-compose.prod.yml up -d mongo
+              sleep 20
+            fi
+            
+            # Полный перезапуск приложений
+            docker compose -f docker-compose.prod.yml up -d --build
+            EOF
