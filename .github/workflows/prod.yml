@@ -16,6 +16,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+      - name: Записываем .env backend
+        run: echo "${{ secrets.BACKEND_ENV }}" > backend/.env 
+
+      - name: Записываем .env frontend
+        run: echo "${{ secrets.FRONTEND_ENV }}" > app/.env 
+      
+=======
+      - name: Получение списка изменённых файлов
+        id: changes
+        run: |
+          echo "CHANGED_BACKEND=false" >> $GITHUB_ENV
+          echo "CHANGED_FRONTEND=false" >> $GITHUB_ENV
+
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+
+          echo "$CHANGED_FILES" | grep '^backend/' && echo "CHANGED_BACKEND=true" >> $GITHUB_ENV
+          echo "$CHANGED_FILES" | grep '^app/' && echo "CHANGED_FRONTEND=true" >> $GITHUB_ENV
+>>>>>>> Stashed changes
+>>>>>>> dev
 
       - name: Настройка SSH ключа
         run: |
@@ -24,18 +47,31 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
 
+<<<<<<< HEAD
           
+=======
+<<<<<<< Updated upstream
+>>>>>>> dev
       - name: Деплой и перезапуск Docker Compose на сервере
+=======
+      - name: Деплой на сервере
+>>>>>>> Stashed changes
         run: |
           ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
           set -e
-
           cd /huntai
+
           git reset --hard HEAD
           git pull origin main
 
-          docker compose down --remove-orphans --rmi all -v
+          if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
+            echo "Изменения в backend — пересобираем backend..."
+            echo "${{ secrets.BACKEND_ENV }}" > backend/.env
+            docker compose build backend
+            docker compose up -d backend
+          fi
 
+<<<<<<< Updated upstream
           
           docker container prune -f
 
@@ -50,3 +86,12 @@ jobs:
 
           docker compose up -d --build
           EOF
+=======
+          if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
+            echo "Изменения в frontend — пересобираем frontend..."
+            echo "${{ secrets.FRONTEND_ENV }}" > app/.env
+            docker compose build frontend
+            docker compose up -d frontend
+          fi
+          EOF
+>>>>>>> Stashed changes
