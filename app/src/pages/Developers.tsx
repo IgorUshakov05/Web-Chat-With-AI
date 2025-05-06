@@ -89,7 +89,7 @@ export default function DevelopersPage() {
           </div>
         </article>
       </div>
-      {/* <YandexAd blockID="R-A-15374861-3"  /> */}
+      <YandexAd blockID="R-A-15374861-3"  />
 
       <Footer />
     </>
