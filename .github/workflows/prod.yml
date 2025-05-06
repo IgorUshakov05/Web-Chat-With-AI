@@ -1,0 +1,68 @@
+name: Продакшен
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Определение изменённых частей
+        id: changes
+        run: |
+          echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+
+      - name: Настройка SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Установка Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+      - name: Деплой
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          set -e
+          cd /huntai
+          
+          docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
+          
+          git fetch origin
+          git reset --hard origin/main
+
+          # Обновляем только изменённые сервисы
+          if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
+            echo "Обновляем backend..."
+            echo "${{ secrets.BACKEND_ENV }}" > backend/.env
+            docker compose -f docker-compose.prod.yml build backend
+            docker compose -f docker-compose.prod.yml up -d --force-recreate backend
+          fi
+
+          if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
+            echo "Обновляем frontend..."
+            echo "${{ secrets.FRONTEND_ENV }}" > app/.env
+            docker compose -f docker-compose.prod.yml build frontend
+            docker compose -f docker-compose.prod.yml up -d --force-recreate frontend
+          fi
+
+          # Если не было изменений в конкретных частях - просто перезапускаем
+          if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
+            echo "Перезапускаем приложения..."
+            docker compose -f docker-compose.prod.yml up -d
+          fi
+          EOF
