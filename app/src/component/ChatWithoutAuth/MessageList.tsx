@@ -3,6 +3,7 @@ import MessageTemplate from "./Message";
 import { chatStoreWithoutAuth } from "../../store/withoutAuth";
 import { useEffect, useRef } from "react";
 import LoadingMessage from "../СhatComponent/LoadingMessage";
+import YandexAdBlock from "../UX/AdsSlide";
 
 function MessageList() {
   const listRef = useRef<HTMLDivElement>(null);
@@ -19,7 +20,7 @@ function MessageList() {
 
   return (
     <div className="message-list" ref={listRef}>
-      <div id="yandex_rtb_R-A-15374861-5"></div>
+      <YandexAdBlock blockId="R-A-15374861-5"/>
       <div className="messagesAndAds">
         {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
           <MessageTemplate
