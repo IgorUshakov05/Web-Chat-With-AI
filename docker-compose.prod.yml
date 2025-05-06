@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mongo:
     image: mongo
@@ -30,7 +32,7 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
-    command: sh -c "sleep 15 && npm start"  # Задержка для инициализации MongoDB
+    command: sh -c "sleep 15 && npm start"  # Явная задержка для инициализации MongoDB
 
   frontend:
     build:
