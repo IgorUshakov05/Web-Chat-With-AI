@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: webAI  
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+    networks:
+      - backend-network
+
+  backend:
+    build: 
+      context: ./backend
+      target: development
+    container_name: backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: "mongodb://root:password@mongo:27017/webAI?authSource=admin"
+    networks:
+      - backend-network
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  frontend:
+    build: 
+      context: ./app
+      target: development
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./app/.env
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+  mongo-config:
+
+networks:
+  backend-network:

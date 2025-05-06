@@ -35,6 +35,9 @@ jobs:
           set -e
           cd /huntai
           
+          # Проверяем существование сети
+          docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
+          
           git fetch origin
           git reset --hard origin/main
 
@@ -42,20 +45,20 @@ jobs:
           if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
             echo "Обновляем backend..."
             echo "${{ secrets.BACKEND_ENV }}" > backend/.env
-            docker compose build backend
-            docker compose up -d --force-recreate backend
+            docker compose -f docker-compose.prod.yml build backend
+            docker compose -f docker-compose.prod.yml up -d --force-recreate backend
           fi
 
           if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
             echo "Обновляем frontend..."
             echo "${{ secrets.FRONTEND_ENV }}" > app/.env
-            docker compose build frontend
-            docker compose up -d --force-recreate frontend
+            docker compose -f docker-compose.prod.yml build frontend
+            docker compose -f docker-compose.prod.yml up -d --force-recreate frontend
           fi
 
-          # Если не было изменений в конкретных частях - просто перезапускаем всё кроме MongoDB
+          # Если не было изменений в конкретных частях - просто перезапускаем
           if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
             echo "Перезапускаем приложения..."
-            docker compose up -d backend frontend
+            docker compose -f docker-compose.prod.yml up -d
           fi
           EOF

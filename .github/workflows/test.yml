@@ -18,24 +18,20 @@ jobs:
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
           echo "${{ secrets.FRONTEND_ENV }}" > app/.env
       
-      - name: Создаем сеть
-        run: docker network create backend-network || true
-      
       - name: Запуск всех сервисов
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-files: |
-            docker-compose.mongo.yml
-            docker-compose.yml
+            docker-compose.test.yml
           action: "up -d --build"
       
       - name: Тестирование
         run: |
           # Ваши тестовые команды
-          echo "Running tests..."
+          echo "Running integration tests..."
+          docker exec backend npm run test
       
       - name: Остановка сервисов (опционально)
         if: always()
         run: |
-          docker compose -f docker-compose.yml down
-          docker compose -f docker-compose.mongo.yml down
+          docker compose -f docker-compose.test.yml down
