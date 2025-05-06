@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Установка Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
       - name: Записываем .env файлы
         run: |
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
@@ -21,21 +26,11 @@ jobs:
       - name: Создаем сеть
         run: docker network create backend-network || true
       
-      - name: Запуск всех сервисов
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-files: |
-            docker-compose.mongo.yml
-            docker-compose.yml
-          action: "up -d --build"
       
-      - name: Тестирование
-        run: |
-          # Ваши тестовые команды
-          echo "Running tests..."
+      - name: Запуск основного приложения
+        run: docker-compose -f docker-compose.test.yml up -d --build
       
-      - name: Остановка сервисов (опционально)
+      - name: Остановка сервисов
         if: always()
         run: |
-          docker compose -f docker-compose.yml down
-          docker compose -f docker-compose.mongo.yml down
+          docker-compose -f docker-compose.test.yml down
