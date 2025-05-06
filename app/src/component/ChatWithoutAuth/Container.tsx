@@ -89,6 +89,7 @@ function Chat() {
         <MessageList />
       )}
 
+
       <div className="chat-footer">
         <input
           type="text"
