@@ -2,20 +2,20 @@ version: '3.8'
 
 services:
   mongo:
-    image: mongo
-    container_name: mongo
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: qwerty
-      MONGO_INITDB_DATABASE: webAI
-    volumes:
-      - mongo-data:/data/db
-      - mongo-config:/data/configdb
-    networks:
-      - backend-network
+      image: mongo
+      container_name: mongo
+      restart: unless-stopped
+      ports:
+        - "27017:27017"
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: qwerty
+        MONGO_INITDB_DATABASE: webAI
+      volumes:
+        - mongo-data:/data/db
+        - mongo-config:/data/configdb
+      networks:
+        - backend-network
 
   backend:
     build:
@@ -32,8 +32,7 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
-    command: sh -c "sleep 10 && npm start"  # Задержка для инициализации MongoDB
-
+    command: sh -c "sleep 10 && npm start"  
   frontend:
     build:
       context: ./app
