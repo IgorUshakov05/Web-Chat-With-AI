@@ -19,7 +19,7 @@ function MessageList() {
 
   return (
     <div className="message-list" ref={listRef}>
-      {/* <div id="yandex_rtb_R-A-15368355-4"></div> */}
+      <div id="yandex_rtb_R-A-15374861-5"></div>
       <div className="messagesAndAds">
         {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
           <MessageTemplate
