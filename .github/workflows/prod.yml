@@ -38,10 +38,8 @@ jobs:
           git fetch origin
           git reset --hard origin/main
 
-          # Очистка Docker (только если нужно)
           docker system prune -f || true
 
-          # Условное обновление backend
           if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
             echo "Обновляем backend..."
             echo "${{ secrets.BACKEND_ENV }}" > backend/.env
@@ -49,7 +47,6 @@ jobs:
             docker compose up -d --force-recreate backend
           fi
 
-          # Условное обновление frontend
           if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
             echo "Обновляем frontend..."
             echo "${{ secrets.FRONTEND_ENV }}" > app/.env
@@ -57,7 +54,6 @@ jobs:
             docker compose up -d --force-recreate frontend
           fi
 
-          # Если не было изменений в конкретных частях - просто перезапускаем
           if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
             echo "Нет изменений в backend/frontend - перезапускаем всё"
             docker compose up -d
