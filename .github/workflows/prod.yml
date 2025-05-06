@@ -37,18 +37,18 @@ jobs:
       - name: Деплой
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          set -e
+          set -ex
           cd /huntai
           
-          # Остановка старых контейнеров с очисткой orphans
+          # Создаем сеть (если не существует)
+          docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
+          
+          # Полная пересборка и запуск всех сервисов
           docker compose -f docker-compose.prod.yml down --remove-orphans
-          
-          # Запуск MongoDB если не запущена
-          if ! docker ps --format '{{.Names}}' | grep -q '^mongo$'; then
-            docker compose -f docker-compose.prod.yml up -d mongo
-            sleep 20
-          fi
-          
-          # Полный перезапуск приложений
           docker compose -f docker-compose.prod.yml up -d --build
+          
+          # Проверка состояния
+          sleep 10
+          docker ps -a
+          docker compose -f docker-compose.prod.yml logs --tail=50
           EOF
