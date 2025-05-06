@@ -34,21 +34,21 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
-          - name: Деплой
-          run: |
-            ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            set -e
-            cd /huntai
-            
-            # Остановка старых контейнеров с очисткой orphans
-            docker compose -f docker-compose.prod.yml down --remove-orphans
-            
-            # Запуск MongoDB если не запущена
-            if ! docker ps --format '{{.Names}}' | grep -q '^mongo$'; then
-              docker compose -f docker-compose.prod.yml up -d mongo
-              sleep 20
-            fi
-            
-            # Полный перезапуск приложений
-            docker compose -f docker-compose.prod.yml up -d --build
-            EOF
+      - name: Деплой
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          set -e
+          cd /huntai
+          
+          # Остановка старых контейнеров с очисткой orphans
+          docker compose -f docker-compose.prod.yml down --remove-orphans
+          
+          # Запуск MongoDB если не запущена
+          if ! docker ps --format '{{.Names}}' | grep -q '^mongo$'; then
+            docker compose -f docker-compose.prod.yml up -d mongo
+            sleep 20
+          fi
+          
+          # Полный перезапуск приложений
+          docker compose -f docker-compose.prod.yml up -d --build
+          EOF
