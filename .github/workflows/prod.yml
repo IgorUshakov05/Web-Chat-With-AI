@@ -41,17 +41,27 @@ jobs:
           set -ex
           cd /huntai
           
+          # Проверяем наличие файла
+          if [ ! -f docker-compose.prod.yml ]; then
+            echo "ОШИБКА: Файл docker-compose.prod.yml не найден!"
+            ls -la
+            exit 1
+          fi
+          
+          # Создаем сеть
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
           
+          # Полная остановка и очистка
           docker compose -f docker-compose.prod.yml down --remove-orphans || true
           
-          docker compose -f docker-compose.prod.yml up -d mongo
-          sleep 15  # Ожидание инициализации MongoDB
-          
+          # Запуск всех сервисов
           docker compose -f docker-compose.prod.yml up -d --build
           
+          # Проверка состояния
           echo "Текущие контейнеры:"
           docker ps -a
-          echo "\nЛоги последних 50 строк:"
-          docker compose -f docker-compose.prod.yml logs --tail=50
+          echo "Логи MongoDB:"
+          docker logs mongo --tail=20
+          echo "Логи Backend:"
+          docker logs backend --tail=20
           EOF
