@@ -14,28 +14,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-<<<<<<< Updated upstream
-      - name: Записываем .env backend
-        run: echo "${{ secrets.BACKEND_ENV }}" > backend/.env 
-
-      - name: Записываем .env frontend
-        run: echo "${{ secrets.FRONTEND_ENV }}" > app/.env 
-      
-=======
       - name: Получение списка изменённых файлов
         id: changes
         run: |
-          echo "CHANGED_BACKEND=false" >> $GITHUB_ENV
-          echo "CHANGED_FRONTEND=false" >> $GITHUB_ENV
-
-          git fetch origin main
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
-
-          echo "$CHANGED_FILES" | grep '^backend/' && echo "CHANGED_BACKEND=true" >> $GITHUB_ENV
-          echo "$CHANGED_FILES" | grep '^app/' && echo "CHANGED_FRONTEND=true" >> $GITHUB_ENV
->>>>>>> Stashed changes
+          echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
 
       - name: Настройка SSH ключа
         run: |
@@ -44,44 +29,37 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
 
-<<<<<<< Updated upstream
-      - name: Деплой и перезапуск Docker Compose на сервере
-=======
-      - name: Деплой на сервере
->>>>>>> Stashed changes
+      - name: Условный деплой
         run: |
           ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
           set -e
           cd /huntai
+          
+          git fetch origin
+          git reset --hard origin/main
 
-          git reset --hard HEAD
-          git pull origin main
+          # Очистка Docker (только если нужно)
+          docker system prune -f || true
 
+          # Условное обновление backend
           if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
-            echo "Изменения в backend — пересобираем backend..."
+            echo "Обновляем backend..."
             echo "${{ secrets.BACKEND_ENV }}" > backend/.env
             docker compose build backend
-            docker compose up -d backend
+            docker compose up -d --force-recreate backend
           fi
 
-<<<<<<< Updated upstream
-          
-          docker container prune -f
-
-          docker image prune -af
-
-          docker network prune -f
-
-          docker volume prune -f
-
-          docker compose up -d --build
-          EOF
-=======
+          # Условное обновление frontend
           if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
-            echo "Изменения в frontend — пересобираем frontend..."
+            echo "Обновляем frontend..."
             echo "${{ secrets.FRONTEND_ENV }}" > app/.env
             docker compose build frontend
-            docker compose up -d frontend
+            docker compose up -d --force-recreate frontend
+          fi
+
+          # Если не было изменений в конкретных частях - просто перезапускаем
+          if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
+            echo "Нет изменений в backend/frontend - перезапускаем всё"
+            docker compose up -d
           fi
           EOF
->>>>>>> Stashed changes
