@@ -18,7 +18,7 @@ services:
   backend:
     build: 
       context: ./backend
-      target: development
+      target: build
     container_name: backend
     ports:
       - "4000:4000"
@@ -35,7 +35,7 @@ services:
   frontend:
     build: 
       context: ./app
-      target: development
+      target: prod
     container_name: frontend
     ports:
       - "3000:3000"
