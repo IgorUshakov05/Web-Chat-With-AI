@@ -21,14 +21,11 @@ jobs:
       - name: Создаем сеть
         run: docker network create backend-network || true
       
-      - name: Запуск MongoDB
-        run: docker-compose -f docker-compose.mongo.yml up -d
       
       - name: Запуск основного приложения
-        run: docker-compose -f docker-compose.yml up -d --build
+        run: docker-compose -f docker-compose.test.yml up -d --build
       
       - name: Остановка сервисов
         if: always()
         run: |
-          docker-compose -f docker-compose.yml down
-          docker-compose -f docker-compose.mongo.yml down
+          docker-compose -f docker-compose.test.yml down
