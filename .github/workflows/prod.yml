@@ -34,21 +34,24 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
+
       - name: Деплой
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           set -ex
           cd /huntai
           
-          # Создаем сеть (если не существует)
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
           
-          # Полная пересборка и запуск всех сервисов
-          docker compose -f docker-compose.prod.yml down --remove-orphans
+          docker compose -f docker-compose.prod.yml down --remove-orphans || true
+          
+          docker compose -f docker-compose.prod.yml up -d mongo
+          sleep 15  # Ожидание инициализации MongoDB
+          
           docker compose -f docker-compose.prod.yml up -d --build
           
-          # Проверка состояния
-          sleep 10
+          echo "Текущие контейнеры:"
           docker ps -a
+          echo "\nЛоги последних 50 строк:"
           docker compose -f docker-compose.prod.yml logs --tail=50
           EOF

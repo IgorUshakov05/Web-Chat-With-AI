@@ -7,7 +7,7 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_PASSWORD: qwerty
       MONGO_INITDB_DATABASE: webAI  
     volumes:
       - mongo-data:/data/db
@@ -25,7 +25,7 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      DATABASE_URL: "mongodb://root:password@mongo:27017/webAI?authSource=admin"
+      DATABASE_URL: "mongodb://root:qwerty@mongo:27017/webAI?authSource=admin"
     networks:
       - backend-network
     depends_on:
