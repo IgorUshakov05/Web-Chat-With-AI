@@ -16,32 +16,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Получение списка изменённых файлов
+      - name: Определение изменённых частей
         id: changes
         run: |
           echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
           echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
 
-      - name: Настройка SSH ключа
+      - name: Настройка SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 82.202.156.126 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Условный деплой
+      - name: Деплой
         run: |
-          ssh -i ~/.ssh/id_rsa igor@82.202.156.126 << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           set -e
           cd /huntai
           
           git fetch origin
           git reset --hard origin/main
 
-          # Очистка Docker (только если нужно)
-          docker system prune -f || true
-
-          # Условное обновление backend
+          # Обновляем только изменённые сервисы
           if [ "${{ env.CHANGED_BACKEND }}" = "true" ]; then
             echo "Обновляем backend..."
             echo "${{ secrets.BACKEND_ENV }}" > backend/.env
@@ -49,7 +46,6 @@ jobs:
             docker compose up -d --force-recreate backend
           fi
 
-          # Условное обновление frontend
           if [ "${{ env.CHANGED_FRONTEND }}" = "true" ]; then
             echo "Обновляем frontend..."
             echo "${{ secrets.FRONTEND_ENV }}" > app/.env
@@ -57,9 +53,9 @@ jobs:
             docker compose up -d --force-recreate frontend
           fi
 
-          # Если не было изменений в конкретных частях - просто перезапускаем
+          # Если не было изменений в конкретных частях - просто перезапускаем всё кроме MongoDB
           if [ "${{ env.CHANGED_BACKEND }}" = "false" ] && [ "${{ env.CHANGED_FRONTEND }}" = "false" ]; then
-            echo "Нет изменений в backend/frontend - перезапускаем всё"
-            docker compose up -d
+            echo "Перезапускаем приложения..."
+            docker compose up -d backend frontend
           fi
           EOF

@@ -13,30 +13,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Записываем .env 
-        run: echo "${{ secrets.BACKEND_ENV }}" > backend/.env
+      - name: Записываем .env файлы
+        run: |
+          echo "${{ secrets.BACKEND_ENV }}" > backend/.env
+          echo "${{ secrets.FRONTEND_ENV }}" > app/.env
       
-      - name: Создаем сеть (если еще не существует)
+      - name: Создаем сеть
         run: docker network create backend-network || true
       
-      - name: Запуск MongoDB
+      - name: Запуск всех сервисов
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
-          compose-file: "docker-compose.mongo.yml"
-          action: "up -d"
-      
-      - name: Запуск основного приложения
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: "docker-compose.yml"
+          compose-files: |
+            docker-compose.mongo.yml
+            docker-compose.yml
           action: "up -d --build"
       
-      - name: Тестирование (добавьте свои тесты здесь)
+      - name: Тестирование
         run: |
-          # Здесь могут быть команды для запуска тестов
+          # Ваши тестовые команды
           echo "Running tests..."
       
-      - name: Выключаю
+      - name: Остановка сервисов (опционально)
+        if: always()
         run: |
           docker compose -f docker-compose.yml down
           docker compose -f docker-compose.mongo.yml down
