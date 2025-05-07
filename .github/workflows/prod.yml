@@ -44,6 +44,7 @@ jobs:
           set -ex
           cd /huntai
           git pull
+          echo "Hello World" > test.txt
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
           echo "${{ secrets.FRONTEND_ENV }}" > app/.env
       
