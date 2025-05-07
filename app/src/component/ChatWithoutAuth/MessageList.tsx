@@ -22,8 +22,10 @@ function MessageList() {
     <div className="message-list">
       <YandexAdBlock
         blockId="R-A-15374861-7"
-        maxHeight="600px"
-        maxWidth="300px"
+        defaultMaxHeight="600px"
+        defaultMaxWidth="300px"
+        mobileMaxHeight="250px"
+        mobileMaxWidth="970px"
       />
       <div className="messagesAndAds" ref={listRef}>
         {chatStoreWithoutAuth.messages.map((itemMessage, index) => (

@@ -2,14 +2,35 @@ import { useEffect, useState } from "react";
 
 const YandexAdBlock = ({
   blockId,
-  maxWidth,
-  maxHeight,
+  defaultMaxWidth = "300px",
+  defaultMaxHeight = "600px",
+  mobileMaxWidth = "250px",
+  mobileMaxHeight = "400px",
 }: {
   blockId: string;
-  maxWidth: string;
-  maxHeight: string;
+  defaultMaxWidth?: string;
+  defaultMaxHeight?: string;
+  mobileMaxWidth?: string;
+  mobileMaxHeight?: string;
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Определяем мобильное устройство по ширине экрана
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 900px)").matches);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Выбираем размеры в зависимости от устройства
+  const maxHeight = isMobile ? mobileMaxHeight : defaultMaxHeight;
+  const maxWidth = isMobile ? mobileMaxWidth : defaultMaxWidth;
 
   useEffect(() => {
     const renderAd = () => {
