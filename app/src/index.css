@@ -2350,6 +2350,9 @@ ul {
   gap: 10px;
   display: flex;
 }
+.sitemap {
+  display: none;
+}
 .messagesAndAds {
   width: 72%;
   overflow-y: scroll;

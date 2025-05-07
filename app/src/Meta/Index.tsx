@@ -19,14 +19,14 @@ export default function IndexMeta() {
         property="og:description"
         content="HuntAI - мощный инструмент для решения задач с использованием ИИ: создание контента, анализ данных и разработка решений для бизнеса."
       />
+      <meta property="og:image" content="https://hunt-ai.ru/preview.jpg" />
+
       <meta
-        property="og:image"
-        content="https://hunt-ai.ru/preview.jpg"
+        name="keywords"
+        content="HuntAI, нейросеть, искусственный интеллект, генерация текста, чат с ИИ, генерация кода, ИИ для бизнеса, анализ данных, обучение, автоматизация, GPT, LLM, AI инструменты"
       />
-      <meta
-        property="og:url"
-        content={baseUrl}
-      />
+
+      <meta property="og:url" content={baseUrl} />
       <meta property="og:type" content="website" />
 
       {/* Twitter Card */}
@@ -39,15 +39,12 @@ export default function IndexMeta() {
         name="twitter:description"
         content="HuntAI - нейросеть, которая помогает бизнесу решать задачи с помощью ИИ. Генерация текста, программирование, аналитика и многое другое."
       />
-      <meta
-        name="twitter:image"
-        content="https://hunt-ai.ru/preview.jpg"
-      />
+      <meta name="twitter:image" content="https://hunt-ai.ru/preview.jpg" />
 
       <script type="application/ld+json">
         {`
           {
-            "@context": "http://schema.org",
+            "@context": "https://schema.org",
             "@type": "WebSite",
             "name": "HuntAI - Нейросеть для бизнеса и повседневных задач",
             "url": "${baseUrl}",

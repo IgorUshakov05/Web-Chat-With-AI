@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 export default function ProductsMeta() {
-  const baseUrl = "https://hunt-ai.ru" 
+  const baseUrl = "https://hunt-ai.ru";
 
   return (
     <Helmet>
@@ -15,6 +15,10 @@ export default function ProductsMeta() {
         property="og:description"
         content="Изучите продукты от команды HuntAI: WebHunt, CountryHunt и интеллектуальный ИИ-чат. Помогаем искать работу и создавать тексты с помощью ИИ."
       />
+      <meta
+        name="keywords"
+        content="HuntAI, WebHunt, CountryHunt, ИИ чат, поиск работы, генерация текста, искусственный интеллект, AI продукты, нейросеть, генерация контента, разработка ИИ"
+      />
       <meta property="og:image" content={`${baseUrl}/product-preview.png`} />
       <meta property="og:url" content={`${baseUrl}/products`} />
       <meta property="og:type" content="website" />
@@ -25,10 +29,11 @@ export default function ProductsMeta() {
         content="Ознакомьтесь с продуктами HuntAI: WebHunt — платформа поиска работы, CountryHunt — глобальный найм, и ИИ-чат для создания контента."
       />
       <meta name="twitter:image" content={`${baseUrl}/product-preview.png`} />
+
       <script type="application/ld+json">
         {`
           {
-            "@context": "http://schema.org",
+            "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "HuntAI - Наши продукты",
             "url": "${baseUrl}/products",

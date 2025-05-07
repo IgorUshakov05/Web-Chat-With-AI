@@ -18,6 +18,10 @@ export default function DevelopersMeta() {
         property="og:image"
         content="https://hunt-ai.ru/preview.jpg"
       />
+       <meta
+        name="keywords"
+        content="HuntAI, команда, разработчики, дизайнеры, искусственный интеллект, нейросети, ИИ для бизнеса, технологии, инновационные проекты, разработка ИИ, AI solutions"
+      />
       <meta
         property="og:url"
         content={`${baseUrl}/developers`}
@@ -37,15 +41,15 @@ export default function DevelopersMeta() {
       <script type="application/ld+json">
         {`
           {
-            "@context": "http://schema.org",
+            "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "HuntAI - Наша команда",
-            "url": \`${baseUrl}/developers}\`/developers",
+            "url": "${baseUrl}/developers",
             "description": "Познакомьтесь с нашей командой, создающей искусственный интеллект HuntAI и другие проекты экосистемы WebHunt.",
             "publisher": {
               "@type": "Organization",
               "name": "HuntAI",
-              "url": \`${baseUrl}/developers\`
+              "url": "${baseUrl}"
             }
           }
         `}

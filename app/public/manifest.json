@@ -1,21 +1,18 @@
 {
-  "short_name": "HuntAI",
-  "name": "HuntAI - Бесплатная нейросеть",
+  "name": "HuntAI",
+  "short_name": "HuntAI - Бесплатная нейросеть",
   "icons": [
     {
-      "src": "favicon.webp",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/svg+xml"
+      "src": "/favicon.ico/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "favicon.webp",
-      "type": "image/svg+xml",
-      "sizes": "192x192"
-    },
-    {
-      "src": "favicon.webp",
-      "type": "image/svg+xml",
-      "sizes": "512x512"
+      "src": "/favicon.ico/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",

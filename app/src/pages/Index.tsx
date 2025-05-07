@@ -74,7 +74,7 @@ function IndexPage() {
         </section>
 
         <section className="sektor-container fle">
-          <div className="sektor-gaza bot">
+          <article className="sektor-gaza bot">
             <div>
               <h2 className="name-plus">Создание и редактирование текстов</h2>
               <p className="comand-text rte">
@@ -88,7 +88,7 @@ function IndexPage() {
                 Написание, отладка и перевод кода на разные языки
               </p>
             </div>
-          </div>
+          </article>
           <div className="ill">
             <img
               src={illustrationImg}
@@ -96,7 +96,7 @@ function IndexPage() {
               className="img-illustration"
             />
           </div>
-          <div className="sektor-gaza bot">
+          <article className="sektor-gaza bot">
             <div>
               <h2 className="name-plus">Образование и обучение</h2>
               <p className="comand-text rte">
@@ -109,7 +109,7 @@ function IndexPage() {
                 Быстрый поиск данных, анализ и краткие сводки
               </p>
             </div>
-          </div>
+          </article>
         </section>
 
         <section className="cent">
