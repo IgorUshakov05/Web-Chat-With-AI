@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import YandexAd from "../component/UX/AdsBlock";
+import Igor from "../static/Игорь.webp";
+import Yaroslav from "../static/ЯрикФото.webp";
 import DevelopersMeta from "../Meta/Developers";
 export default function DevelopersPage() {
   return (
@@ -21,7 +23,7 @@ export default function DevelopersPage() {
               <img src="Telegram.svg" alt="Telegram" />
             </Link>
           </div>
-          <img src="Игорь.webp" alt="Игорь" className="photo-sektor" />
+          <img src={Igor} alt="Игорь" className="photo-sektor" />
           <div className="social-media">
             <Link to={"https://dprofile.ru/fullstack"} className="button-media">
               <img src="DProfile.svg" alt="DProfile" />
@@ -68,7 +70,7 @@ export default function DevelopersPage() {
               <img src="Telegram.svg" alt="Telegram" />
             </Link>
           </div>
-          <img src="ЯрикФото.webp" alt="Ярослав" className="photo-sektor" />
+          <img src={Yaroslav} alt="Ярослав" className="photo-sektor" />
           <div className="social-media">
             <Link
               to={"https://dprofile.ru/yaroslavushakov"}
@@ -89,7 +91,7 @@ export default function DevelopersPage() {
           </div>
         </article>
       </div>
-      <YandexAd blockID="R-A-15374861-3"  />
+      <YandexAd blockID="R-A-15374861-3" />
 
       <Footer />
     </>

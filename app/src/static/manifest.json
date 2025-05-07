@@ -1,0 +1,25 @@
+{
+  "short_name": "HuntAI",
+  "name": "HuntAI - Бесплатная нейросеть",
+  "icons": [
+    {
+      "src": "favicon.webp",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.webp",
+      "type": "image/svg+xml",
+      "sizes": "192x192"
+    },
+    {
+      "src": "favicon.webp",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#232dfc",
+  "background_color": "#ffffff"
+}

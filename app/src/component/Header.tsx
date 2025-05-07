@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthPanel from "./AuthPanel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { authStore } from "../store/index";
 import { observer } from "mobx-react";
 import { useNewChat } from "../hook/NewChat";
+
+import logo from '../static/logo.svg'
 const links = [
   { text: "Наши продукты", href: "/products" },
   { text: "Разработчики", href: "/developers" },
@@ -32,7 +34,7 @@ function Header(): any {
     <>
       <header className="header" id="header">
         <a href="/">
-          <img src="/logo.svg" alt="Логотип HuntAI" className="logo" />
+          <img src={logo} alt="Логотип HuntAI" className="logo" />
         </a>
         <nav className="header-nav" aria-label="Основная навигация">
           <ul className="header-buttons">
