@@ -30,7 +30,7 @@ function Header(): any {
 
   return (
     <>
-      <header className="header">
+      <header className="header" id="header">
         <a href="/">
           <img src="/logo.svg" alt="Логотип HuntAI" className="logo" />
         </a>
