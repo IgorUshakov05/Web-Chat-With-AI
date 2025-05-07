@@ -40,7 +40,8 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           set -ex
           cd /huntai
-          
+          echo ${{ secrets.BACKEND_ENV}} > ./backend/.env
+          echo ${{ secrets.FRONTEND_ENV}} > ./app/.env
           # Проверка файла конфигурации
           if [ ! -f docker-compose.prod.yml ]; then
             echo "ERROR: docker-compose.prod.yml not found!"

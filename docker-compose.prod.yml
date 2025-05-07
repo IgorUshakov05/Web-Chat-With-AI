@@ -1,16 +1,14 @@
-version: '3.8'
-
 services:
   mongo:
     image: mongo
     container_name: mongo
-    restart: unless-stopped
+    restart: always
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: qwerty
-      MONGO_INITDB_DATABASE: webAI
+      MONGO_INITDB_DATABASE: webAI  
     volumes:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
@@ -18,8 +16,9 @@ services:
       - backend-network
 
   backend:
-    build:
+    build: 
       context: ./backend
+      target: build
     container_name: backend
     ports:
       - "4000:4000"
@@ -32,11 +31,11 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
-    command: sh -c "sleep 15 && npm start"  # Явная задержка для инициализации MongoDB
 
   frontend:
-    build:
+    build: 
       context: ./app
+      target: prod
     container_name: frontend
     ports:
       - "3000:3000"
@@ -54,4 +53,3 @@ volumes:
 
 networks:
   backend-network:
-    external: true
