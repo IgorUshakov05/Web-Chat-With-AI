@@ -36,43 +36,35 @@ jobs:
           docker-compose --version
 
       - name: Деплой
+        env:
+          CHANGED_BACKEND: ${{ env.CHANGED_BACKEND }}
+          CHANGED_FRONTEND: ${{ env.CHANGED_FRONTEND }}
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} <<EOF
           set -ex
           cd /huntai
           git pull
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
           echo "${{ secrets.FRONTEND_ENV }}" > app/.env
-          
-          if [ ! -f docker-compose.prod.yml ]; then
-            echo "ERROR: docker-compose.prod.yml not found!"
-            ls -la
-            exit 1
-          fi
-
+      
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
-
-          # Перезапуск только изменённых контейнеров
+      
           if [ "$CHANGED_BACKEND" = "true" ]; then
             docker compose -f docker-compose.prod.yml stop backend || true
             docker compose -f docker-compose.prod.yml rm -f backend || true
             docker compose -f docker-compose.prod.yml build backend
             docker compose -f docker-compose.prod.yml up -d backend
           fi
-
+      
           if [ "$CHANGED_FRONTEND" = "true" ]; then
             docker compose -f docker-compose.prod.yml stop frontend || true
             docker compose -f docker-compose.prod.yml rm -f frontend || true
             docker compose -f docker-compose.prod.yml build frontend
             docker compose -f docker-compose.prod.yml up -d frontend
           fi
-
-          echo "Состояние контейнеров:"
+      
           docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-
-          echo "Логи backend:"
           docker logs backend --tail 20
-
-          echo "Логи MongoDB:"
           docker logs mongo --tail 20
           EOF
+      

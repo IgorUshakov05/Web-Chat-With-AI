@@ -5,7 +5,7 @@ export default function IndexMeta() {
 
   return (
     <Helmet>
-      <title>HuntAI Игорь - Нейросеть для создания решений</title>
+      <title>HuntAI - Нейросеть для создания решений</title>
 
       <meta
         name="description"

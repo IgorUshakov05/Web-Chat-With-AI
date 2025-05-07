@@ -6,7 +6,7 @@ export default function Footer():any {
       <p className="razdel">Страницы</p>
       <p className="punkt"><a href="/developers">Разработчики</a></p>
       <p className="punkt"><a href="/products">Продукты</a></p>
-      <p className="punkt"><a href="/our-products">Наши продукты</a></p>
+      <p className="punkt"><a href="/documtntation">Документация</a></p>
     </div>
     <div>
       <p className="razdel">Юридическая ерунда</p>
