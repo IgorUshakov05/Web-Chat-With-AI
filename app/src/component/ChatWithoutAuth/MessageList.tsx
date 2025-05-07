@@ -20,7 +20,7 @@ function MessageList() {
 
   return (
     <div className="message-list" ref={listRef}>
-      <YandexAdBlock blockId="R-A-15374861-5"/>
+      <YandexAdBlock blockId="R-A-15374861-6"/>
       <div className="messagesAndAds">
         {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
           <MessageTemplate
