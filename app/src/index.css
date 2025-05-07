@@ -2359,7 +2359,11 @@ ul {
 .messagesAndAds::-webkit-scrollbar {
   display: none;
 }
-
+@media (max-width:500px) {
+  .message__wrapper {
+    width: 100%;
+  } 
+}
 @media (max-width: 900px) {
   .header-nav {
     display: none;
@@ -2461,6 +2465,9 @@ ul {
     bottom: 0;
     margin: auto;
   }
+.message__avatar {
+  display: none;
+}
 
   .auth-panel__close {
     left: 20px;
