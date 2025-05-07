@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const YandexAdBlock = ({
   blockId,
@@ -9,16 +9,19 @@ const YandexAdBlock = ({
   maxWidth: string;
   maxHeight: string;
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const renderAd = () => {
       if (window.Ya?.Context?.AdvManager) {
         try {
           window.Ya.Context.AdvManager.render({
-            blockId: blockId,
+            blockId,
             renderTo: `yandex_rtb_${blockId}`,
             type: "",
           });
         } catch (error) {
+          setIsLoading(true);
           console.error("Yandex ad rendering error:", error);
         }
       }
@@ -30,18 +33,70 @@ const YandexAdBlock = ({
       renderAd();
     }
 
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          try {
+            setIsLoading(false);
+            observer.disconnect();
+            break;
+          } catch (e) {
+            console.log(e, " тут ошибка");
+          }
+        }
+      }
+    });
+
+    const adContainer = document.getElementById(`yandex_rtb_${blockId}`);
+    if (adContainer) {
+      observer.observe(adContainer, { childList: true, subtree: true });
+    }
+
     return () => {
-      const adContainer = document.getElementById(`yandex_rtb_${blockId}`);
+      observer.disconnect();
       if (adContainer) {
         adContainer.innerHTML = "";
       }
     };
   }, [blockId]);
+
   return (
     <div
-      id={`yandex_rtb_${blockId}`}
-      style={{ maxWidth, maxHeight }}
-    />
+      style={{
+        position: "relative",
+        maxWidth,
+        maxHeight,
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      {isLoading && (
+        <img
+          alt="Реклама"
+          src="/placeholder.png"
+          style={{
+            backgroundColor: "#e0e0e0",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 1,
+          }}
+        />
+      )}
+      <div
+        id={`yandex_rtb_${blockId}`}
+        style={{
+          maxWidth,
+          maxHeight,
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          zIndex: 2,
+        }}
+      />
+    </div>
   );
 };
 
