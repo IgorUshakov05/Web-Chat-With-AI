@@ -12,10 +12,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      BACKEND_PATH: backend
-      FRONTEND_PATH: app
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -23,12 +19,8 @@ jobs:
       - name: Определение изменённых частей
         id: changes
         run: |
-          echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^${{ env.BACKEND_PATH }}/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
-          echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^${{ env.FRONTEND_PATH }}/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
-
-      - name: Пропуск деплоя при отсутствии изменений
-        if: env.CHANGED_BACKEND == 'false' && env.CHANGED_FRONTEND == 'false'
-        run: echo "Нет изменений в backend или frontend. Пропуск деплоя." && exit 0
+          echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
 
       - name: Настройка SSH
         run: |
@@ -43,48 +35,38 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      - name: Деплой на сервер
+      - name: Деплой
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} <<EOF
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           set -ex
-      
           cd /huntai
-      
-          # .env backend
-          cat > ./backend/.env <<EOB
-          ${{ secrets.BACKEND_ENV }}
-          EOB
-      
-          # .env frontend
-          cat > ./app/.env <<EOA
-          ${{ secrets.FRONTEND_ENV }}
-          EOA
-          
-          more ./backend/.env
-          more ./app/.env
 
-          # Проверка docker-compose файла
+          echo "${{ secrets.BACKEND_ENV }}" > backend/.env
+          echo "${{ secrets.FRONTEND_ENV }}" > app/.env
+          
+          # Проверка файла конфигурации
           if [ ! -f docker-compose.prod.yml ]; then
             echo "ERROR: docker-compose.prod.yml not found!"
             ls -la
             exit 1
           fi
-      
-          # Создание сети, если не существует
+          
+          # Создание сети
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
-      
-          # Перезапуск с пересборкой
+          
+          # Полная перезагрузка
           docker compose -f docker-compose.prod.yml down --remove-orphans || true
+          
+          # Запуск всех сервисов с ожиданием
           docker compose -f docker-compose.prod.yml up -d --build
-      
-          # Статус и логи
-          echo "Контейнеры:"
+          
+          # Проверка состояния
+          echo "Состояние контейнеров:"
           docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-      
-          echo "Последни логи backend:"
+          
+          echo "Логи backend:"
           docker logs backend --tail 20
-      
-          echo "Последние логи MongoDB:"
+          
+          echo "Логи MongoDB:"
           docker logs mongo --tail 20
           EOF
-          
