@@ -2353,7 +2353,6 @@ ul {
 }
 .message-list {
   height: 100%;
-  overflow-y: scroll;
   width: 100%;
   align-items: flex-end;
   max-height: 90%;
@@ -2362,8 +2361,10 @@ ul {
 }
 .messagesAndAds {
   width: 72%;
+  overflow-y: scroll;
+  max-height: 100%;
 }
 
-.message-list::-webkit-scrollbar {
+.messagesAndAds::-webkit-scrollbar {
   display: none;
 }
