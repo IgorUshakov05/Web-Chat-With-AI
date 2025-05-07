@@ -19,13 +19,13 @@ function MessageList() {
   }, [chatStoreWithoutAuth.messages, chatStoreWithoutAuth.isPending]);
 
   return (
-    <div className="message-list" ref={listRef}>
+    <div className="message-list">
       <YandexAdBlock
         blockId="R-A-15374861-7"
         maxHeight="600px"
         maxWidth="300px"
       />
-      <div className="messagesAndAds">
+      <div className="messagesAndAds" ref={listRef}>
         {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
           <MessageTemplate
             key={index}
