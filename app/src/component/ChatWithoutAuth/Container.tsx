@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import useMessageWithOutAuth from "../../hook/useMessageWithOutAuth";
 import { chatStoreWithoutAuth } from "../../store/withoutAuth";
+import img from './HuntAIText.webp'
 import React, { useEffect, useState } from "react";
 import MessageList from "./MessageList";
 
@@ -128,7 +129,7 @@ function Chat() {
 function EmptyChat() {
   return (
     <div className="empty-chat">
-  <img src="/HuntAIText.webp" alt="" />
+  <img src={img} alt="" />
     </div>
   );
 }
