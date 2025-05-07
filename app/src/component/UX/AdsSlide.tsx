@@ -1,6 +1,14 @@
 import { useEffect } from "react";
 
-const YandexAdBlock = ({ blockId }: { blockId: string }) => {
+const YandexAdBlock = ({
+  blockId,
+  maxWidth,
+  maxHeight,
+}: {
+  blockId: string;
+  maxWidth: string;
+  maxHeight: string;
+}) => {
   useEffect(() => {
     const renderAd = () => {
       if (window.Ya?.Context?.AdvManager) {
@@ -32,7 +40,7 @@ const YandexAdBlock = ({ blockId }: { blockId: string }) => {
   return (
     <div
       id={`yandex_rtb_${blockId}`}
-      style={{ maxWidth: "300px", maxHeight: "600px" }}
+      style={{ maxWidth, maxHeight }}
     />
   );
 };
