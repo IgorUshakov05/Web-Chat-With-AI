@@ -7,7 +7,6 @@ export default function IndexMeta() {
     <Helmet>
       <title>HuntAI Игорь - Нейросеть для создания решений</title>
 
-      {/* Description */}
       <meta
         name="description"
         content="HuntAI - бесплатный ИИ для создания текстов, программирования, поиска информации и обучения. Удобные инструменты для бизнеса и повседневных задач."

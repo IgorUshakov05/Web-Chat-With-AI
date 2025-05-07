@@ -40,7 +40,7 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           set -ex
           cd /huntai
-
+          git pull
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
           echo "${{ secrets.FRONTEND_ENV }}" > app/.env
           
