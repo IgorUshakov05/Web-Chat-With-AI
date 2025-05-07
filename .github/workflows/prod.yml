@@ -59,6 +59,7 @@ jobs:
           cat > ./app/.env <<EOA
           ${{ secrets.FRONTEND_ENV }}
           EOA
+          
           more ./backend/.env
           more ./app/.env
 
