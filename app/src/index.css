@@ -6,6 +6,7 @@
 html {
   scroll-behavior: smooth;
   width: 100%;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -117,6 +118,7 @@ body.panel-open {
   z-index: 99;
   position: relative;
   align-items: center;
+  background:red;
   padding: 10px 0;
 }
 
@@ -2367,4 +2369,22 @@ ul {
 
 .messagesAndAds::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 900px) {
+  .header-nav {
+    display: none;
+  }
+  .chat-container {
+    height: 88vh;
+  }
+  .message-list {
+    flex-direction: column;
+  }
+  .messagesAndAds {
+    width: 100%;
+  }
+  .chat-footer {
+    width: 100%;
+  }
 }
