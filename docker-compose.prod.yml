@@ -27,11 +27,12 @@ services:
     networks:
       - backend-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://localhost:4000/health"]
-      interval: 1m30s
-      timeout: 30s
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 2m
+      timeout: 1m
       retries: 5
-      start_period: 30s
+      start_period: 1m
+
     depends_on:
       - mongo
     restart: unless-stopped
