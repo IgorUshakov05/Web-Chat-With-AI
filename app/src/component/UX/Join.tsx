@@ -4,7 +4,7 @@ import { authStore } from "../../store";
 function Join() {
   return (
     <div className="sd">
-      <img src="HuntID.png" className="left-img" alt="HuntID logo" />
+      <img src="HuntID.webp" className="left-img" alt="HuntID logo" />
       <div className="right">
         <h4 className="name-product size">Присоединяйся</h4>
         <div className="join">

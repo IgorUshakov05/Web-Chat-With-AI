@@ -15,7 +15,7 @@ class MainWindow(QWidget):
         super().__init__()
 
         self.setWindowTitle("Моя первая программа на PySide6")
-        self.setWindowIcon(QIcon("path/to/your/icon.png")) # Замените на путь к вашему значку
+        self.setWindowIcon(QIcon("path/to/your/icon.webp")) # Замените на путь к вашему значку
 
         # Кнопка
         button = QPushButton("Нажми меня!")

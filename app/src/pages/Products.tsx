@@ -24,7 +24,7 @@ export default function ProductsPage() {
         </div>
         <div className="img-wenhunt">
           <img
-            src="img-wenhunt.png"
+            src="img-wenhunt.webp"
             alt="Web Chat With AI"
             className="img-wenhunt"
           />
@@ -122,7 +122,7 @@ export default function ProductsPage() {
 
         <div className="comand">
           <img
-            src="RabSpec.png"
+            src="RabSpec.webp"
             alt="Web Chat With AI"
             className="wenhuntrab"
           />
@@ -155,7 +155,7 @@ export default function ProductsPage() {
             <span> платформа для поиска работы</span>
           </h1>
           <img
-            src="Planet.png"
+            src="Planet.webp"
             alt="Web Chat With AI"
             className="img-countryhunt"
           />
@@ -277,7 +277,7 @@ export default function ProductsPage() {
                 </div>
               </div>
             </div>
-            <img src="AIHunt.png" alt="Web Chat With AI" className="AIHunt" />
+            <img src="AIHunt.webp" alt="Web Chat With AI" className="AIHunt" />
             <div className="sektor-gaza bottom">
               <p className="verh-opis opisanye">
                 Это интеллектуальная платформа для создания и редактирования

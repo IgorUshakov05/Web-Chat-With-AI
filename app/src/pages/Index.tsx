@@ -23,7 +23,7 @@ function IndexPage() {
               </p>
             </div>
             <div className="img-block">
-              <img src="free.png" alt="Изображение" className="img-free" />
+              <img src="free.webp" alt="Изображение" className="img-free" />
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@ function IndexPage() {
               </p>
             </div>
             <div className="img-block">
-              <img src="Цепь.png" alt="Изображение" />
+              <img src="Цепь.webp" alt="Изображение" />
             </div>
           </div>
 
@@ -48,7 +48,7 @@ function IndexPage() {
               </p>
             </div>
             <div className="img-block">
-              <img src="Будильник.png" alt="Изображение" />
+              <img src="Будильник.webp" alt="Изображение" />
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ function IndexPage() {
         </div>
         <div className="ill">
           <img
-            src="Илюстрация.png"
+            src="Илюстрация.webp"
             alt="Изображение"
             className="img-illustration"
           />
@@ -112,8 +112,8 @@ function IndexPage() {
               </div>
               <div className="photo-product">
                 <img src="HuntAI.svg" className="logo-pla" alt="" />
-                <img src="Img-AI.png" className="ai-img" alt="" />
-                <img src="Snake.png" className="ai-img snake" alt="" />
+                <img src="Img-AI.webp" className="ai-img" alt="" />
+                <img src="Snake.webp" className="ai-img snake" alt="" />
               </div>
             </div>
             <div className="block-content">
@@ -123,7 +123,7 @@ function IndexPage() {
               </div>
               <div className="photo-product">
                 <img src="WebHunt.svg" className="logo-pla" alt="" />
-                <img src="WebHUnt.png" className="ai-img" alt="" />
+                <img src="WebHUnt.webp" className="ai-img" alt="" />
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ function IndexPage() {
             </div>
             <div className="photo-product fly">
               <img src="CountryHunt.svg" className="logo-pla" alt="" />
-              <img src="Img-Country.png" className="ai-img" alt="" />
+              <img src="Img-Country.webp" className="ai-img" alt="" />
             </div>
           </div>
         </div>

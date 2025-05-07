@@ -94,7 +94,7 @@ const YandexAdBlock = ({
       {isLoading && (
         <img
           alt="Реклама"
-          src="/placeholder.png"
+          src="/placeholder.webp"
           style={{
             backgroundColor: "#e0e0e0",
             width: "100%",
