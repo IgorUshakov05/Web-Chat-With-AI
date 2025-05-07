@@ -14,7 +14,7 @@ export default function DocumentationMeta() {
         property="og:description"
         content="Подробное руководство по настройке и использованию HuntAI. Узнайте, как интегрировать чат с ИИ, используя axios, Socket.IO и JWT-аутентификацию."
       />
-      <meta property="og:image" content={`${baseUrl}/image.png`} />
+      <meta property="og:image" content="https://hunt-ai.ru/preview.jpg" />
       <meta property="og:url" content={`${baseUrl}/documentation`} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
@@ -24,7 +24,7 @@ export default function DocumentationMeta() {
         content="Изучите техническую документацию HuntAI: настройка API, WebSocket, аутентификация и примеры кода для создания чата с ИИ."
       />
 
-      <meta name="twitter:image" content={`${baseUrl}/image.png`} />
+      <meta name="twitter:image" content="https://hunt-ai.ru/preview.jpg" />
       <script type="application/ld+json">
         {`
             {

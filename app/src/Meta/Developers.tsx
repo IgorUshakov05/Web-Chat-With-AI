@@ -16,7 +16,7 @@ export default function DevelopersMeta() {
       />
       <meta
         property="og:image"
-        content={`${baseUrl}/image.png`}
+        content="https://hunt-ai.ru/preview.jpg"
       />
       <meta
         property="og:url"
@@ -31,7 +31,7 @@ export default function DevelopersMeta() {
       />
       <meta
         name="twitter:image"
-        content={`${baseUrl}/image.png`}
+        content="https://hunt-ai.ru/preview.jpg"
       />
 
       <script type="application/ld+json">
