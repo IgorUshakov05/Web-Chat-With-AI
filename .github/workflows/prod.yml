@@ -59,7 +59,9 @@ jobs:
           cat > ./app/.env <<EOA
           ${{ secrets.FRONTEND_ENV }}
           EOA
-      
+          more ./backend/.env
+          more ./app/.env
+
           # Проверка docker-compose файла
           if [ ! -f docker-compose.prod.yml ]; then
             echo "ERROR: docker-compose.prod.yml not found!"
