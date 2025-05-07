@@ -40,13 +40,16 @@ function Chat() {
       top: "64%",
     },
   ]);
+
   function handelInput(e: React.FormEvent<HTMLInputElement>) {
     let value = e.currentTarget.value;
     chatStoreWithoutAuth.inputMessage(value);
   }
+
   useEffect(() => {
     chatStoreWithoutAuth.setIsWait(isPending);
   }, [isPending]);
+
   async function handelSubmit() {
     if (chatStoreWithoutAuth.message.length === 0) return;
     await chatStoreWithoutAuth.setOneMessage({
@@ -70,6 +73,14 @@ function Chat() {
     chatStoreWithoutAuth.clear();
   }
 
+  // Обработчик нажатия клавиши
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" && !isPending) {
+      e.preventDefault();  // Чтобы предотвратить новую строку
+      handelSubmit();  // Отправляем сообщение
+    }
+  }
+
   return (
     <div className="chat-container">
       {chatStoreWithoutAuth.messages.length === 0 ? (
@@ -90,11 +101,11 @@ function Chat() {
         <MessageList />
       )}
 
-
       <div className="chat-footer">
         <input
           type="text"
           onInput={handelInput}
+          onKeyDown={handleKeyDown}  // Добавляем обработчик события клавиши
           value={chatStoreWithoutAuth.message}
           className="inputInEmpty"
           maxLength={1000}
@@ -129,7 +140,7 @@ function Chat() {
 function EmptyChat() {
   return (
     <div className="empty-chat">
-  <img src={img} alt="" />
+      <img src={img} alt="" />
     </div>
   );
 }
