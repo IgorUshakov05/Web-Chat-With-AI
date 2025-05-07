@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 export default function ProductsMeta() {
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : ""; // чтобы не падало на сервере
+  const baseUrl = "https://hunt-ai.ru" 
 
   return (
     <Helmet>

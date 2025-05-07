@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 export default function IndexMeta() {
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  const baseUrl = "https://hunt-ai.ru";
 
   return (
     <Helmet>

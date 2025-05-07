@@ -128,7 +128,7 @@ function Chat() {
 function EmptyChat() {
   return (
     <div className="empty-chat">
-      <img src="/HuntAIText.png" alt="" />
+  <img src="/HuntAIText.webp" alt="" />
     </div>
   );
 }

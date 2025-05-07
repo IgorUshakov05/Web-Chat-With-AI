@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 export default function DocumentationMeta() {
-  const baseUrl = window.location.origin;
+  const baseUrl = "https://hunt-ai.ru";
   return (
     <Helmet>
       <title>HuntAI - Документация</title>
