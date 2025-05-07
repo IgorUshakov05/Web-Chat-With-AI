@@ -45,40 +45,43 @@ jobs:
 
       - name: Деплой на сервер
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} <<EOF
           set -ex
-
+      
           cd /huntai
-
-          # Запись .env-файлов с использованием heredoc (на случай \n и спецсимволов)
-          cat <<EOB > ./backend/.env
+      
+          # .env backend
+          cat > ./backend/.env <<EOB
           ${{ secrets.BACKEND_ENV }}
           EOB
-
-          cat <<EOF > ./app/.env
+      
+          # .env frontend
+          cat > ./app/.env <<EOA
           ${{ secrets.FRONTEND_ENV }}
-          EOF
-
-          # Проверка docker-compose.prod.yml
+          EOA
+      
+          # Проверка docker-compose файла
           if [ ! -f docker-compose.prod.yml ]; then
             echo "ERROR: docker-compose.prod.yml not found!"
             ls -la
             exit 1
           fi
-
-          # Создание docker-сети, если не существует
+      
+          # Создание сети, если не существует
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
-
-          # Полный перезапуск с пересборкой
+      
+          # Перезапуск с пересборкой
           docker compose -f docker-compose.prod.yml down --remove-orphans || true
           docker compose -f docker-compose.prod.yml up -d --build
-
+      
+          # Статус и логи
           echo "Контейнеры:"
           docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-
-          echo "Последние логи backend:"
+      
+          echo "Последни логи backend:"
           docker logs backend --tail 20
-
+      
           echo "Последние логи MongoDB:"
           docker logs mongo --tail 20
           EOF
+          
