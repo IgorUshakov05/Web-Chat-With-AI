@@ -24,8 +24,6 @@ services:
       - "4000:4000"
     env_file:
       - ./backend/.env
-    environment:
-      DATABASE_URL: "mongodb://root:qwerty@mongo:27017/webAI?authSource=admin"
     networks:
       - backend-network
     depends_on:
