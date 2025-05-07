@@ -4,7 +4,7 @@ export default function DevelopersMeta() {
   const baseUrl = window.location.origin ;
   return (
     <Helmet>
-      <title>Игорь HuntAI - Наша команда</title>
+      <title>HuntAI - Наша команда</title>
       <meta
         name="description"
         content="Познакомьтесь с командой HuntAI: разработчики, дизайнеры и энтузиасты, стоящие за созданием нейросетевых решений для бизнеса и повседневных задач."
