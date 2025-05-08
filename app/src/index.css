@@ -123,6 +123,11 @@ body.panel-open {
   align-items: center;
   padding: 10px 0;
 }
+.header > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* Header Content */
 .header-text {
@@ -138,6 +143,7 @@ body.panel-open {
 .header-buttons {
   display: flex;
   gap: 10px;
+  padding: 0;
 }
 
 .button_header {
@@ -1583,7 +1589,7 @@ ul {
   display: flex;
   justify-content: space-between;
 }
-.w40 > div {
+.w40 > article {
   width: 46%;
 }
 .wid {
@@ -2044,6 +2050,7 @@ ul {
 
 .center {
   text-align: center;
+  margin: auto;
 }
 
 .img-countryhunt {
@@ -2264,6 +2271,7 @@ ul {
 .inputInEmpty {
   background: #f3f3f3;
   width: 100%;
+  resize: none;
   color: #000000ab;
   box-sizing: border-box;
   padding: 20px 18px;
@@ -2274,8 +2282,11 @@ ul {
   letter-spacing: 0%;
   border-radius: 4px;
   outline: none;
-  padding-right: 50px;
+  padding: 10px 50px 20px 10px;
   border: 0.5px solid #00045952;
+}
+.inputInEmpty::-webkit-scrollbar {
+  display: none;
 }
 .buttonInEmpty {
   position: absolute;
@@ -2362,17 +2373,47 @@ ul {
 .messagesAndAds::-webkit-scrollbar {
   display: none;
 }
-@media (max-width:500px) {
-  .message__wrapper {
-    width: 100%;
-  } 
+.burger {
+  height: 35px;
+  display: none;
+  background: #f5f5f5;
+  aspect-ratio: 4/3;
+  border-radius: 4px;
 }
+.replaace {
+  display: flex;
+  width: 68%;
+  align-items: center;
+  justify-content: space-between;
+}
+.burger {
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+}
+.burger > div {
+  border: 1px solid #808080;
+  width: 45%;
+  height: 1px;
+}
+
 @media (max-width: 900px) {
-  .header-nav {
+  .replaace {
+    width: 50%;
+  }
+  .header-buttons {
     display: none;
   }
+  .replaace {
+    flex-direction: row-reverse;
+  }
+  .burger {
+    display: flex;
+  }
   .chat-container {
-    height: 88vh;
+    height: 77vh;
   }
   .message-list {
     flex-direction: column;
@@ -2382,8 +2423,10 @@ ul {
     width: 100%;
   }
   .chat-footer {
+    bottom: 0;
     width: 100%;
   }
+
   .p2 {
     flex-direction: column;
   }
@@ -2403,6 +2446,7 @@ ul {
   .sektor-gaza {
     aspect-ratio: inherit;
     margin: auto;
+    width: 100%;
   }
   .name-plus {
     font-family: "Involve";
@@ -2442,8 +2486,7 @@ ul {
     text-align: right;
   }
   .cent {
-  margin: 100px auto;
-
+    margin: 100px auto;
   }
   .centr-name.l > * {
     text-align: left;
@@ -2456,7 +2499,7 @@ ul {
   }
   .name-product.size {
     font-size: 36px !important;
-  } 
+  }
   .right,
   .join {
     width: 100%;
@@ -2468,11 +2511,26 @@ ul {
     bottom: 0;
     margin: auto;
   }
-.message__avatar {
-  display: none;
-}
+  .message__avatar {
+    display: none;
+  }
 
   .auth-panel__close {
     left: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .message__wrapper {
+    width: 100%;
+  }
+  .logo {
+    width: 110px;
+  }
+  .replaace {
+    width: 64%;
+  }
+  .chat-footer:focus-within {
+    position: fixed;
   }
 }

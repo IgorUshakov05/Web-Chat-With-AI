@@ -5,7 +5,7 @@ import { authStore } from "../store/index";
 import { observer } from "mobx-react";
 import { useNewChat } from "../hook/NewChat";
 
-import logo from '../static/logo.svg'
+import logo from "../static/logo.svg";
 const links = [
   { text: "Наши продукты", href: "/products" },
   { text: "Разработчики", href: "/developers" },
@@ -36,34 +36,41 @@ function Header(): any {
         <a href="/">
           <img src={logo} alt="Логотип HuntAI" className="logo" />
         </a>
-        <nav className="header-nav" aria-label="Основная навигация">
-          <ul className="header-buttons">
-            {links.map((link, index) => (
-              <li key={index}>
-                <Link
-                  to={link.href}
-                  className={
-                    location.pathname === link.href
-                      ? "button_header"
-                      : "button_header_common"
-                  }
-                >
-                  {link.text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="replaace">
+          <nav className="header-nav" aria-label="Основная навигация">
+            <div className="burger">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <ul className="header-buttons">
+              {links.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    to={link.href}
+                    className={
+                      location.pathname === link.href
+                        ? "button_header"
+                        : "button_header_common"
+                    }
+                  >
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {!authStore.isAuth ? (
-          <button className="auth-button" onClick={showHandle}>
-            {authStore.isWaitAuth ? "Загрузка" : "Авторизация"}
-          </button>
-        ) : (
-          <button className="auth-button" onClick={() => mutate()}>
-            Перейти в чат
-          </button>
-        )}
+          {!authStore.isAuth ? (
+            <button className="auth-button" onClick={showHandle}>
+              {authStore.isWaitAuth ? "Загрузка" : "Авторизация"}
+            </button>
+          ) : (
+            <button className="auth-button" onClick={() => mutate()}>
+              Перейти в чат
+            </button>
+          )}
+        </div>
       </header>
       {isActive && <AuthPanel hide={hideHandle} isHiding={isHiding} />}
     </>

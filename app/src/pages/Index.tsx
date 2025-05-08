@@ -63,7 +63,7 @@ function IndexPage() {
                   ИИ доступен 24/7 — ночью и днём
                 </p>
               </div>
-              <div className="img-block">
+              <div className="img-block" style={{display:'flex', alignItems: 'flex-end'}}>
                 <img
                   src={alarmImg}
                   alt="Будильник — доступность круглосуточно"
@@ -119,7 +119,7 @@ function IndexPage() {
           </h2>
           <div className="list-product">
             <div className="w40">
-              <div className="block-content">
+              <article className="block-content">
                 <div className="centr-name l">
                   <h3 className="nazv">Hunt AI</h3>
                   <p className="text-ai">
@@ -139,8 +139,8 @@ function IndexPage() {
                     alt="Модель змеи в интерфейсе"
                   />
                 </div>
-              </div>
-              <div className="block-content">
+              </article>
+              <article className="block-content">
                 <div className="centr-name r">
                   <h3 className="nazv">Web Hunt</h3>
                   <p className="text-ai">
@@ -159,10 +159,10 @@ function IndexPage() {
                     alt="Интерфейс Web Hunt"
                   />
                 </div>
-              </div>
+              </article>
             </div>
 
-            <div className="block-content">
+            <article className="block-content">
               <div className="centr-name">
                 <h3 className="nazv">Country Hunt</h3>
                 <p className="text-ai">Поиск работы по всему миру</p>
@@ -179,7 +179,7 @@ function IndexPage() {
                   alt="Интерфейс Country Hunt"
                 />
               </div>
-            </div>
+            </article>
           </div>
         </section>
         <Suspense>

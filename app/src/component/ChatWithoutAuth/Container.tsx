@@ -1,9 +1,10 @@
 import { observer } from "mobx-react";
 import useMessageWithOutAuth from "../../hook/useMessageWithOutAuth";
 import { chatStoreWithoutAuth } from "../../store/withoutAuth";
-import img from './HuntAIText.webp'
+import img from "./HuntAIText.webp";
 import React, { useEffect, useState } from "react";
 import MessageList from "./MessageList";
+import useRedirectToChat from "../../hook/useRedirectToChat";
 
 function Chat() {
   const { mutate, isPending } = useMessageWithOutAuth(
@@ -41,7 +42,7 @@ function Chat() {
     },
   ]);
 
-  function handelInput(e: React.FormEvent<HTMLInputElement>) {
+  function handelInput(e: React.FormEvent<HTMLTextAreaElement>) {
     let value = e.currentTarget.value;
     chatStoreWithoutAuth.inputMessage(value);
   }
@@ -49,13 +50,23 @@ function Chat() {
   useEffect(() => {
     chatStoreWithoutAuth.setIsWait(isPending);
   }, [isPending]);
+  let { newChat, user } = useRedirectToChat();
 
   async function handelSubmit() {
     if (chatStoreWithoutAuth.message.length === 0) return;
+
+    const isAuthed = user.data?.success;
+    console.log(isAuthed)
+    if (isAuthed) {
+      newChat.mutate();
+      return;
+    }
+
     await chatStoreWithoutAuth.setOneMessage({
       message: chatStoreWithoutAuth.message,
       sender: "User",
     });
+
     await mutate(undefined, {
       onSuccess: (response) => {
         chatStoreWithoutAuth.setOneMessage({
@@ -63,23 +74,58 @@ function Chat() {
           sender: "Bot",
         });
       },
-      onError: (data) => {
+      onError: () => {
         chatStoreWithoutAuth.setOneMessage({
-          message: "С начала авторизируйтесь",
+          message: "Сначала авторизируйтесь",
           sender: "Bot",
         });
       },
     });
+
     chatStoreWithoutAuth.clear();
   }
 
-  // Обработчик нажатия клавиши
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter" && !isPending) {
-      e.preventDefault();  // Чтобы предотвратить новую строку
-      handelSubmit();  // Отправляем сообщение
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Enter") {
+      if (e.shiftKey) {
+        e.preventDefault();
+        const textarea = e.target as HTMLTextAreaElement;
+        const cursorPos = textarea.selectionStart;
+        const textBefore = textarea.value.substring(0, cursorPos);
+        const textAfter = textarea.value.substring(cursorPos);
+        textarea.value = textBefore + "\n" + textAfter;
+        textarea.selectionStart = cursorPos + 1;
+        textarea.selectionEnd = cursorPos + 1;
+      } else if (!isPending) {
+        e.preventDefault();
+        handelSubmit();
+      }
     }
   }
+
+  useEffect(() => {
+    const chatFooter = document.querySelector(".chat-footer");
+
+    const focusInHandler = () => {
+      document.body.style.overflow = "hidden";
+    };
+
+    const focusOutHandler = () => {
+      document.body.style.overflow = "";
+    };
+
+    if (chatFooter) {
+      chatFooter.addEventListener("focusin", focusInHandler);
+      chatFooter.addEventListener("focusout", focusOutHandler);
+    }
+
+    return () => {
+      if (chatFooter) {
+        chatFooter.removeEventListener("focusin", focusInHandler);
+        chatFooter.removeEventListener("focusout", focusOutHandler);
+      }
+    };
+  }, []);
 
   return (
     <div className="chat-container">
@@ -102,13 +148,16 @@ function Chat() {
       )}
 
       <div className="chat-footer">
-        <input
-          type="text"
+        <textarea
           onInput={handelInput}
-          onKeyDown={handleKeyDown}  
+          onKeyDown={handleKeyDown}
           value={chatStoreWithoutAuth.message}
           className="inputInEmpty"
           maxLength={10000}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
           placeholder="Введите запрос..."
         />
         {!!chatStoreWithoutAuth.message.length && !isPending && (
