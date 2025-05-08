@@ -107,7 +107,7 @@ function Chat() {
     const chatFooter = document.querySelector(".chat-footer");
 
     const focusInHandler = () => {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
     };
 
     const focusOutHandler = () => {

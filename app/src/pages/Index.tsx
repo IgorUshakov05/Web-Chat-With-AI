@@ -8,7 +8,6 @@ import freeImg from "../static/free.webp";
 import chainImg from "../static/Цепь.webp";
 import alarmImg from "../static/Будильник.webp";
 import illustrationImg from "../static/Илюстрация.webp";
-import huntAILogo from "../static/HuntAIText.webp";
 import imgAI from "../static/Img-AI.webp";
 import snakeImg from "../static/Snake.webp";
 import webHuntSvg from "../static/WebHunt.svg";
@@ -51,7 +50,7 @@ function IndexPage() {
                   Общайтесь с ИИ на любые темы без ограничений
                 </p>
               </div>
-              <div className="img-block">
+              <div className="img-block flex">
                 <img src={chainImg} alt="Разорванная цепь — символ свободы" />
               </div>
             </div>
@@ -63,7 +62,7 @@ function IndexPage() {
                   ИИ доступен 24/7 — ночью и днём
                 </p>
               </div>
-              <div className="img-block" style={{display:'flex', alignItems: 'flex-end'}}>
+              <div className="img-block flex no">
                 <img
                   src={alarmImg}
                   alt="Будильник — доступность круглосуточно"
@@ -128,7 +127,7 @@ function IndexPage() {
                 </div>
                 <div className="photo-product">
                   <img
-                    src={huntAILogo}
+                    src={webHuntSvg}
                     className="logo-pla"
                     alt="Логотип Hunt AI"
                   />

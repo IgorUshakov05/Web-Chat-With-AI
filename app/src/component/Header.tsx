@@ -15,7 +15,7 @@ function Header(): any {
   const location = useLocation();
   let [isActive, setIsActive] = useState(false);
   let [isHiding, setIsHiding] = useState(false);
-
+  let [isOpen, setOpen] = useState(false);
   const { mutate } = useNewChat();
 
   function hideHandle() {
@@ -38,12 +38,14 @@ function Header(): any {
         </a>
         <div className="replaace">
           <nav className="header-nav" aria-label="Основная навигация">
-            <div className="burger">
-              <div></div>
+            <div
+              className={`burger ${isOpen ? "open" : ""}`}
+              onClick={() => setOpen(!isOpen)}
+            >
               <div></div>
               <div></div>
             </div>
-            <ul className="header-buttons">
+            <ul className={`header-buttons ${isOpen ? "open" : ""}`}>
               {links.map((link, index) => (
                 <li key={index}>
                   <Link
@@ -58,6 +60,17 @@ function Header(): any {
                   </Link>
                 </li>
               ))}
+              <li>
+                {isOpen && (
+                  <Link
+                    to="#"
+                    onClick={() => mutate()}
+                    className={"button_header_common"}
+                  >
+                    Перейти в чат
+                  </Link>
+                )}
+              </li>
             </ul>
           </nav>
 
@@ -66,7 +79,7 @@ function Header(): any {
               {authStore.isWaitAuth ? "Загрузка" : "Авторизация"}
             </button>
           ) : (
-            <button className="auth-button" onClick={() => mutate()}>
+            <button className="auth-button m-none" onClick={() => mutate()}>
               Перейти в чат
             </button>
           )}
