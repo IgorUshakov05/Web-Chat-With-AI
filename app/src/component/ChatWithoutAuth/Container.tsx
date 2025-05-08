@@ -105,10 +105,10 @@ function Chat() {
         <input
           type="text"
           onInput={handelInput}
-          onKeyDown={handleKeyDown}  // Добавляем обработчик события клавиши
+          onKeyDown={handleKeyDown}  
           value={chatStoreWithoutAuth.message}
           className="inputInEmpty"
-          maxLength={1000}
+          maxLength={10000}
           placeholder="Введите запрос..."
         />
         {!!chatStoreWithoutAuth.message.length && !isPending && (
