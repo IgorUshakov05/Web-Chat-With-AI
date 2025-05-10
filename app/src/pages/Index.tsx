@@ -15,6 +15,7 @@ import webHuntImg from "../static/WebHUnt.webp";
 import countryHuntSvg from "../static/CountryHunt.svg";
 import countryHuntImg from "../static/Img-Country.webp";
 import IndexMeta from "../Meta/Index";
+import YandexAdBlock from "../component/UX/AdsSlide";
 const Join = lazy(() => import("../component/UX/Join"));
 
 function IndexPage() {
@@ -24,6 +25,15 @@ function IndexPage() {
       <Header />
       <main>
         <ChatWithoutAuth />
+        <div style={{height:'250px'}}>
+          <YandexAdBlock
+            blockId="R-A-15374861-9"
+            defaultMaxHeight="250px"
+            defaultMaxWidth="100vw"
+            mobileMaxHeight="100vh"
+            mobileMaxWidth="100vw"
+          />
+        </div>
         <section className="p2">
           <div className="left-panel">
             <div className="kartochka">

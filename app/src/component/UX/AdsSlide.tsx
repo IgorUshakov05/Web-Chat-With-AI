@@ -23,9 +23,9 @@ const YandexAdBlock = ({
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Выбираем размеры в зависимости от устройства
@@ -85,10 +85,10 @@ const YandexAdBlock = ({
     <div
       style={{
         position: "relative",
-        maxWidth,
-        maxHeight,
         width: "100%",
         height: "100%",
+        maxWidth,
+        maxHeight,
       }}
     >
       {isLoading && (
@@ -96,7 +96,6 @@ const YandexAdBlock = ({
           alt="Реклама"
           src="/placeholder.webp"
           style={{
-            backgroundColor: "#e0e0e0",
             width: "100%",
             height: "100%",
             position: "absolute",
@@ -109,8 +108,6 @@ const YandexAdBlock = ({
       <div
         id={`yandex_rtb_${blockId}`}
         style={{
-          maxWidth,
-          maxHeight,
           width: "100%",
           height: "100%",
           position: "relative",
