@@ -605,8 +605,8 @@ section.chat-area,
 
 .loader span {
   width: 4px;
-  aspect-ratio:1;
-  background-color: #FF0066;
+  aspect-ratio: 1;
+  background-color: #ff0066;
   border-radius: 50%;
   animation: pulse 1.2s infinite ease-in-out;
 }
@@ -1582,7 +1582,6 @@ ul {
   flex-direction: column;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
-  height: 165px;
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
@@ -1925,7 +1924,7 @@ ul {
 
 .sektor-container {
   display: flex;
-  margin: 200px auto;
+  margin: 50px auto;
   justify-content: space-between;
   align-items: center;
 }
@@ -2041,6 +2040,7 @@ ul {
 
 .wenhuntrab {
   width: 100%;
+  max-width: 400px;
 }
 .webhunt-img {
   width: 100%;
@@ -2090,7 +2090,7 @@ ul {
 
 .img-wenhunt {
   width: 100%;
-  margin-top: -230px;
+  margin-top: -150px;
 }
 .CountryHunt {
   display: flex;
@@ -2225,8 +2225,8 @@ ul {
   align-items: center;
 }
 .img-wenhunt {
-  width: auto;
-  max-height: 600px;
+  width: fit-content;
+  max-width: 600px;
 }
 
 .nigger {
@@ -2461,6 +2461,11 @@ ul {
   align-items: center;
   justify-content: space-between;
 }
+
+.containerWeb {
+  width: 100%;
+}
+
 .burger {
   display: none;
   align-items: center;
@@ -2482,6 +2487,23 @@ ul {
   .header-buttons {
     display: none;
   }
+  .sektor-centr-top {
+    flex-direction: column;
+  }
+  .sektor-centr {
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 0;
+  }
+
+  .opis.centr {
+    width: 100%;
+  }
+  .CountryOpisanye,
+  .ContryImg {
+    width: 100%;
+  }
+
   .replaace {
     flex-direction: row-reverse;
   }
@@ -2526,7 +2548,16 @@ ul {
     overflow: hidden;
     gap: 0;
   }
-
+  .img-wenhunt:not(img) {
+    width: 100%;
+    margin-top: 40px;
+  }
+  img.img-wenhunt {
+    width: 100%;
+  }
+  .name-product.center {
+    text-align: justify;
+  }
   .header-buttons.open::after {
   }
   .sidebar.sidebar--history {
@@ -2541,6 +2572,24 @@ ul {
   }
   .header-buttons.open > li {
     width: 50%;
+  }
+  .huntAI-block-l {
+    flex-direction: column-reverse;
+    margin-top: 0;
+  }
+  .huntAI-block-title {
+    width: 100%;
+    gap: 0;
+    align-items: flex-start;
+  }
+  .AIHunt {
+    display: none;
+  }
+  .sektor-gaza.bottom {
+    margin-top: 10px;
+  }
+  .ii {
+    margin: 0;
   }
   .header-buttons.open > li > a {
     width: 100%;
@@ -2561,6 +2610,10 @@ ul {
   }
   .sektor-container > div {
     width: 100%;
+    margin: auto;
+  }
+  .sektor-container > .comand {
+    width: 80%;
   }
   .sektor-gaza {
     aspect-ratio: inherit;
@@ -2579,7 +2632,7 @@ ul {
     width: 100%;
   }
   .name-product {
-    font-size: 60px;
+    font-size: 13vw;
   }
   .sektor-gaza.bot > div {
     width: 100%;
@@ -2672,6 +2725,9 @@ ul {
     height: fit-content;
     max-height: 250px;
     width: 100%;
+  }
+  .name-product.center {
+    font-size: 10vw;
   }
 }
 .centr-name {
