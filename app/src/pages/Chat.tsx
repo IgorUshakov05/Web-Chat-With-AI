@@ -12,6 +12,7 @@ import Spinner from "../component/СhatComponent/Spin";
 import useCurrentChat from "../hook/GetCurrentChat";
 import { chatStore, socketStore } from "../store";
 import LoadingMessage from "../component/СhatComponent/LoadingMessage";
+import ErrorMessage from "../component/СhatComponent/ErrorMessage";
 
 const ChatPage: React.FC = () => {
   const location = useLocation();
@@ -46,16 +47,21 @@ const ChatPage: React.FC = () => {
             {isPending ? (
               <Spinner />
             ) : (
-              chatStore.messages.map((msg, index) => (
-                <MessageTemplate
-                  key={index}
-                  data={{
-                    sender: msg.sender,
-                    text: msg.text,
-                    timestamp: msg.timestamp,
-                  }}
-                />
-              ))
+              chatStore.messages.map((msg, index) =>
+                msg.text === "Ошибка сервера" ||
+                msg.text === "Сначала авторизируйтесь" ? (
+                  <ErrorMessage />
+                ) : (
+                  <MessageTemplate
+                    key={index}
+                    data={{
+                      sender: msg.sender,
+                      text: msg.text,
+                      timestamp: msg.timestamp,
+                    }}
+                  />
+                )
+              )
             )}
             {socketStore.isWait ? <LoadingMessage /> : null}
             <div ref={bottomRef} />

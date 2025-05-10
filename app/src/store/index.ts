@@ -3,6 +3,7 @@ import { io, Socket } from "socket.io-client";
 import Message, { ChatListItemMessage } from "../types/ChatMessages";
 
 class ChatStore {
+  isWait:boolean = false;
   messages: Message[] = [];
   chatID: string = localStorage.getItem("chat_id") || "";
   chatList: ChatListItemMessage[] = [];
@@ -14,6 +15,9 @@ class ChatStore {
   }
   setChatList(newChatList: ChatListItemMessage[]) {
     this.chatList = newChatList;
+  }
+  setIsWait(state:boolean) {
+    this.isWait = state
   }
   removeChat(id: string) {
     this.chatList = this.chatList.filter((item) => item.id !== id);

@@ -11,6 +11,9 @@ import chat_router from "./Chat/routes";
 import auth_router from "./Auth/Router";
 import CodeRoute from "./mail/router";
 import initSocket from "./Chat/Socket";
+import { setGlobalDispatcher, Agent, fetch } from "undici";
+setGlobalDispatcher(new Agent({ keepAliveTimeout: 120000 }));
+globalThis.fetch = fetch as any;
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 4000;
@@ -54,7 +57,7 @@ export async function verifyGoogleIdToken(idToken: string) {
     idToken,
     audience: process.env.GOOGLE_CLIENT_ID,
   });
-  return ticket.getPayload(); 
+  return ticket.getPayload();
 }
 
 const server = http.createServer(app);

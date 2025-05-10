@@ -1,8 +1,5 @@
 import type { Content } from "@google/generative-ai";
 import { find_chat_by_id } from "./Chat";
-import { setGlobalDispatcher, Agent, fetch } from "undici";
-setGlobalDispatcher(new Agent({ keepAliveTimeout: 60000 }));
-globalThis.fetch = fetch as any;
 import { GoogleGenerativeAI } from "@google/generative-ai";
 export default async function get_answer_ai(
   request: string,

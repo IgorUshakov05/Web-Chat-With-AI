@@ -7,7 +7,7 @@ export default function LoadingMessage() {
         </div>
         <div className="message__wrapper">
           <div className="message__content markdown-content loading">
-            Генерирую
+            Генерирую пупсик
             <div className="loader">
               <span></span>
               <span></span>

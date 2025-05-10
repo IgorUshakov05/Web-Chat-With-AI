@@ -2,14 +2,14 @@ import { makeAutoObservable } from "mobx";
 import { Message } from "../types/WithoutAuth";
 
 class ChatStore {
-  isPending: boolean = false;
+  isWait: boolean = false;
   messages: Message[] = [];
   message: string = localStorage.getItem("message") || "";
   constructor() {
     makeAutoObservable(this);
   }
   setIsWait(state: boolean) {
-    this.isPending = state;
+    this.isWait = state;
   }
   inputMessage(message: string) {
     this.message = message;

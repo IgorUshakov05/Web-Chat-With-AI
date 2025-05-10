@@ -56,7 +56,7 @@ function Chat() {
     if (chatStoreWithoutAuth.message.length === 0) return;
 
     const isAuthed = user.data?.success;
-    console.log(isAuthed)
+    console.log(isAuthed);
     if (isAuthed) {
       newChat.mutate();
       return;
@@ -160,7 +160,7 @@ function Chat() {
           spellCheck="false"
           placeholder="Введите запрос..."
         />
-        {!!chatStoreWithoutAuth.message.length && !isPending && (
+        {!!chatStoreWithoutAuth.message.length && !isPending  || !chatStoreWithoutAuth.isWait? (
           <button
             className="buttonInEmpty"
             aria-label="Отправить запрос"
@@ -180,6 +180,13 @@ function Chat() {
               />
             </svg>
           </button>
+        ) : (
+          <div className="buttonInEmpty">
+            <div className="rel">
+              <div className="star"></div>
+              <div className="star1"></div>
+            </div>
+          </div>
         )}
       </div>
     </div>

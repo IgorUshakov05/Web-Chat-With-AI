@@ -4,6 +4,7 @@ import { chatStoreWithoutAuth } from "../../store/withoutAuth";
 import { useEffect, useRef } from "react";
 import LoadingMessage from "../СhatComponent/LoadingMessage";
 import YandexAdBlock from "../UX/AdsSlide";
+import ErrorMessage from "../СhatComponent/ErrorMessage";
 
 function MessageList() {
   const listRef = useRef<HTMLDivElement>(null);
@@ -16,7 +17,7 @@ function MessageList() {
         behavior: "smooth",
       });
     }
-  }, [chatStoreWithoutAuth.messages, chatStoreWithoutAuth.isPending]);
+  }, [chatStoreWithoutAuth.messages, chatStoreWithoutAuth.isWait]);
 
   return (
     <div className="message-list">
@@ -28,13 +29,20 @@ function MessageList() {
         mobileMaxWidth="970px"
       />
       <div className="messagesAndAds" ref={listRef}>
-        {chatStoreWithoutAuth.messages.map((itemMessage, index) => (
-          <MessageTemplate
-            key={index}
-            data={{ message: itemMessage.message, sender: itemMessage.sender }}
-          />
-        ))}
-        {chatStoreWithoutAuth.isPending && <LoadingMessage />}
+        {chatStoreWithoutAuth.messages.map((itemMessage, index) =>
+          itemMessage.message === "Ошибка сервера" ||  itemMessage.message === "Сначала авторизируйтесь"? (
+            <ErrorMessage />
+          ) : (
+            <MessageTemplate
+              key={index}
+              data={{
+                message: itemMessage.message,
+                sender: itemMessage.sender,
+              }}
+            />
+          )
+        )}
+        {chatStoreWithoutAuth.isWait && <LoadingMessage />}
       </div>
     </div>
   );
