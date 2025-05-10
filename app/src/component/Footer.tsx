@@ -26,8 +26,8 @@ export default function Footer(): any {
         <div>
           <p className="razdel">Сотрудничество</p>
           <p className="punkt">
-            <a href="mailto:team@webhunt.ru" className="__cf_email__">
-              team@webhunt.ru
+            <a href="mailto:team@huntteam.ru" className="__cf_email__">
+              team@huntteam.ru
             </a>
           </p>
         </div>
