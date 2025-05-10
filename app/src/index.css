@@ -748,7 +748,7 @@ section.chat-area,
 .textDocumentation {
   font-family: "Involve";
   font-weight: 600;
-  font-size: 290px;
+  font-size: 23vw;
   line-height: 85%;
   text-align: center;
   letter-spacing: 0%;
@@ -905,7 +905,7 @@ pre code.hljs {
 
 .text-stek {
   margin: 0;
-  font-size: 70px;
+  font-size: 10vw;
   font-family: "Involve", sans-serif;
   color: #cccccc;
 }
@@ -2392,7 +2392,16 @@ ul {
 .burger.open div:nth-child(1) {
   transform: rotate(45deg) translate(3px, 2px);
 }
+.stek-list li {
+  font-size: 20px;
+  color: #a7abfe;
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
 
+.stek-list li.active {
+  font-size: 40px;
+  color: #232dfc;
+}
 .burger.open div:nth-child(2) {
   transform: rotate(-45deg) translate(3px, -2px);
 }
@@ -2438,6 +2447,9 @@ ul {
   .messagesAndAds,
   .left-panel {
     width: 100%;
+  }
+  .sektor-container {
+    margin: 20px auto;
   }
   .chat-footer {
     bottom: 0;
@@ -2575,17 +2587,36 @@ ul {
   .message__avatar {
     display: none;
   }
-
+  .stek-div {
+    gap: 0;
+  }
   .auth-panel__close {
     left: 20px;
+  }
+  .stek-list li {
+    font-size: 4vw;
+    color: #a7abfe;
+    transition: font-size 0.3s ease, color 0.3s ease;
+  }
+
+  .stek-list li.active {
+    font-size: 6vw;
+    color: #232dfc;
   }
   .sektor {
     width: 100%;
     max-width: 500px;
   }
+
   .sektor:nth-child(3) {
     width: 100%;
     max-width: 500px;
+  }
+  .stek-row {
+    flex-direction: column;
+  }
+  .stek-row > * {
+    width: 100%;
   }
   .comand {
     height: fit-content;

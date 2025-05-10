@@ -8,11 +8,11 @@ import Footer from "../component/Footer";
 import DocumentationArticle from "../component/UX/Documentation";
 import YandexAd from "../component/UX/AdsBlock";
 import DocumentationMeta from "../Meta/Documentation";
+import YandexAdBlock from "../component/UX/AdsSlide";
 
 hljs.registerLanguage("javascript", javascript);
 
 const Documentation = () => {
-
   useEffect(() => {
     const handleScroll = () => {
       updateStyles();
@@ -21,8 +21,6 @@ const Documentation = () => {
 
     const updateStyles = () => {
       const listItems = document.querySelectorAll(".stek-list li");
-      const originalFontSize = 20;
-      const targetFontSize = 50;
       const windowHeight = window.innerHeight;
       const centerY = windowHeight / 2;
 
@@ -34,15 +32,9 @@ const Documentation = () => {
         const isAtCenter = distanceFromCenter <= maxDistance;
 
         if (isAtCenter) {
-          const scaleFactor = 1 - distanceFromCenter / maxDistance;
-          const newFontSize =
-            originalFontSize +
-            (targetFontSize - originalFontSize) * scaleFactor;
-          (item as HTMLElement).style.fontSize = `${newFontSize}px`;
-          (item as HTMLElement).style.color = "#232DFC";
+          item.classList.add("active"); // Добавляем класс "active"
         } else {
-          (item as HTMLElement).style.fontSize = `${originalFontSize}px`;
-          (item as HTMLElement).style.color = "#A7ABFE";
+          item.classList.remove("active"); // Убираем класс "active"
         }
       });
     };
@@ -51,9 +43,9 @@ const Documentation = () => {
       const backToTopButton = document.querySelector(".back-to-top");
       if (backToTopButton) {
         if (window.scrollY > 300) {
-          backToTopButton.classList.add("visible");
+          backToTopButton.classList.add("visible"); // Добавляем класс .visible
         } else {
-          backToTopButton.classList.remove("visible");
+          backToTopButton.classList.remove("visible"); // Убираем класс .visible
         }
       }
     };
@@ -373,6 +365,15 @@ const getBearer = (header?: string): string | undefined => {
           </div>
         </div>
       </div>
+      <div style={{ height: "300px", margin: '20px 0' }}>
+        <YandexAdBlock
+          blockId="R-A-15374861-12"
+          defaultMaxHeight="300px"
+          defaultMaxWidth="100vw"
+          mobileMaxHeight="100vh"
+          mobileMaxWidth="100vw"
+        />
+      </div>
       <div className="stek-row">
         <div className="title">
           <p>Настройка axios для отправки запросов с Bearer</p>
@@ -485,6 +486,15 @@ const getBearer = (header?: string): string | undefined => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div style={{ height: "300px", margin: '20px 0' }}>
+        <YandexAdBlock
+          blockId="R-A-15374861-12"
+          defaultMaxHeight="300px"
+          defaultMaxWidth="100vw"
+          mobileMaxHeight="100vh"
+          mobileMaxWidth="100vw"
+        />
       </div>
       <div className="stek-row">
         <div className="title">
@@ -718,13 +728,21 @@ const getBearer = (header?: string): string | undefined => {
           </div>
         </div>
       </div>
+      <div style={{ height: "300px", margin: '20px 0' }}>
+        <YandexAdBlock
+          blockId="R-A-15374861-12"
+          defaultMaxHeight="300px"
+          defaultMaxWidth="100vw"
+          mobileMaxHeight="100vh"
+          mobileMaxWidth="100vw"
+        />
+      </div>
       <button
         className="back-to-top fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-full opacity-0 transition-opacity duration-300"
         onClick={handleBackToTop}
       >
         ↑
       </button>
-      <YandexAd blockID="R-A-15374861-4" />
 
       <Footer />
     </div>
