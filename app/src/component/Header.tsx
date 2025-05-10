@@ -49,7 +49,12 @@ function Header(): any {
               {links.map((link, index) => (
                 <li
                   key={index}
-                  style={{ width: links.length-1 === index ? "100%" : "50%" }}
+                  style={{
+                    width:
+                      links.length - 1 === index && !authStore.isAuth
+                        ? "100%"
+                        : "50%",
+                  }}
                 >
                   <Link
                     to={link.href}
@@ -63,7 +68,7 @@ function Header(): any {
                   </Link>
                 </li>
               ))}
-              {isOpen && authStore.isAuth && (
+              {authStore.isAuth && (
                 <li>
                   <Link
                     to="#"
