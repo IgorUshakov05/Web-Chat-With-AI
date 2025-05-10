@@ -48,13 +48,12 @@ function Header(): any {
             <ul className={`header-buttons ${isOpen ? "open" : ""}`}>
               {links.map((link, index) => (
                 <li
+                  className={
+                    links.length - 1 === index && !authStore.isAuth
+                      ? "w100"
+                      : "w50"
+                  }
                   key={index}
-                  style={{
-                    width:
-                      links.length - 1 === index && !authStore.isAuth
-                        ? "100%"
-                        : "50%",
-                  }}
                 >
                   <Link
                     to={link.href}

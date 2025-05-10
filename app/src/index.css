@@ -2524,7 +2524,7 @@ ul {
     margin: 20px auto;
   }
   .chat-footer {
-    bottom: 0;
+    bottom: 40px;
     width: 100%;
   }
 
@@ -2720,6 +2720,9 @@ ul {
   }
   .stek-row > * {
     width: 100%;
+  }
+  li.w100 {
+    width: 100% !important;
   }
   .comand {
     height: fit-content;
