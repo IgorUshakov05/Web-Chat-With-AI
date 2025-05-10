@@ -31,9 +31,9 @@ const Documentation = () => {
         const isAtCenter = distanceFromCenter <= maxDistance;
 
         if (isAtCenter) {
-          item.classList.add("active"); // Добавляем класс "active"
+          item.classList.add("active");
         } else {
-          item.classList.remove("active"); // Убираем класс "active"
+          item.classList.remove("active");
         }
       });
     };
@@ -364,7 +364,7 @@ const getBearer = (header?: string): string | undefined => {
           </div>
         </div>
       </div>
-      <div style={{ height: "300px", margin: '20px 0' }}>
+      <div style={{ height: "300px", margin: "20px 0" }}>
         <YandexAdBlock
           blockId="R-A-15374861-12"
           defaultMaxHeight="300px"
@@ -486,7 +486,7 @@ const getBearer = (header?: string): string | undefined => {
           </table>
         </div>
       </div>
-      <div style={{ height: "300px", margin: '20px 0' }}>
+      <div style={{ height: "300px", margin: "20px 0" }}>
         <YandexAdBlock
           blockId="R-A-15374861-13"
           defaultMaxHeight="300px"
@@ -727,7 +727,7 @@ const getBearer = (header?: string): string | undefined => {
           </div>
         </div>
       </div>
-      <div style={{ height: "300px", margin: '20px 0' }}>
+      <div style={{ height: "300px", margin: "20px 0" }}>
         <YandexAdBlock
           blockId="R-A-15374861-14"
           defaultMaxHeight="300px"
