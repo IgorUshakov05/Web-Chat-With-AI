@@ -2235,7 +2235,7 @@ ul {
   align-items: center;
   justify-content: space-between;
   height: 80vh;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   max-height: 700px;
 
   position: relative;
@@ -2475,7 +2475,7 @@ ul {
     padding: 10px 0 0 0;
   }
   .chat-input {
-  width:100%;
+    width: 100%;
   }
   .header-buttons.open > li {
     width: 50%;
@@ -2578,6 +2578,19 @@ ul {
 
   .auth-panel__close {
     left: 20px;
+  }
+  .sektor {
+    width: 100%;
+    max-width: 500px;
+  }
+  .sektor:nth-child(3) {
+    width: 100%;
+    max-width: 500px;
+  }
+  .comand {
+    height: fit-content;
+    max-height: 250px;
+    width: 100%;
   }
 }
 .centr-name {

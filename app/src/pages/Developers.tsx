@@ -5,11 +5,21 @@ import YandexAd from "../component/UX/AdsBlock";
 import Igor from "../static/Игорь.webp";
 import Yaroslav from "../static/ЯрикФото.webp";
 import DevelopersMeta from "../Meta/Developers";
+import YandexAdBlock from "../component/UX/AdsSlide";
 export default function DevelopersPage() {
   return (
     <>
       <DevelopersMeta />
       <Header />
+      <div style={{ height: "250px" }}>
+        <YandexAdBlock
+          blockId="R-A-15374861-10"
+          defaultMaxHeight="250px"
+          defaultMaxWidth="100vw"
+          mobileMaxHeight="100vh"
+          mobileMaxWidth="100vw"
+        />
+      </div>
       <div className="sektor-container">
         <article className="sektor">
           <div className="social-media">
@@ -91,8 +101,16 @@ export default function DevelopersPage() {
           </div>
         </article>
       </div>
-      <YandexAd blockID="R-A-15374861-3" />
 
+      <div style={{ height: "250px" }}>
+        <YandexAdBlock
+          blockId="R-A-15374861-11"
+          defaultMaxHeight="250px"
+          defaultMaxWidth="100vw"
+          mobileMaxHeight="100vh"
+          mobileMaxWidth="100vw"
+        />
+      </div>
       <Footer />
     </>
   );

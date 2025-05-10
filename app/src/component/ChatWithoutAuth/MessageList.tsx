@@ -24,7 +24,7 @@ function MessageList() {
         blockId="R-A-15374861-7"
         defaultMaxHeight="600px"
         defaultMaxWidth="300px"
-        mobileMaxHeight="250px"
+        mobileMaxHeight="150px"
         mobileMaxWidth="970px"
       />
       <div className="messagesAndAds" ref={listRef}>
