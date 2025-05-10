@@ -683,6 +683,9 @@ section.chat-area,
   border-radius: 0;
 }
 
+.d-none {
+  display: none;
+}
 .message__text {
   font-family: "Inter", sans-serif;
   font-weight: Regular;
@@ -2567,6 +2570,9 @@ ul {
   }
   .sektor-centr-top {
     flex-direction: column;
+  }
+  .d-none {
+    display: block;
   }
   .sektor-centr {
     flex-direction: column;

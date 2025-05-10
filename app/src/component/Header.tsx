@@ -72,7 +72,7 @@ function Header(): any {
                   <Link
                     to="#"
                     onClick={() => mutate()}
-                    className={"button_header_common"}
+                    className={"button_header_common d-none"}
                   >
                     Перейти в чат
                   </Link>
