@@ -25,14 +25,14 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res
-        .status(404)
+        .status(401)
         .json({ success: false, message: "Введите сообщение" });
     }
     let { message } = req.body;
     let response = await get_answer_ai_without_auth(message);
     if (!response.success)
       return res
-        .status(404)
+        .status(401)
         .json({ success: false, message: response.message });
     return res.status(201).json(response);
   }
