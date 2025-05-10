@@ -9,8 +9,8 @@
       sizes="96x96"
     />
 
-    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="https://hunt-ai.ru/favicon.svg" />
+    <link rel="shortcut icon" href="https://hunt-ai.ru/favicon.ico" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -111,16 +111,12 @@
 
     <script type="application/ld+json">
       {
-        "@context": "http://schema.org",
-        "@type": "WebSite",
-        "name": "HuntAI - бесплатная нейросеть",
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "HuntAI",
         "url": "https://hunt-ai.ru/",
-        "description": "HuntAI использует нейросети для анализа данных, создания контента и решения бизнес-задач. Простой и удобный ИИ для вашей компании.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://hunt-ai.ru/search?q={search_term}",
-          "query-input": "required name=search_term"
-        }
+        "logo": "https://hunt-ai.ru/logo.png",
+        "sameAs": ["https://t.me/huntai_ru", "https://github.com/hunt-ai"]
       }
     </script>
 
@@ -132,6 +128,464 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: none">
+        <header class="header" id="header">
+          <a href="/">
+            <img src="logo.svg" alt="Логотип HuntAI" class="logo" />
+          </a>
+          <div class="replaace">
+            <nav class="header-nav" aria-label="Основная навигация">
+              <div class="burger">
+                <div></div>
+                <div></div>
+              </div>
+              <ul class="header-buttons">
+                <li>
+                  <a href="/products" class="button_header_common"
+                    >Наши продукты</a
+                  >
+                </li>
+                <li>
+                  <a href="/developers" class="button_header_common"
+                    >Разработчики</a
+                  >
+                </li>
+                <li>
+                  <a href="/documentation" class="button_header_common"
+                    >Документация</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="button_header_common">Перейти в чат</a>
+                </li>
+              </ul>
+            </nav>
+
+            <button class="auth-button">Авторизация</button>
+          </div>
+        </header>
+
+        <main>
+          <div id="chat-without-auth">
+            <div class="auth-panel__container">
+              <div class="auth-panel">
+                <button class="auth-panel__close" onclick="hide()">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <path
+                      d="M2 2L24 24M46 46L24 24M24 24L46 2L2 46"
+                      stroke="black"
+                      stroke-width="3"
+                    />
+                  </svg>
+                </button>
+
+                <div class="auth-panel__header">
+                  <img
+                    src="img-login.webp"
+                    alt="Авторизация"
+                    class="auth-panel__header-image"
+                  />
+                  <p class="step">1 из 4 шагов</p>
+                </div>
+
+                <div class="auth-panel__content">
+                  <h2 class="t1">Регистрация</h2>
+                  <button class="button-auth" onclick="toggleAuthStage()">
+                    Вход
+                  </button>
+
+                  <form
+                    action="/submit-registration"
+                    method="POST"
+                    class="content-aut"
+                  >
+                    <div class="cont">
+                      <label for="name" class="text-ver">Имя</label>
+                      <input
+                        type="text"
+                        class="input"
+                        placeholder="Имя"
+                        id="name"
+                        name="name"
+                        required
+                      />
+                    </div>
+
+                    <div class="cont">
+                      <label for="surname" class="text-ver">Фамилия</label>
+                      <input
+                        type="text"
+                        class="input"
+                        placeholder="Фамилия"
+                        id="surname"
+                        name="surname"
+                        required
+                      />
+                    </div>
+
+                    <div class="cont">
+                      <label for="birthday" class="text-ver"
+                        >Дата рождения</label
+                      >
+                      <div class="flex">
+                        <div>
+                          <span class="text-birth">День</span>
+                          <input
+                            type="number"
+                            class="input"
+                            placeholder="09"
+                            id="day"
+                            name="day"
+                            min="1"
+                            max="31"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <span class="text-birth">Месяц</span>
+                          <input
+                            type="number"
+                            class="input"
+                            placeholder="07"
+                            id="month"
+                            name="month"
+                            min="1"
+                            max="12"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <span class="text-birth">Год</span>
+                          <input
+                            type="number"
+                            class="input"
+                            placeholder="2005"
+                            id="year"
+                            name="year"
+                            min="1900"
+                            max="2025"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cont">
+                      <label for="email" class="text-ver">Введите email</label>
+                      <input
+                        type="email"
+                        class="input"
+                        placeholder="example@domain.com"
+                        id="email"
+                        name="email"
+                        required
+                      />
+                    </div>
+
+                    <div class="cont">
+                      <label for="password" class="text-ver"
+                        >Введите пароль</label
+                      >
+                      <input
+                        type="password"
+                        class="input"
+                        placeholder="Пароль"
+                        id="password"
+                        name="password"
+                        required
+                      />
+                    </div>
+
+                    <div class="cont">
+                      <label for="retry_password" class="text-ver"
+                        >Повторите пароль</label
+                      >
+                      <input
+                        type="password"
+                        class="input"
+                        placeholder="Повторите пароль"
+                        id="retry_password"
+                        name="retry_password"
+                        required
+                      />
+                    </div>
+
+                    <button type="submit" class="submit">Завершить</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="p2">
+            <div class="left-panel">
+              <div class="kartochka">
+                <section>
+                  <h2>Бесплатное использование ChatGPT на русском языке</h2>
+                  <p>
+                    HuntAI — это бесплатная нейросеть, которая поможет вам
+                    решать самые разные задачи с помощью ИИ. Используйте ChatGPT
+                    бесплатно для создания текстов, программирования, поиска
+                    информации и обучения. Мы предлагаем удобные инструменты для
+                    бизнеса и повседневных задач.
+                  </p>
+                </section>
+                <div class="img-block">
+                  <img
+                    src="free.webp"
+                    alt="Бесплатное общение с ИИ"
+                    class="img-free"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="right-panel">
+              <div class="kartochka">
+                <section>
+                  <h2>Гибкость и Свобода общения с Нейросетью</h2>
+                  <p>
+                    ChatGPT на русском доступен 24/7 — ночью и днём. Используйте
+                    нашу нейросеть для общения на любые темы без ограничений.
+                  </p>
+                </section>
+                <div class="img-block flex">
+                  <img
+                    src="Цепь.webp"
+                    alt="Разорванная цепь — символ свободы"
+                  />
+                </div>
+              </div>
+
+              <div class="kartochka">
+                <div>
+                  <h2 class="name-plus">Доступ в любое время</h2>
+                  <p class="comand-text rte">ИИ доступен 24/7 — ночью и днём</p>
+                </div>
+                <div class="img-block flex no">
+                  <img
+                    src="Будильник.webp"
+                    alt="Будильник — доступность круглосуточно"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Преимущества использования HuntAI</h2>
+            <ul>
+              <li>
+                <strong>Создание и редактирование текстов:</strong> Генерация
+                статей, постов, рекламных материалов, сценариев и рассказов.
+              </li>
+              <li>
+                <strong>Программирование:</strong> Написание, отладка и перевод
+                кода на разные языки.
+              </li>
+              <li>
+                <strong>Образование и обучение:</strong> Объяснение сложных тем,
+                создание учебных материалов и тестов.
+              </li>
+              <li>
+                <strong>Поиск информации и аналитика:</strong> Быстрый поиск
+                данных, анализ и краткие сводки.
+              </li>
+            </ul>
+          </section>
+          <section class="sektor-container fle">
+            <article class="sektor-gaza bot">
+              <div>
+                <h2 class="name-plus">Создание и редактирование текстов</h2>
+                <p class="comand-text rte">
+                  Генерация статей, постов, рекламных материалов, сценариев и
+                  рассказов
+                </p>
+              </div>
+              <div>
+                <h2 class="name-plus">Программирование</h2>
+                <p class="comand-text rte">
+                  Написание, отладка и перевод кода на разные языки
+                </p>
+              </div>
+            </article>
+            <div class="ill">
+              <img
+                src="Илюстрация.webp"
+                alt="Иллюстрация возможностей ИИ"
+                class="img-illustration"
+              />
+            </div>
+            <article class="sektor-gaza bot">
+              <div>
+                <h2 class="name-plus">Образование и обучение</h2>
+                <p class="comand-text rte">
+                  Объяснение сложных тем, создание учебных материалов и тестов
+                </p>
+              </div>
+              <div>
+                <h2 class="name-plus">Поиск информации и аналитика</h2>
+                <p class="comand-text rte">
+                  Быстрый поиск данных, анализ и краткие сводки
+                </p>
+              </div>
+            </article>
+          </section>
+
+          <section class="cent">
+            <h2 class="name-product center wid">
+              <span class="color">У нас есть не только </span>
+              <span class="gra">GPT</span>
+            </h2>
+            <div class="list-product">
+              <div class="w40">
+                <article class="block-content">
+                  <div class="centr-name l">
+                    <h3 class="nazv">Hunt AI</h3>
+                    <p class="text-ai">
+                      Бесплатный чат с искусственным интеллектом
+                    </p>
+                  </div>
+                  <div class="photo-product">
+                    <img
+                      src="WebHunt.svg"
+                      class="logo-pla"
+                      alt="Логотип Hunt AI"
+                    />
+                    <img
+                      src="Img-AI.webp"
+                      class="ai-img"
+                      alt="Интерфейс Hunt AI"
+                    />
+                    <img
+                      src="Snake.webp"
+                      class="ai-img snake"
+                      alt="Модель змеи в интерфейсе"
+                    />
+                  </div>
+                </article>
+                <article class="block-content">
+                  <div class="centr-name r">
+                    <h3 class="nazv">Web Hunt</h3>
+                    <p class="text-ai">Платформа для веб-специалистов в СНГ</p>
+                  </div>
+                  <div class="photo-product">
+                    <img
+                      src="WebHunt.svg"
+                      class="logo-pla"
+                      alt="Логотип Web Hunt"
+                    />
+                    <img
+                      src="WebHunt.webp"
+                      class="ai-img"
+                      alt="Интерфейс Web Hunt"
+                    />
+                  </div>
+                </article>
+              </div>
+
+              <article class="block-content">
+                <div class="centr-name">
+                  <h3 class="nazv">Country Hunt</h3>
+                  <p class="text-ai">Поиск работы по всему миру</p>
+                </div>
+                <div class="photo-product fly">
+                  <img
+                    src="CountryHunt.svg"
+                    class="logo-pla"
+                    alt="Логотип Country Hunt"
+                  />
+                  <img
+                    src="Img-Country.webp"
+                    class="ai-img"
+                    alt="Интерфейс Country Hunt"
+                  />
+                </div>
+              </article>
+            </div>
+          </section>
+        </main>
+        <footer class="futer" aria-label="Подвал сайта">
+          <nav class="info" role="navigation" aria-label="Навигация в подвале">
+            <div>
+              <p class="razdel">Страницы</p>
+              <p class="punkt">
+                <a href="/developers">Разработчики</a>
+              </p>
+              <p class="punkt">
+                <a href="/products">Продукты</a>
+              </p>
+              <p class="punkt">
+                <a href="/documentation">Документация</a>
+              </p>
+            </div>
+            <div>
+              <p class="razdel">Юридическая информация</p>
+              <p class="punkt">
+                <a href="/privacy-policy">Политика конфиденциальности</a>
+              </p>
+              <p class="punkt">
+                <a href="/terms-of-use">Правила использования продукта</a>
+              </p>
+            </div>
+            <div>
+              <p class="razdel">Сотрудничество</p>
+              <p class="punkt">
+                <a href="mailto:team@webhunt.ru" class="__cf_email__">
+                  team@webhunt.ru
+                </a>
+              </p>
+            </div>
+            <div>
+              <p class="razdel">Связь для вопросов</p>
+              <p class="punkt">
+                <a href="mailto:support@webhunt.ru" class="__cf_email__">
+                  support@webhunt.ru
+                </a>
+              </p>
+            </div>
+          </nav>
+
+          <section class="sitemap" aria-label="Карта сайта">
+            <p class="razdel">Карта сайта</p>
+            <ul class="sitemap-list">
+              <li>
+                <a href="/">Главная</a>
+              </li>
+              <li>
+                <a href="/developers">Разработчики</a>
+              </li>
+              <li>
+                <a href="/products">Продукты</a>
+              </li>
+              <li>
+                <a href="/documentation">Документация</a>
+              </li>
+              <li>
+                <a href="/privacy-policy">Политика конфиденциальности</a>
+              </li>
+              <li>
+                <a href="/terms-of-use">Правила использования</a>
+              </li>
+            </ul>
+          </section>
+
+          <div class="footer-line" role="separator" aria-hidden="true"></div>
+
+          <div class="info" role="contentinfo">
+            <img src="/logo.svg" alt="Логотип компании" class="logo" />
+            <img
+              src="/SiteAbakan.svg"
+              alt="Партнерский сайт SiteAbakan"
+              class="SiteAbakan"
+            />
+            <button
+              class="button-futer"
+              aria-label="Дополнительные действия"
+            ></button>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
