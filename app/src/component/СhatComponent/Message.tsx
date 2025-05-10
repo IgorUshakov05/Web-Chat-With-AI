@@ -84,9 +84,9 @@ export default function MessageTemplate({ data }: { data: Message }) {
     return (
       <div className="message sent">
         <div className="message__content">
-          <p style={{ whiteSpace: "break-spaces" }} className="message__text">
+          <pre style={{ whiteSpace: "break-spaces" }} className="message__text">
             {data.text}
-          </p>
+          </pre>
         </div>
       </div>
     );

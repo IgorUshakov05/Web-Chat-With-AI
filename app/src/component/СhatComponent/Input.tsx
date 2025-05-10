@@ -77,7 +77,7 @@ function Input() {
         className="chat-input__textarea"
         placeholder="Введите запрос..."
       ></textarea>
-      {socketStore.message ? (
+      {socketStore.message && (
         <button
           type="submit"
           className="chat-input__button"
@@ -85,14 +85,15 @@ function Input() {
         >
           <img src="/send.svg" alt="Send" />
         </button>
-      ) : (
+      )}
+      {socketStore.isWait ? (
         <div className="buttonInEmpty">
           <div className="rel">
             <div className="star"></div>
             <div className="star1"></div>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

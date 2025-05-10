@@ -87,9 +87,9 @@ export default function MessageTemplate({ data }: { data: Message }) {
         style={{ marginLeft: "auto", width: "fit-content" }}
       >
         <div className="message__content">
-          <p style={{ whiteSpace: "break-spaces" }} className="message__text">
+          <pre style={{ whiteSpace: "break-spaces" }} className="message__text">
             {data.message}
-          </p>
+          </pre>
         </div>
       </div>
     );
