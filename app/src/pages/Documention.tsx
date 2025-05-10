@@ -6,7 +6,6 @@ import "highlight.js/styles/default.css";
 import "tailwindcss/tailwind.css";
 import Footer from "../component/Footer";
 import DocumentationArticle from "../component/UX/Documentation";
-import YandexAd from "../component/UX/AdsBlock";
 import DocumentationMeta from "../Meta/Documentation";
 import YandexAdBlock from "../component/UX/AdsSlide";
 
@@ -489,7 +488,7 @@ const getBearer = (header?: string): string | undefined => {
       </div>
       <div style={{ height: "300px", margin: '20px 0' }}>
         <YandexAdBlock
-          blockId="R-A-15374861-12"
+          blockId="R-A-15374861-13"
           defaultMaxHeight="300px"
           defaultMaxWidth="100vw"
           mobileMaxHeight="100vh"
@@ -730,7 +729,7 @@ const getBearer = (header?: string): string | undefined => {
       </div>
       <div style={{ height: "300px", margin: '20px 0' }}>
         <YandexAdBlock
-          blockId="R-A-15374861-12"
+          blockId="R-A-15374861-14"
           defaultMaxHeight="300px"
           defaultMaxWidth="100vw"
           mobileMaxHeight="100vh"
