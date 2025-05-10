@@ -195,7 +195,7 @@ function IndexPage() {
           <Join />
         </Suspense>
       </main>
-      <YandexAd blockID="R-A-15374861-1" />
+      {/* <YandexAd blockID="R-A-15374861-1" /> */}
       <Footer />
     </>
   );
