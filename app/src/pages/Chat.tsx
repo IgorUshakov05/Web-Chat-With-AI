@@ -63,6 +63,7 @@ const ChatPage: React.FC = () => {
                 )
               )
             )}
+            
             {socketStore.isWait ? <LoadingMessage /> : null}
             <div ref={bottomRef} />
           </div>
