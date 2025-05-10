@@ -207,7 +207,7 @@ body.panel-open {
   width: 100%;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(2px);
-  height: 100vh;
+  height: 94vh;
   left: 0;
   top: 0;
   bottom: 0;

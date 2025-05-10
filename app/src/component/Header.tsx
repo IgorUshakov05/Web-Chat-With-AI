@@ -47,7 +47,10 @@ function Header(): any {
             </div>
             <ul className={`header-buttons ${isOpen ? "open" : ""}`}>
               {links.map((link, index) => (
-                <li key={index}>
+                <li
+                  key={index}
+                  style={{ width: links.length-1 === index ? "100%" : "50%" }}
+                >
                   <Link
                     to={link.href}
                     className={
@@ -60,8 +63,8 @@ function Header(): any {
                   </Link>
                 </li>
               ))}
-              <li>
-                {isOpen && (
+              {isOpen && authStore.isAuth && (
+                <li>
                   <Link
                     to="#"
                     onClick={() => mutate()}
@@ -69,8 +72,8 @@ function Header(): any {
                   >
                     Перейти в чат
                   </Link>
-                )}
-              </li>
+                </li>
+              )}
             </ul>
           </nav>
 
