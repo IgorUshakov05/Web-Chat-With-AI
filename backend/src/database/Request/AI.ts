@@ -1,10 +1,12 @@
 import type { Content } from "@google/generative-ai";
 import { find_chat_by_id } from "./Chat";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { setGlobalDispatcher, Agent, fetch } from "undici";
+setGlobalDispatcher(new Agent({ keepAliveTimeout: 120000 }));
 export default async function get_answer_ai(
   request: string,
   chatID: string
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ success: boolean; message: string; error?: string|unknown }> {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
     const model = genAI.getGenerativeModel({
@@ -43,7 +45,11 @@ export default async function get_answer_ai(
     return { success: true, message: responseText };
   } catch (e) {
     console.error("Error:", e);
-    return { success: false, message: "Ошибка сервера!" };
+    return {
+      success: false,
+      message: "Ошибка сервера!",
+      error: e ? e : "Hello",
+    };
   }
 }
 
