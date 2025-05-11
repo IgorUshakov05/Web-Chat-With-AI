@@ -105,26 +105,50 @@ function Chat() {
   }
 
   useEffect(() => {
-    const chatFooter = document.querySelector(".chat-footer");
+    const textarea = document.querySelector(".chat-footer textarea");
+    if (!textarea) return;
 
-    const focusInHandler = () => {
+    const initialHeight = window.innerHeight;
+
+    const adjustForKeyboard = () => {
+      const viewportHeight = window.visualViewport?.height ?? initialHeight;
+      const keyboardHeight = Math.max(0, initialHeight - viewportHeight - 6);
+
+      document.body.style.height = `calc(100vh - ${keyboardHeight}px)`;
       document.body.style.overflowY = "hidden";
+
+      const chatFooter = document.querySelector(".chat-footer") as HTMLElement;
+      if (chatFooter) {
+        chatFooter.style.bottom = `${keyboardHeight}px`;
+      }
     };
 
-    const focusOutHandler = () => {
-      document.body.style.overflow = "";
+    const resetLayout = () => {
+      document.body.style.height = "";
+      document.body.style.overflowY = "";
+
+      const chatFooter = document.querySelector(".chat-footer") as HTMLElement;
+      if (chatFooter) {
+        chatFooter.style.bottom = "";
+      }
     };
 
-    if (chatFooter) {
-      chatFooter.addEventListener("focusin", focusInHandler);
-      chatFooter.addEventListener("focusout", focusOutHandler);
-    }
+    const handleFocus = () => {
+      window.visualViewport?.addEventListener("resize", adjustForKeyboard);
+    };
+
+    const handleBlur = () => {
+      window.visualViewport?.removeEventListener("resize", adjustForKeyboard);
+      resetLayout();
+    };
+
+    textarea.addEventListener("focus", handleFocus);
+    textarea.addEventListener("blur", handleBlur);
 
     return () => {
-      if (chatFooter) {
-        chatFooter.removeEventListener("focusin", focusInHandler);
-        chatFooter.removeEventListener("focusout", focusOutHandler);
-      }
+      textarea.removeEventListener("focus", handleFocus);
+      textarea.removeEventListener("blur", handleBlur);
+      window.visualViewport?.removeEventListener("resize", adjustForKeyboard);
     };
   }, []);
 
