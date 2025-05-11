@@ -50,7 +50,7 @@ jobs:
       
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
       
-          #Билд бэк
+      \    #Билд бэк
           # if [ "$CHANGED_BACKEND" = "true" ]; then
           # fi
           docker compose -f docker-compose.prod.yml build backend
