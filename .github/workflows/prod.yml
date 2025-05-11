@@ -15,27 +15,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 2  # Важно для корректного сравнения коммитов
 
       - name: Определение изменённых частей
         id: changes
         run: |
-          BACKEND_CHANGED=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')
-          FRONTEND_CHANGED=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')
-          echo "BACKEND_CHANGED=$BACKEND_CHANGED" >> $GITHUB_OUTPUT
-          echo "FRONTEND_CHANGED=$FRONTEND_CHANGED" >> $GITHUB_OUTPUT
-          echo "BACKEND_CHANGED=$BACKEND_CHANGED" >> $GITHUB_ENV
-          echo "FRONTEND_CHANGED=$FRONTEND_CHANGED" >> $GITHUB_ENV
-        
-      - name: Проверка обновлений
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
-            docker inspect huntai-backend | grep -A 5 Env
-            docker exec huntai-backend ls -la /app/src
-            docker logs huntai-backend --tail 20
-          "
-
+          echo "CHANGED_BACKEND=$(git diff --name-only HEAD^ HEAD | grep -q '^backend/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          echo "CHANGED_FRONTEND=$(git diff --name-only HEAD^ HEAD | grep -q '^app/' && echo 'true' || echo 'false')" >> $GITHUB_ENV
 
       - name: Настройка SSH
         run: |
@@ -51,48 +36,38 @@ jobs:
           docker-compose --version
 
       - name: Деплой
+        env:
+          CHANGED_BACKEND: ${{ env.CHANGED_BACKEND }}
+          CHANGED_FRONTEND: ${{ env.CHANGED_FRONTEND }}
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} <<EOF
           set -ex
           cd /huntai
           git pull
-          
-          # Получаем изменения из GitHub Actions
-          BACKEND_CHANGED=$1
-          FRONTEND_CHANGED=$2
-          
-          echo "BACKEND_CHANGED: ${BACKEND_CHANGED}"
-          echo "FRONTEND_CHANGED: ${FRONTEND_CHANGED}"
-          
+          echo "CHANGED_BACKEND: ${{ env.CHANGED_BACKEND }} CHANGED_FRONTEND: ${{ env.CHANGED_FRONTEND }}" > test.txt
           echo "${{ secrets.BACKEND_ENV }}" > backend/.env
           echo "${{ secrets.FRONTEND_ENV }}" > app/.env
       
           docker network inspect backend-network >/dev/null 2>&1 || docker network create backend-network
       
-          # Билд бэка если были изменения
-          if [ "${BACKEND_CHANGED}" = "true" ]; then
-            echo "Rebuilding backend..."
-            docker compose -f docker-compose.prod.yml build backend
-            docker compose -f docker-compose.prod.yml stop backend || true
-            docker compose -f docker-compose.prod.yml rm -f backend || true
-            docker compose -f docker-compose.prod.yml up -d backend
-          else
-            echo "No backend changes detected, skipping rebuild"
-          fi
+          #Билд бэк
+          # if [ "$CHANGED_BACKEND" = "true" ]; then
+          # fi
+          docker compose -f docker-compose.prod.yml build backend
+          docker compose -f docker-compose.prod.yml stop backend || true
+          docker compose -f docker-compose.prod.yml rm -f backend || true
+          docker compose -f docker-compose.prod.yml up -d backend
 
-          # Всегда пересобираем фронт (как в вашем оригинальном workflow)
-          echo "Rebuilding frontend..."
+          #Билд фронта
           docker compose -f docker-compose.prod.yml build frontend
           docker compose -f docker-compose.prod.yml stop frontend || true
           docker compose -f docker-compose.prod.yml rm -f frontend || true
           docker compose -f docker-compose.prod.yml up -d frontend
-          
           docker image prune -f
       
           docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
           docker logs backend --tail 20
           docker logs mongo --tail 20
+
           EOF
-        env:
-          BACKEND_CHANGED: ${{ steps.changes.outputs.BACKEND_CHANGED }}
-          FRONTEND_CHANGED: ${{ steps.changes.outputs.FRONTEND_CHANGED }}
+      
