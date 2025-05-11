@@ -2851,5 +2851,6 @@ ul {
   }
   .chat-footer:focus-within {
     position: fixed;
+    bottom:44%;
   }
 }

@@ -8,15 +8,25 @@
       href="https://hunt-ai.ru/favicon-96x96.png"
       sizes="96x96"
     />
-
-    <link rel="icon" type="image/svg+xml" href="https://hunt-ai.ru/favicon.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://hunt-ai.ru/favicon.svg"
+    />
     <link rel="shortcut icon" href="https://hunt-ai.ru/favicon.ico" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="https://hunt-ai.ru/apple-touch-icon.png"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link
       href="https://hunt-ai.ru/favicon.ico"
       rel="shortcut icon"
@@ -588,5 +598,13 @@
         </footer>
       </div>
     </div>
+    <script>
+      document.querySelectorAll("input, textarea").forEach((element) => {
+        element.addEventListener("focus", (event) => {
+          window.scrollTo(0, 0); // Возвращает экран в начальную позицию
+          event.preventDefault(); // Предотвращает стандартное поведение
+        });
+      });
+    </script>
   </body>
 </html>
