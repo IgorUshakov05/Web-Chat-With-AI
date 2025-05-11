@@ -50,16 +50,13 @@ export default async function get_answer_ai(
             });
         }
 
-        // Формируем промпт
         const prompt = request + ", using the markdown response and respond in the user's language";
         
-        // Добавляем текущий запрос в историю
         history.push({
             role: "user",
             parts: [{ text: prompt }],
         });
 
-        // Формируем тело запроса
         const requestBody: GeminiRequest = {
             contents: history,
             tools: [{ codeExecution: {} }],
