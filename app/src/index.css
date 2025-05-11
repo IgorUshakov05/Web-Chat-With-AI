@@ -1220,6 +1220,9 @@ pre code.hljs {
   margin: 100px auto;
 }
 
+.sektor-container.fle > article {
+  max-height: 200px;
+}
 .sektor {
   width: 30%;
   display: flex;
@@ -2692,12 +2695,17 @@ ul {
   .img-illustration {
     max-width: 500px;
   }
-  .sektor-container > div {
-    width: 100%;
-    margin: auto;
-  }
   .sektor-container > .comand {
     width: 80%;
+    margin: auto;
+  }
+  .sektor-container > div {
+    width: fit-content;
+    margin: auto;
+  }
+  .sektor-container > .hello {
+    width: 100%;
+    margin: auto;
   }
   .sektor-gaza {
     aspect-ratio: inherit;

@@ -56,7 +56,7 @@ export default function ProductsPage() {
             </p>
           </div>
         </div>
-        <div className="comand">
+        <div className="comand hello">
           <div className="nazvanye">
             <p className="name-comand">Почему</p>
             <p className="name-comand-blue">WebHunt</p>
