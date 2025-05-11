@@ -599,11 +599,31 @@
       </div>
     </div>
     <script>
-      document.querySelectorAll("input, textarea").forEach((element) => {
-        element.addEventListener("focus", (event) => {
-          window.scrollTo(0, 0); // Возвращает экран в начальную позицию
-          event.preventDefault(); // Предотвращает стандартное поведение
-        });
+      let initialHeight = window.innerHeight;
+
+      window.addEventListener("load", () => {
+        initialHeight = window.innerHeight;
+        console.log("Начальная высота:", initialHeight);
+      });
+
+      window.visualViewport.addEventListener("resize", () => {
+        const viewportHeight = window.visualViewport.height;
+        const keyboardHeight = Math.max(0, initialHeight - viewportHeight - 6);
+
+        console.log("Высота области просмотра:", viewportHeight);
+        console.log("Высота клавиатуры:", keyboardHeight);
+
+        // Set max-height for the body
+        document.body.style.maxHeight = `calc(100vh - ${keyboardHeight}px)`;
+        document.body.style.minHeight = `calc(100vh - ${keyboardHeight}px)`;
+
+        document.body.style.overflowY = "hidden"; // Hide the vertical overflow
+
+        // Optional: Adjust chat footer
+        const chatFooter = document.getElementsByClassName("chat-footer")[0];
+        if (chatFooter) {
+          chatFooter.style.bottom = `${keyboardHeight}px`;
+        }
       });
     </script>
   </body>

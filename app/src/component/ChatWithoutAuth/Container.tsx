@@ -86,10 +86,10 @@ function Chat() {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    const textarea = e.target as HTMLTextAreaElement;
     if (e.key === "Enter") {
       if (e.shiftKey) {
         e.preventDefault();
-        const textarea = e.target as HTMLTextAreaElement;
         const cursorPos = textarea.selectionStart;
         const textBefore = textarea.value.substring(0, cursorPos);
         const textAfter = textarea.value.substring(cursorPos);
@@ -98,6 +98,7 @@ function Chat() {
         textarea.selectionEnd = cursorPos + 1;
       } else if (!isPending) {
         e.preventDefault();
+        textarea.blur();
         handelSubmit();
       }
     }
@@ -160,7 +161,8 @@ function Chat() {
           spellCheck="false"
           placeholder="Введите запрос..."
         />
-        {!!chatStoreWithoutAuth.message.length && !isPending  || !chatStoreWithoutAuth.isWait? (
+        {(!!chatStoreWithoutAuth.message.length && !isPending) ||
+        !chatStoreWithoutAuth.isWait ? (
           <button
             className="buttonInEmpty"
             aria-label="Отправить запрос"
