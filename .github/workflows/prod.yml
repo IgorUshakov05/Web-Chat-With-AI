@@ -27,6 +27,15 @@ jobs:
           echo "FRONTEND_CHANGED=$FRONTEND_CHANGED" >> $GITHUB_OUTPUT
           echo "BACKEND_CHANGED=$BACKEND_CHANGED" >> $GITHUB_ENV
           echo "FRONTEND_CHANGED=$FRONTEND_CHANGED" >> $GITHUB_ENV
+        
+      - name: Проверка обновлений
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
+            docker inspect huntai-backend | grep -A 5 Env
+            docker exec huntai-backend ls -la /app/src
+            docker logs huntai-backend --tail 20
+          "
+
 
       - name: Настройка SSH
         run: |
