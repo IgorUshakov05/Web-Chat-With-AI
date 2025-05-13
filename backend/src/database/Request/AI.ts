@@ -50,7 +50,7 @@ export default async function get_answer_ai(
         });
 
         const requestBody: OpenRouterRequest = {
-            model: "nousresearch/deephermes-3-mistral-24b-preview:free",
+            model: "google/gemini-2.5-pro-exp-03-25",
             messages,
         };
 
