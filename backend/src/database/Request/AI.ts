@@ -48,7 +48,9 @@ export default async function get_answer_ai(
         });
       });
     }
-    const markdownText = `${request}, Пожалуйста, отвечайте только в формате Markdown. И не говори что его используешь`;
+
+    // Уточнение для нейросети, что нужно отвечать в Markdown
+    const markdownText = `${request}\n\nPlease respond exclusively in Markdown format. Do not mention Markdown in your reply.`;
 
     const userMessage: OpenRouterMessage = {
       role: "user",
@@ -107,7 +109,7 @@ export async function get_answer_ai_without_auth(
   imageUrl?: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const markdownText = `${text}, Пожалуйста, отвечайте только в формате Markdown. И не говори что его используешь`;
+    const markdownText = `${text}\n\nPlease respond exclusively in Markdown format. Do not mention Markdown in your reply.`;
 
     const userMessage: OpenRouterMessage = {
       role: "user",
@@ -145,8 +147,10 @@ export async function get_answer_ai_without_auth(
     }
 
     const responseData: OpenRouterResponse = await response.json();
+    console.log(responseData, "response");
     const responseText =
-      responseData.choices?.[0]?.message?.content || "No response text found";
+      responseData.choices?.[0]?.message?.content ||
+      "У разработчиков закончились токены, попробуйте позже";
 
     return { success: true, message: responseText };
   } catch (e) {
