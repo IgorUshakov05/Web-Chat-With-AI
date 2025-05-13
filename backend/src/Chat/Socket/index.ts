@@ -48,7 +48,7 @@ const initSocket = (server: any) => {
         from: "User",
         connect: false,
       });
-      let messageAI = await get_answer_ai(data.text, data.room);
+      let messageAI = await get_answer_ai(data.text + "давай ответ в стиле markdown", data.room);
       if (!messageAI.success)
         return io.to(data.room).emit("message", {
           success: false,

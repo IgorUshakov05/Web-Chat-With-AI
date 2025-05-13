@@ -3,32 +3,27 @@ import { setGlobalDispatcher, Agent } from "undici";
 
 setGlobalDispatcher(new Agent({ keepAliveTimeout: 120000 }));
 
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Убедитесь, что ключ задан
 
-interface GeminiContent {
-    role?: string;
-    parts: { text: string }[];
+interface OpenRouterMessage {
+    role: "user" | "assistant" | "system";
+    content: string;
 }
 
-interface GeminiRequest {
-    contents: GeminiContent[];
-    tools?: {
-        codeExecution: {};
-    }[];
+interface OpenRouterRequest {
+    model: string;
+    messages: OpenRouterMessage[];
 }
 
-interface GeminiResponse {
-    candidates?: {
-        content: {
-            parts: {
-                text: string;
-            }[];
+interface OpenRouterResponse {
+    choices: {
+        message: {
+            content: string;
         };
     }[];
     error?: {
-        code: number;
         message: string;
-        status: string;
     };
 }
 
@@ -37,50 +32,47 @@ export default async function get_answer_ai(
     chatID: string
 ): Promise<{ success: boolean; message: string; error?: string | unknown }> {
     try {
-        // Получаем историю чата
-        let history: GeminiContent[] = [];
+        let messages: OpenRouterMessage[] = [];
         const { success, chat } = await find_chat_by_id(chatID);
-        
+
         if (success && chat && "message" in chat && Array.isArray(chat.message)) {
             chat.message.forEach((item: any) => {
-                history.push({
-                    role: item.sender === "User" ? "user" : "model",
-                    parts: [{ text: item.text || "" }],
+                messages.push({
+                    role: item.sender === "User" ? "user" : "assistant",
+                    content: item.text || "",
                 });
             });
         }
 
-        const prompt = request + ", using the markdown response and respond in the user's language";
-        
-        history.push({
+        messages.push({
             role: "user",
-            parts: [{ text: prompt }],
+            content: request,
         });
 
-        const requestBody: GeminiRequest = {
-            contents: history,
-            tools: [{ codeExecution: {} }],
+        const requestBody: OpenRouterRequest = {
+            model: "nousresearch/deephermes-3-mistral-24b-preview:free",
+            messages,
         };
 
-        // Отправляем запрос к Gemini API
-        const response = await fetch(`${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`, {
+        const response = await fetch(OPENROUTER_API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${OPENROUTER_API_KEY}`,
             },
             body: JSON.stringify(requestBody),
         });
 
         if (!response.ok) {
-            const errorData: GeminiResponse = await response.json();
-            console.error("Gemini API Error:", errorData);
+            const errorData: OpenRouterResponse = await response.json();
+            console.error("OpenRouter API Error:", errorData);
             throw new Error(errorData.error?.message || `API request failed with status ${response.status}`);
         }
 
-        const responseData: GeminiResponse = await response.json();
-        const responseText = responseData.candidates?.[0]?.content?.parts?.[0]?.text || "No response text found";
+        const responseData: OpenRouterResponse = await response.json();
+        const responseText = responseData.choices?.[0]?.message?.content || "No response text found";
 
-        console.log("Gemini Response:", responseText);
+        console.log("OpenRouter Response:", responseText);
         return { success: true, message: responseText };
     } catch (e) {
         console.error("Error:", e);
@@ -96,32 +88,35 @@ export async function get_answer_ai_without_auth(
     text: string
 ): Promise<{ success: boolean; message: string }> {
     try {
-        const requestBody: GeminiRequest = {
-            contents: [{
-                role: "user",
-                parts: [{ text }],
-            }],
-            tools: [{ codeExecution: {} }],
+        const requestBody: OpenRouterRequest = {
+            model: "nousresearch/deephermes-3-mistral-24b-preview:free",
+            messages: [
+                {
+                    role: "user",
+                    content: text,
+                },
+            ],
         };
 
-        const response = await fetch(`${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`, {
+        const response = await fetch(OPENROUTER_API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${OPENROUTER_API_KEY}`,
             },
             body: JSON.stringify(requestBody),
         });
 
         if (!response.ok) {
-            const errorData: GeminiResponse = await response.json();
-            console.error("Gemini API Error:", errorData);
+            const errorData: OpenRouterResponse = await response.json();
+            console.error("OpenRouter API Error:", errorData);
             throw new Error(errorData.error?.message || `API request failed with status ${response.status}`);
         }
 
-        const responseData: GeminiResponse = await response.json();
-        const responseText = responseData.candidates?.[0]?.content?.parts?.[0]?.text || "No response text found";
+        const responseData: OpenRouterResponse = await response.json();
+        const responseText = responseData.choices?.[0]?.message?.content || "No response text found";
 
-        console.log("Gemini Response:", responseText);
+        console.log("OpenRouter Response:", responseText);
         return { success: true, message: responseText };
     } catch (e) {
         console.error("Error:", e);
