@@ -51,13 +51,12 @@ function Chat() {
     chatStoreWithoutAuth.setIsWait(isPending);
   }, [isPending]);
   let { newChat, user } = useRedirectToChat();
-
   async function handelSubmit() {
     if (chatStoreWithoutAuth.message.length === 0) return;
 
     const isAuthed = user.data?.success;
     console.log(isAuthed);
-    if (isAuthed) {
+    if (isAuthed && user.data) {
       newChat.mutate();
       return;
     }

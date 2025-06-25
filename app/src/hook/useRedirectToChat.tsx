@@ -2,11 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { authentication } from "../api/Auth";
 import { useNavigate } from "react-router-dom";
 import { open_new_chat } from "../api/Chat";
-import { useEffect } from "react";
 
 export default function useRedirectToChat() {
   const navigate = useNavigate();
-
   const newChat = useMutation({
     mutationKey: ["new chat"],
     mutationFn: open_new_chat,
@@ -19,6 +17,5 @@ export default function useRedirectToChat() {
     queryFn: authentication,
     retry: false,
   });
-
   return { user, newChat };
 }

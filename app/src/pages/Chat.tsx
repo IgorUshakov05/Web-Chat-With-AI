@@ -25,8 +25,9 @@ const ChatPage: React.FC = () => {
   };
 
   useEffect(() => {
+    chatStore.setIsWait(true);
     scrollToBottom();
-  }, [chatStore.messages.length, isPending]);
+  }, [chatStore.messages.length, isPending, chatID]);
   useEffect(() => {
     chatStore.setChatID(chatID);
     if (isSuccess && data?.chat.message) {

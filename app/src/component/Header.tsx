@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import AuthPanel from "./AuthPanel";
-import { useState } from "react";
-import { authStore } from "../store/index";
+import { useEffect, useState } from "react";
+import { authStore, chatStore } from "../store/index";
 import { observer } from "mobx-react";
 import { useNewChat } from "../hook/NewChat";
 
@@ -17,7 +17,9 @@ function Header(): any {
   let [isHiding, setIsHiding] = useState(false);
   let [isOpen, setOpen] = useState(false);
   const { mutate } = useNewChat();
-
+  useEffect(() => {
+    console.log(chatStore.chatID)
+  }, [chatStore.chatID])
   function hideHandle() {
     setIsHiding(true);
     setTimeout(() => {

@@ -4,10 +4,11 @@ import { observer } from "mobx-react";
 
 function UserData() {
   const navigate = useNavigate();
-  const handle_exit = () => {
-    localStorage.clear();
-    authStore.setAuth(false);
-    navigate("/");
+  const handle_exit = async () => {
+    await localStorage.clear();
+    await authStore.setWaitAuth(false);
+    await authStore.setAuth(false);
+    await navigate("/");
   };
   return (
     <div className="autorizacia">
@@ -27,4 +28,4 @@ function UserData() {
   );
 }
 
-export default observer(UserData)
+export default observer(UserData);

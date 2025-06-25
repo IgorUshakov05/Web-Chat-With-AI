@@ -11,12 +11,6 @@ function Input() {
     return e;
   };
   useEffect(() => {
-    socketStore.connect();
-    return () => {
-      socketStore.disconnect();
-    };
-  }, []);
-  useEffect(() => {
     socketStore.socket.on("message", (data: SocketMessage) => {
       console.log("📩 Получено сообщение с сервера:", data);
       if (data.connection || data.from === "User") return;
