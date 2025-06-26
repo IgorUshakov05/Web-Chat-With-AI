@@ -4,7 +4,7 @@ import { setGlobalDispatcher, Agent } from "undici";
 setGlobalDispatcher(new Agent({ keepAliveTimeout: 120000 }));
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Обязательно задайте ключ
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; 
 
 type OpenRouterContent =
   | { type: "text"; text: string }
@@ -65,9 +65,7 @@ export default async function get_answer_ai(
     messages.push(userMessage);
 
     const requestBody: OpenRouterRequest = {
-      model: imageUrl
-        ? "google/gemini-2.5-pro-exp-03-25"
-        : "nousresearch/deephermes-3-mistral-24b-preview:free",
+      model:"mistralai/mistral-small-3.2-24b-instruct:free",
       messages,
     };
 
@@ -122,9 +120,7 @@ export async function get_answer_ai_without_auth(
     };
 
     const requestBody: OpenRouterRequest = {
-      model: imageUrl
-        ? "google/gemini-2.5-pro-exp-03-25"
-        : "nousresearch/deephermes-3-mistral-24b-preview:free",
+      model: "mistralai/mistral-small-3.2-24b-instruct:free",
       messages: [userMessage],
     };
 
